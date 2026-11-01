@@ -55,8 +55,8 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 
 | Phase | Focus | Status |
 |:-----:|-------|--------|
-| 1 | Foundation, registry & extensible schema | 🚧 In progress |
-| 2 | Global layout, hero & catalog UI | ⏳ Planned |
+| 1 | Foundation, registry & extensible schema | ✅ Complete |
+| 2 | Global layout, hero & catalog UI | 🚧 In progressd |
 | 3 | Method detail page, Shiki viewer & docs UI | ⏳ Planned |
 | 4 | `.zip` bundler & download pipeline | ⏳ Planned |
 | 5 | Credentials auth boilerplates (3 methods) | ⏳ Planned |
@@ -68,14 +68,14 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 
 ---
 
-### Phase 1 — Foundation, registry & extensible schema 🚧
+### Phase 1 — Foundation, registry & extensible schema ✅
 
 - [x] **Step 1.1:** Initialize Next.js App Router with TypeScript, Tailwind CSS, `lucide-react`, `shiki`, and `jszip`
 - [x] **Step 1.2:** Add `src/data/auth-methods.ts` with the 5 `authCategories`, 17 `authMethods`, and lookup helpers (`getAuthMethodById`, `getAuthMethodsByCategory`)
 - [x] **Step 1.3:** Create `src/types/auth.ts` with types for `AuthVariant`, `TemplateFile` (`core` vs `optional-ui` vs `db-adapter` badges), `FunctionDoc`, `DbAdapterMethodDoc`, and `ApiPayloadContract`
-- [ ] **Step 1.4:** Create `src/lib/templates.ts` to read raw files from `templates/[method-id]/[variant-id]/` on the server and construct the structured file tree
+- [x] **Step 1.4:** Create `src/lib/templates.ts` to read raw files from `templates/[method-id]/[variant-id]/` on the server and construct the structured file tree
 
-### Phase 2 — Global layout, hero & catalog UI ⏳
+### Phase 2 — Global layout, hero & catalog UI 🚧
 
 - [ ] **Step 2.1:** Create a dark developer-focused layout with sticky navigation, GitHub link, and quick category jump links
 - [ ] **Step 2.2:** Create the hero section explaining the `core/` + `auth-db.ts` + `optional-ui/` workflow and one-click `.zip` downloads
@@ -146,6 +146,7 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 | Styling | Tailwind CSS | Responsive developer-focused dark UI |
 | Syntax Highlighting | Shiki | Server-side syntax highlighting (`codeToHtml`) with VS Code theme accuracy |
 | Icons | `lucide-react` | Category, method, and file-tree iconography |
+| Brand Icons | `react-icons` | Official social provider logos for authentication methods |
 | Archive Bundler | `jszip` | On-demand `.zip` generation directly from the `templates/` directory |
 | Hosting | Vercel (Free Hobby Tier) | Stateless deployment with zero database required |
 
