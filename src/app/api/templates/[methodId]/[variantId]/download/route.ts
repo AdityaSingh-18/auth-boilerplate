@@ -29,16 +29,16 @@ export async function GET(
     }
 
     const packageType: DownloadPackage = packageParam;
-    if (packageType !== "full" && packageType !== "core") {
-      return NextResponse.json(
-        { error: "Invalid package type. Choose 'full' or 'core'." },
-        { status: 400 },
-      );
-    }
 
     const files = await loadTemplateFiles(methodId, variantId);
     const includedFiles = files.filter((file) => {
-      if (file.path === "README.md")   return true;
+      if (
+        file.path === "README.md" ||
+        file.path === ".env.example"
+      ) {
+        return true;
+      }
+
       if (file.path.startsWith("core/"))   return true;
 
       if (

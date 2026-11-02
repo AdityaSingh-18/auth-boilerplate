@@ -1,5 +1,11 @@
 import { randomUUID } from "node:crypto";
 import { authDb } from "./auth-db";
+import { hashPassword, verifyPassword } from "./password";
+import {
+  createSessionToken,
+  getSessionUserId,
+  setSessionCookie,
+} from "./session";
 
 export interface RegisterInput {
   email: string;
@@ -11,59 +17,113 @@ export interface LoginInput {
   password: string;
 }
 
-export interface AuthUser {
+export interface PublicUser {
   id: string;
   email: string;
 }
 
-// Simple demonstration hash.
-function demoHash(password: string): string {
-  return Buffer.from(password).toString("base64");
+function normalizeEmail(email: string): string {
+  return email.trim().toLowerCase();
+}
+
+function validateEmail(email: string): void {
+  if (
+    !email ||
+    email.length > 254 ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  ) {
+    throw new Error("Please provide a valid email address.");
+  }
+}
+
+function validatePassword(password: string): void {
+  if (password.length < 8 || password.length > 128) {
+    throw new Error("Password must be between 8 and 128 characters.");
+  }
+}
+
+function toPublicUser(user: {
+  id: string;
+  email: string;
+}): PublicUser {
+  return {
+    id: user.id,
+    email: user.email,
+  };
 }
 
 export async function registerUser(
   input: RegisterInput,
-): Promise<AuthUser> {
-  const email = input.email.trim().toLowerCase();
+): Promise<PublicUser> {
+  const email = normalizeEmail(input.email);
 
-  if (!email || !email.includes("@")) {
-    throw new Error("Please provide a valid email address.");
-  }
-
-  if (input.password.length < 6) {
-    throw new Error("Password must be at least 6 characters.");
-  }
+  validateEmail(email);
+  validatePassword(input.password);
 
   const existingUser = await authDb.findUserByEmail(email);
 
   if (existingUser) {
-    throw new Error("An account with this email already exists.");
+    throw new Error("USER_ALREADY_EXISTS");
   }
 
-  const user = await authDb.createUser({
-    id: randomUUID(),
-    email,
-    passwordHash: demoHash(input.password),
-  });
+  let user;
 
-  return {
-    id: user.id,
-    email: user.email,
-  };
+  try {
+    user = await authDb.createUser({
+      id: randomUUID(),
+      email,
+      passwordHash: await hashPassword(input.password),
+    });
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      error.message === "USER_ALREADY_EXISTS"
+    ) {
+      throw error;
+    }
+
+    throw error;
+  }
+
+  const token = await createSessionToken(user.id);
+  await setSessionCookie(token);
+
+  return toPublicUser(user);
 }
 
 export async function loginUser(
   input: LoginInput,
-): Promise<AuthUser> {
-  const email = input.email.trim().toLowerCase();
-  const user = await authDb.findUserByEmail(email);
+): Promise<PublicUser> {
+  const email = normalizeEmail(input.email);
 
-  if (!user || user.passwordHash !== demoHash(input.password)) {
+  validateEmail(email);
+
+  if (!input.password || input.password.length > 128) {
     throw new Error("Invalid email or password.");
   }
 
-  return {
-    id: user.id,
-    email: user.email,
-  };
+  const user = await authDb.findUserByEmail(email);
+
+  if (
+    !user ||
+    !(await verifyPassword(input.password, user.passwordHash))
+  ) {
+    throw new Error("Invalid email or password.");
+  }
+
+  const token = await createSessionToken(user.id);
+  await setSessionCookie(token);
+
+  return toPublicUser(user);
+}
+
+export async function getCurrentUser(): Promise<PublicUser | null> {
+  const userId = await getSessionUserId();
+  if (!userId) {
+    return null;
+  }
+
+  const user = await authDb.findUserById(userId);
+
+  return user ? toPublicUser(user) : null;
 }

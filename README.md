@@ -59,7 +59,7 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 | 2 | Global layout, hero & catalog UI | ✅ Complete |
 | 3 | Method detail page, Shiki viewer & docs UI | ✅ Complete |
 | 4 | `.zip` bundler & download pipeline | ✅ Complete |
-| 5 | Credentials auth boilerplates (3 methods) | ⏳ Planned |
+| 5 | Credentials auth boilerplates (3 methods) | 🚧 In progress |
 | 6 | Passwordless auth boilerplates (3 methods) | ⏳ Planned |
 | 7 | Social OAuth boilerplates (7 methods) | ⏳ Planned |
 | 8 | Modern auth boilerplates (2 methods) | ⏳ Planned |
@@ -96,9 +96,10 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 - [x] **Step 4.1:** Use `jszip` in a Next.js Route Handler to package `templates/[method-id]/[variant-id]/` (including `README.md`, `core/`, and `optional-ui/`) and stream `auth-[method-id].zip`
 - [x] **Step 4.2:** Allow developers to download either the **Full Package (`core/` + `optional-ui/` + `README.md`)** or **Headless Core Only (`core/` + `README.md`)**
 
-### Phase 5 — Credentials auth boilerplates ⏳
+### Phase 5 — Credentials auth boilerplates 🚧
 
-- [ ] **Step 5.1:** Implement password hashing (Web Crypto PBKDF2/Scrypt), stateless HTTP-only JWT sessions (`jose`), register/login/logout/me API routes, `auth-db.ts` adapter, optional reference forms, and `README.md`; mark `email-password` as `available`
+- [x] **Step 5.1:** Implement password hashing (Web Crypto PBKDF2/Scrypt), stateless HTTP-only JWT sessions (`jose`), register/login/logout/me API routes, `auth-db.ts` adapter, optional reference forms, and `README.md`; mark `email-password` as `available`
+- [ ] **Step 5.2:** Add database adapter documentation and UI for **Neon**, **MongoDB**, **MySQL**, and **Supabase** with **Neon** as implemented and the remaining adapters as reference examples; add syntax-highlighted adapter tabs and integrate the database adapter section into the `Email & Password` method detail page.
 - [ ] **Step 5.2:** Implement username normalization, uniqueness checks, login/register/logout routes, `auth-db.ts` adapter, optional UI, and `README.md`; mark `username-password` as `available`
 - [ ] **Step 5.3:** Implement E.164 phone normalization, password authentication routes, `auth-db.ts` adapter, optional UI, and `README.md`; mark `phone-password` as `available`
 
@@ -272,7 +273,7 @@ All 17 methods defined in `src/data/auth-methods.ts`:
 
 | Category | ID | Method Title | Status |
 |----------|----|--------------|:------:|
-| **Credentials** | `email-password` | Email & Password | ⏳ Planned |
+| **Credentials** | `email-password` | Email & Password | ✅ Available |
 | **Credentials** | `username-password` | Username & Password | ⏳ Planned |
 | **Credentials** | `phone-password` | Phone & Password | ⏳ Planned |
 | **Passwordless** | `email-otp` | Email OTP | ⏳ Planned |
