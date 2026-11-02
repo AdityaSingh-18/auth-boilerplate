@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Check,
   Copy,
@@ -23,111 +23,234 @@ interface FileExplorerProps {
   files: ExplorerFile[];
 }
 
-export function FileExplorer({ files }: FileExplorerProps) {
-  const [activePath, setActivePath] = useState(files[0]?.path ?? "");
-  const [copiedPath, setCopiedPath] = useState<string | null>(null);
+type FileTreeNode =
+  | {
+      type: "folder";
+      name: string;
+      path: string;
+      children: FileTreeNode[];
+    }
+  | {
+      type: "file";
+      file: ExplorerFile;
+    };
 
-  const [expandedFolders, setExpandedFolders] = useState<string[]>([
-    "core",
-    "core/api",
-    "core/lib",
-    "optional-ui",
-  ]);
+function buildFileTree(files: ExplorerFile[]): FileTreeNode[] {
+  const root: FileTreeNode[] = [];
+
+  for (const file of files) {
+    const segments = file.path.split("/").filter(Boolean);
+    let currentLevel = root;
+    let currentPath = "";
+
+    segments.forEach((segment, index) => {
+      currentPath = currentPath
+        ? `${currentPath}/${segment}`
+        : segment;
+
+      const isFile = index === segments.length - 1;
+
+      if (isFile) {
+        currentLevel.push({
+          type: "file",
+          file,
+        });
+        return;
+      }
+
+      let folder = currentLevel.find(
+        (node): node is Extract<FileTreeNode, { type: "folder" }> =>
+          node.type === "folder" && node.name === segment,
+      );
+
+      if (!folder) {
+        folder = {
+          type: "folder",
+          name: segment,
+          path: currentPath,
+          children: [],
+        };
+
+        currentLevel.push(folder);
+      }
+
+      currentLevel = folder.children;
+    });
+  }
+
+  return root;
+}
+
+function getFolderPaths(nodes: FileTreeNode[]): string[] {
+  const paths: string[] = [];
+
+  for (const node of nodes) {
+    if (node.type === "folder") {
+      paths.push(node.path, ...getFolderPaths(node.children));
+    }
+  }
+
+  return paths;
+}
+
+function getFileCategory(file: ExplorerFile): string {
+  const lowerPath = file.path.toLowerCase();
+  const lowerName = file.name.toLowerCase();
+
+  if (lowerName === ".env.example") {
+    return "Environment";
+  }
+
+  if (lowerName === "readme.md") {
+    return "Documentation";
+  }
+
+  if (
+    file.kind === "db-adapter" ||
+    lowerPath.endsWith("/auth-db.ts")
+  ) {
+    return "DB Adapter";
+  }
+
+  if (file.kind === "optional-ui") {
+    return "Optional Reference UI";
+  }
+
+  if (lowerPath.startsWith("core/")) {
+    return "Required Core";
+  }
+
+  return "Template File";
+}
+
+export function FileExplorer({ files }: FileExplorerProps) {
+  const tree = useMemo(() => buildFileTree(files), [files]);
+
+  const [activePath, setActivePath] = useState(
+    files[0]?.path ?? "",
+  );
+  const [copiedPath, setCopiedPath] = useState<string | null>(null);
+  const [copyErrorPath, setCopyErrorPath] = useState<string | null>(null);
+  const [expandedFolders, setExpandedFolders] = useState<string[]>(() =>
+    getFolderPaths(buildFileTree(files)),
+  );
+
+  const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const activeFile = files.find((file) => file.path === activePath);
 
-  const readmeFiles = files.filter(
-    (file) => file.path.toLowerCase() === "readme.md",
-  );
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) {
+        clearTimeout(copyTimeoutRef.current);
+      }
+    };
+  }, []);
 
-  const coreFiles = files.filter(
-    (file) => file.path.startsWith("core/"),
-  );
+  useEffect(() => {
+    if (!files.some((file) => file.path === activePath)) {
+      setActivePath(files[0]?.path ?? "");
+    }
 
-  const optionalFiles = files.filter(
-    (file) => file.kind === "optional-ui",
-  );
+    setExpandedFolders((current) => {
+      const availablePaths = getFolderPaths(tree);
 
-  const coreFilesWithoutAdapter = coreFiles.filter(
-    (file) => file.path !== "core/lib/auth-db.ts",
-  );
+      return [
+        ...new Set([
+          ...current.filter((path) => availablePaths.includes(path)),
+          ...availablePaths,
+        ]),
+      ];
+    });
+  }, [files, tree, activePath]);
 
-  const adapterFiles = coreFiles.filter(
-    (file) => file.path === "core/lib/auth-db.ts",
-  );
-
-  function toggleFolder(folder: string) {
+  function toggleFolder(folderPath: string) {
     setExpandedFolders((current) =>
-      current.includes(folder)
-        ? current.filter((item) => item !== folder)
-        : [...current, folder],
+      current.includes(folderPath)
+        ? current.filter((path) => path !== folderPath)
+        : [...current, folderPath],
     );
   }
 
   function selectFile(path: string) {
+    if (copyTimeoutRef.current) {
+      clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = null;
+    }
+
     setActivePath(path);
     setCopiedPath(null);
+    setCopyErrorPath(null);
   }
 
   async function handleCopy() {
     if (!activeFile) return;
 
+    if (copyTimeoutRef.current) {
+      clearTimeout(copyTimeoutRef.current);
+    }
+
     try {
       await navigator.clipboard.writeText(activeFile.content);
       setCopiedPath(activeFile.path);
+      setCopyErrorPath(null);
     } catch {
       setCopiedPath(null);
+      setCopyErrorPath(activeFile.path);
     }
+
+    copyTimeoutRef.current = setTimeout(() => {
+      setCopiedPath(null);
+      setCopyErrorPath(null);
+      copyTimeoutRef.current = null;
+    }, 3000);
   }
 
-  function renderFile(file: ExplorerFile, depth = 0) {
-    const isActive = activePath === file.path;
-    const isAdapter = file.path === "core/lib/auth-db.ts";
-    const isReadme = file.name.toLowerCase() === "readme.md";
+  function renderNode(node: FileTreeNode, depth = 0) {
+    if (node.type === "file") {
+      const file = node.file;
+      const isActive = activePath === file.path;
+      const isReadme = file.name.toLowerCase() === "readme.md";
+
+      return (
+        <button
+          key={file.path}
+          type="button"
+          onClick={() => selectFile(file.path)}
+          title={file.path}
+          aria-current={isActive ? "page" : undefined}
+          className={`flex w-full min-w-0 items-center gap-2 rounded-lg px-2 py-2 text-left text-xs transition-colors ${
+            isActive
+              ? "bg-violet-500/10 text-violet-200"
+              : "text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-200"
+          }`}
+          style={{ paddingLeft: `${8 + depth * 14}px` }}
+        >
+          {isReadme ? (
+            <FileText className="h-3.5 w-3.5 shrink-0" />
+          ) : (
+            <FileCode2 className="h-3.5 w-3.5 shrink-0" />
+          )}
+
+          <span className="truncate">{file.name}</span>
+
+          {getFileCategory(file) === "DB Adapter" && (
+            <span className="ml-auto shrink-0 rounded bg-violet-500/15 px-1.5 py-0.5 text-[9px] font-semibold text-violet-300">
+              DB
+            </span>
+          )}
+        </button>
+      );
+    }
+
+    const isExpanded = expandedFolders.includes(node.path);
 
     return (
-      <button
-        key={file.path}
-        type="button"
-        onClick={() => selectFile(file.path)}
-        title={file.path}
-        className={`flex w-full min-w-0 items-center gap-2 rounded-lg px-2 py-2 text-left text-xs transition-colors ${
-          isActive
-            ? "bg-violet-500/10 text-violet-200"
-            : "text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-200"
-        }`}
-        style={{ paddingLeft: `${8 + depth * 14}px` }}
-      >
-        {isReadme ? (
-          <FileText className="h-3.5 w-3.5 shrink-0" />
-        ) : (
-          <FileCode2 className="h-3.5 w-3.5 shrink-0" />
-        )}
-
-        <span className="truncate">{file.name}</span>
-
-        {isAdapter && (
-          <span className="ml-auto shrink-0 rounded bg-violet-500/15 px-1.5 py-0.5 text-[9px] font-semibold text-violet-300">
-            DB
-          </span>
-        )}
-      </button>
-    );
-  }
-
-  function renderFolder(
-    name: string,
-    folderPath: string,
-    folderFiles: ExplorerFile[],
-    depth = 0,
-  ) {
-    const isExpanded = expandedFolders.includes(folderPath);
-
-    return (
-      <div key={folderPath}>
+      <div key={node.path}>
         <button
           type="button"
-          onClick={() => toggleFolder(folderPath)}
+          onClick={() => toggleFolder(node.path)}
+          aria-expanded={isExpanded}
           className="flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-xs font-medium text-zinc-300 transition-colors hover:bg-white/[0.04]"
           style={{ paddingLeft: `${8 + depth * 14}px` }}
         >
@@ -137,22 +260,27 @@ export function FileExplorer({ files }: FileExplorerProps) {
             <Folder className="h-3.5 w-3.5 shrink-0 text-violet-300" />
           )}
 
-          <span>{name}/</span>
+          <span className="truncate">{node.name}/</span>
+
           <span className="ml-auto text-[10px] text-zinc-600">
-            {folderFiles.length}
+            {node.children.length}
           </span>
         </button>
 
         {isExpanded && (
           <div>
-            {folderFiles.map((file) => renderFile(file, depth + 1))}
+            {node.children.map((child) =>
+              renderNode(child, depth + 1),
+            )}
           </div>
         )}
       </div>
     );
   }
 
-  if (files.length === 0 || !activeFile) return null;
+  if (files.length === 0 || !activeFile) {
+    return null;
+  }
 
   return (
     <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0d0d12]">
@@ -169,66 +297,37 @@ export function FileExplorer({ files }: FileExplorerProps) {
           </div>
 
           <div className="space-y-1 p-2">
-            {readmeFiles.map((file) => renderFile(file))}
-
-            {coreFiles.length > 0 && (
-              <div>
-                <div className="flex items-center gap-2 px-2 py-2 text-xs font-semibold text-zinc-200">
-                  <Folder className="h-3.5 w-3.5 text-violet-300" />
-                  core/
-                  <span className="ml-auto rounded bg-emerald-500/10 px-1.5 py-0.5 text-[9px] font-semibold text-emerald-400">
-                    REQUIRED
-                  </span>
-                </div>
-
-                {renderFolder(
-                  "api",
-                  "core/api",
-                  coreFilesWithoutAdapter.filter((file) =>
-                    file.path.startsWith("core/api/"),
-                  ),
-                  1,
-                )}
-
-                {renderFolder(
-                  "lib",
-                  "core/lib",
-                  coreFiles.filter((file) =>
-                    file.path.startsWith("core/lib/"),
-                  ),
-                  1,
-                )}
-
-                {coreFilesWithoutAdapter
-                  .filter(
-                    (file) =>
-                      !file.path.startsWith("core/api/") &&
-                      !file.path.startsWith("core/lib/"),
-                  )
-                  .map((file) => renderFile(file, 1))}
-              </div>
-            )}
-
-            {optionalFiles.length > 0 && (
-              <div className="pt-2">
-                <div className="mb-1 flex items-center gap-2 px-2 text-[9px] font-semibold uppercase tracking-wider text-zinc-500">
-                  Optional reference UI
-                </div>
-
-                {renderFolder(
-                  "optional-ui",
-                  "optional-ui",
-                  optionalFiles,
-                )}
-              </div>
-            )}
+            {tree.map((node) => renderNode(node))}
           </div>
         </aside>
 
         {/* Main code panel */}
         <div className="min-w-0 flex-1">
-          {/* Existing horizontal tabs — kept in the main panel */}
-          <div className="flex overflow-x-auto border-b border-white/10">
+          {/* Mobile file selector */}
+          <div className="border-b border-white/10 p-3 sm:hidden">
+            <label
+              htmlFor="mobile-file-selector"
+              className="mb-2 block text-[10px] font-semibold uppercase tracking-wider text-zinc-500"
+            >
+              Select file
+            </label>
+
+            <select
+              id="mobile-file-selector"
+              value={activePath}
+              onChange={(event) => selectFile(event.target.value)}
+              className="w-full rounded-lg border border-white/10 bg-[#111118] px-3 py-2 text-xs text-zinc-200 outline-none focus:border-violet-400/50"
+            >
+              {files.map((file) => (
+                <option key={file.path} value={file.path}>
+                  {file.path}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Existing horizontal tabs */}
+          <div className="hidden overflow-x-auto border-b border-white/10 sm:flex">
             {files.map((file) => (
               <button
                 key={file.path}
@@ -253,13 +352,7 @@ export function FileExplorer({ files }: FileExplorerProps) {
                 {activeFile.path}
               </p>
               <span className="text-[10px] uppercase tracking-wide text-violet-300">
-                {activeFile.path === "core/lib/auth-db.ts"
-                  ? "DB Adapter"
-                  : activeFile.kind === "optional-ui"
-                    ? "Optional Reference UI"
-                    : activeFile.path.startsWith("core/")
-                      ? "Required Core"
-                      : "Documentation"}
+                {getFileCategory(activeFile)}
               </span>
             </div>
 
@@ -272,6 +365,11 @@ export function FileExplorer({ files }: FileExplorerProps) {
                 <>
                   <Check className="h-3.5 w-3.5 text-emerald-400" />
                   Copied
+                </>
+              ) : copyErrorPath === activeFile.path ? (
+                <>
+                  <Copy className="h-3.5 w-3.5 text-red-400" />
+                  Copy failed
                 </>
               ) : (
                 <>

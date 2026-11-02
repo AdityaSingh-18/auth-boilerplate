@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { DatabaseAdapterExample } from "@/data/template-docs/email-password-adapters";
 
 interface HighlightedAdapter extends DatabaseAdapterExample {
@@ -16,6 +16,12 @@ export function DatabaseAdapterTabs({
 }: DatabaseAdapterTabsProps) {
   const [activeId, setActiveId] = useState(adapters[0]?.id);
 
+  useEffect(() => {
+    if (!adapters.some((adapter) => adapter.id === activeId)) {
+      setActiveId(adapters[0]?.id);
+    }
+  }, [adapters, activeId]);
+
   const activeAdapter = adapters.find(
     (adapter) => adapter.id === activeId,
   );
@@ -23,7 +29,7 @@ export function DatabaseAdapterTabs({
   if (!activeAdapter) return null;
 
   return (
-    <section className="space-y-5 mt-6">
+    <section className="mt-6 space-y-5">
       <div>
         <h3 className="text-xl font-semibold text-white">
           Database adapters
@@ -39,6 +45,7 @@ export function DatabaseAdapterTabs({
             key={adapter.id}
             type="button"
             onClick={() => setActiveId(adapter.id)}
+            aria-pressed={activeId === adapter.id}
             className={`shrink-0 border-b-2 px-4 py-3 text-sm transition ${
               activeId === adapter.id
                 ? "border-violet-500 text-white"
@@ -52,19 +59,36 @@ export function DatabaseAdapterTabs({
 
       <div className="space-y-4">
         <div>
-          <p className="text-sm text-zinc-300">
-            {activeAdapter.description}
-          </p>
-          <p className="mt-2 text-xs text-zinc-500">
+          <div className="flex flex-wrap items-center gap-2">
+            <p className="text-sm text-zinc-300">
+              {activeAdapter.description}
+            </p>
+
+            <span
+              className={`rounded-md px-2 py-1 text-xs ${
+                activeAdapter.implemented
+                  ? "bg-emerald-500/10 text-emerald-300"
+                  : "bg-amber-500/10 text-amber-300"
+              }`}
+            >
+              {activeAdapter.implemented
+                ? "Implemented"
+                : "Reference example"}
+            </span>
+          </div>
+
+          <p className="mt-3 text-xs text-zinc-500">
             Install:{" "}
             <code className="rounded bg-white/5 px-2 py-1 text-zinc-300">
               pnpm add {activeAdapter.packageName}
             </code>
           </p>
+
           <p className="mt-2 text-xs text-zinc-500">
             Required environment variables:{" "}
             {activeAdapter.envVariables.join(", ")}
           </p>
+
           <p className="mt-2 text-xs text-zinc-500">
             Database setup: {activeAdapter.setup}
           </p>
