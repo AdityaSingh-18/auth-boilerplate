@@ -24,7 +24,15 @@ export async function POST(request: NextRequest) {
       password: body.password,
     });
 
-    return NextResponse.json({ user }, { status: 201 });
+    return NextResponse.json(
+      {
+        user: {
+          id: user.id,
+          email: user.email,
+        },
+      },
+      { status: 201 },
+    );
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Registration failed.";

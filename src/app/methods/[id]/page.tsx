@@ -11,6 +11,8 @@ import { VariantDownloadControls } from "@/components/methods/variant-download-c
 import { SourceCodeSection } from "@/components/methods/source-code-section";
 import { FileOverview } from "@/components/methods/file-overview";
 import { emailPasswordDocumentation } from "@/data/template-docs/email-password";
+import { DatabaseAdapterSection } from "@/components/methods/database-adapter-section";
+import { ApiContractSection } from "@/components/methods/api-contract-section";
 
 export const instant = false;
 
@@ -162,8 +164,15 @@ export default async function MethodPage({
         </section>
 
         <SourceCodeSection files={files} />
-        
+
         {documentation && <FileOverview documentation={documentation} />}
+
+        {method.id === "email-password" && (
+          <>
+            <DatabaseAdapterSection />
+            <ApiContractSection />
+          </>
+        )}
       </div>
     </main>
   );
