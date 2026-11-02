@@ -9,6 +9,8 @@ import {
 import { loadTemplateFiles, listTemplateVariants } from "@/lib/templates";
 import { VariantDownloadControls } from "@/components/methods/variant-download-controls";
 import { SourceCodeSection } from "@/components/methods/source-code-section";
+import { FileOverview } from "@/components/methods/file-overview";
+import { emailPasswordDocumentation } from "@/data/template-docs/email-password";
 
 export const instant = false;
 
@@ -43,6 +45,10 @@ export default async function MethodPage({
   if (!method) {
     notFound();
   }
+
+  const documentation = method.id === "email-password"
+    ? emailPasswordDocumentation
+    : null;
 
   const category = authCategories.find(
     (item) => item.id === method.categoryId,
@@ -156,6 +162,8 @@ export default async function MethodPage({
         </section>
 
         <SourceCodeSection files={files} />
+        
+        {documentation && <FileOverview documentation={documentation} />}
       </div>
     </main>
   );

@@ -59,3 +59,33 @@ export interface ApiPayloadContract {
   request?: ApiPayloadShape;
   response?: ApiPayloadShape;
 }
+
+// Documentation for an individual template file.
+export interface FileDoc {
+  path: string;
+  description: string;
+  required: boolean;
+}
+
+// Documentation for an environment variable.
+export interface EnvironmentVariableDoc {
+  name: string;
+  description: string;
+  required: boolean;
+  example?: string;
+}
+
+// A security note relevant to the implementation.
+export interface SecurityNote {
+  title: string;
+  description: string;
+}
+
+// Structured documentation for a template variant.
+export interface TemplateDocumentation {
+  overview: string;
+  files: FileDoc[];
+  functions: FunctionDoc[];
+  environmentVariables: EnvironmentVariableDoc[];
+  securityNotes: SecurityNote[];
+}
