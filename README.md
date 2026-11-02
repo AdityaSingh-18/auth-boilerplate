@@ -86,7 +86,7 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 
 - [x] **Step 3.1:** Build the method detail header with breadcrumbs, status badge, variant selector dropdown (`Next.js App Router`), and primary **Download `.zip`** CTA
 - [x] **Step 3.2:** Create `src/lib/shiki.ts` singleton and render syntax-highlighted source files with zero client-side syntax bundle overhead
-- [ ] **Step 3.3:** Build an interactive file explorer with **horizontal** tabs and a single active **Shiki-highlighted** code preview for switching between template files.
+- [x] **Step 3.3:** Build an interactive file explorer with **horizontal** tabs and a single active **Shiki-highlighted** code preview for switching between template files.
 - [ ] **Step 3.4:** Group template files into `README.md`, `core/` (Required), `core/lib/auth-db.ts` (DB Adapter highlight), and `optional-ui/` (Optional Reference UI) with one-click file copy
 - [ ] **Step 3.5:** Render structured documentation explaining what each file and function does, required environment variables, and security notes
 - [ ] **Step 3.6:** Add interactive tabs showing drop-in `auth-db.ts` implementations for **PostgreSQL (Neon)**, **MongoDB**, **MySQL**, and **Supabase**, plus the JSON request/response contract for custom UIs
