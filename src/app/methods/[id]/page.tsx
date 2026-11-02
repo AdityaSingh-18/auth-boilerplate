@@ -6,8 +6,9 @@ import {
   authCategories,
   getAuthMethodById,
 } from "@/data/auth-methods";
-import { listTemplateVariants } from "@/lib/templates";
+import { loadTemplateFiles, listTemplateVariants } from "@/lib/templates";
 import { VariantDownloadControls } from "@/components/methods/variant-download-controls";
+import { SourceCodeSection } from "@/components/methods/source-code-section";
 
 export const instant = false;
 
@@ -48,6 +49,11 @@ export default async function MethodPage({
   );
 
   const variants = await listTemplateVariants(method.id);
+  const defaultVariant = variants.find((variant) => variant.isDefault) ?? variants[0];
+
+  const files = defaultVariant
+    ? await loadTemplateFiles(method.id, defaultVariant.id)
+    : [];
 
   return (
     <main className="min-h-screen px-5 pb-24 pt-12 sm:px-8">
@@ -148,6 +154,8 @@ export default async function MethodPage({
             </p>
           )}
         </section>
+
+        <SourceCodeSection files={files} />
       </div>
     </main>
   );
