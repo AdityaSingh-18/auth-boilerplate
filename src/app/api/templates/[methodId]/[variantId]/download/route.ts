@@ -9,25 +9,57 @@ interface RouteContext {
   }>;
 }
 
+type DownloadPackage = "full" | "core";
+
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: RouteContext,
 ) {
   try {
     const { methodId, variantId } = await params;
 
-    const files = await loadTemplateFiles(methodId, variantId);
+    const url = new URL(request.url);
 
-    if (files.length === 0) {
+    const packageParam = url.searchParams.get("package") ?? "full";
+    if (packageParam !== "full" && packageParam !== "core") {
       return NextResponse.json(
-        { error: "This template does not contain any files." },
+        { error: "Invalid package type. Choose 'full' or 'core'." },
+        { status: 400 },
+      );
+    }
+
+    const packageType: DownloadPackage = packageParam;
+    if (packageType !== "full" && packageType !== "core") {
+      return NextResponse.json(
+        { error: "Invalid package type. Choose 'full' or 'core'." },
+        { status: 400 },
+      );
+    }
+
+    const files = await loadTemplateFiles(methodId, variantId);
+    const includedFiles = files.filter((file) => {
+      if (file.path === "README.md")   return true;
+      if (file.path.startsWith("core/"))   return true;
+
+      if (
+        packageType === "full" &&
+        file.path.startsWith("optional-ui/")
+      ) {
+        return true;
+      }
+
+      return false;
+    });
+
+    if (includedFiles.length === 0) {
+      return NextResponse.json(
+        { error: "This template does not contain any files for the selected package." },
         { status: 404 },
       );
     }
 
     const zip = new JSZip();
-
-    for (const file of files) {
+    for (const file of includedFiles) {
       zip.file(`${variantId}/${file.path}`, file.content);
     }
 
@@ -39,11 +71,15 @@ export async function GET(
       },
     });
 
+    const filename = packageType === "core"
+      ? `auth-${methodId}-core.zip`
+      : `auth-${methodId}.zip`;
+
     return new Response(new Uint8Array(archive), {
       status: 200,
       headers: {
         "Content-Type": "application/zip",
-        "Content-Disposition": `attachment; filename="auth-${methodId}.zip"`,
+        "Content-Disposition": `attachment; filename="${filename}"`,
         "Cache-Control": "no-store",
       },
     });
