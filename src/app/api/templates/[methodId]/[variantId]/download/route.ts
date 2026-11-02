@@ -1,6 +1,5 @@
 import JSZip from "jszip";
 import { NextResponse } from "next/server";
-
 import { loadTemplateFiles } from "@/lib/templates";
 
 interface RouteContext {
@@ -18,6 +17,7 @@ export async function GET(
     const { methodId, variantId } = await params;
 
     const files = await loadTemplateFiles(methodId, variantId);
+
     if (files.length === 0) {
       return NextResponse.json(
         { error: "This template does not contain any files." },
@@ -26,6 +26,7 @@ export async function GET(
     }
 
     const zip = new JSZip();
+
     for (const file of files) {
       zip.file(`${variantId}/${file.path}`, file.content);
     }
@@ -38,14 +39,11 @@ export async function GET(
       },
     });
 
-    const filename = `${methodId}_${variantId}.zip`;
-    const responseBody = new Uint8Array(archive);
-
-    return new Response(responseBody, {
+    return new Response(new Uint8Array(archive), {
       status: 200,
       headers: {
         "Content-Type": "application/zip",
-        "Content-Disposition": `attachment; filename="${filename}"`,
+        "Content-Disposition": `attachment; filename="auth-${methodId}.zip"`,
         "Cache-Control": "no-store",
       },
     });

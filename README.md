@@ -58,7 +58,7 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 | 1 | Foundation, registry & extensible schema | ✅ Complete |
 | 2 | Global layout, hero & catalog UI | ✅ Complete |
 | 3 | Method detail page, Shiki viewer & docs UI | ✅ Complete |
-| 4 | `.zip` bundler & download pipeline | ⏳ Planned |
+| 4 | `.zip` bundler & download pipeline | 🚧 In progress |
 | 5 | Credentials auth boilerplates (3 methods) | ⏳ Planned |
 | 6 | Passwordless auth boilerplates (3 methods) | ⏳ Planned |
 | 7 | Social OAuth boilerplates (7 methods) | ⏳ Planned |
@@ -91,9 +91,9 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 - [x] **Step 3.5:** Render structured documentation explaining what each file and function does, required environment variables, and security notes
 - [x] **Step 3.6:** Add interactive tabs showing drop-in `auth-db.ts` implementations for **PostgreSQL (Neon)**, **MongoDB**, **MySQL**, and **Supabase**, plus the JSON request/response contract for custom UIs
 
-### Phase 4 — `.zip` bundler & download pipeline ⏳
+### Phase 4 — `.zip` bundler & download pipeline 🚧
 
-- [ ] **Step 4.1:** Use `jszip` in a Next.js Route Handler to package `templates/[method-id]/[variant-id]/` (including `README.md`, `core/`, and `optional-ui/`) and stream `auth-[method-id].zip`
+- [x] **Step 4.1:** Use `jszip` in a Next.js Route Handler to package `templates/[method-id]/[variant-id]/` (including `README.md`, `core/`, and `optional-ui/`) and stream `auth-[method-id].zip`
 - [ ] **Step 4.2:** Allow developers to download either the **Full Package (`core/` + `optional-ui/` + `README.md`)** or **Headless Core Only (`core/` + `README.md`)**
 
 ### Phase 5 — Credentials auth boilerplates ⏳
