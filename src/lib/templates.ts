@@ -17,13 +17,13 @@ function validateId(id: string, label: string): void {
 
 // Determines the badge kind from the file's directory path.
 function getFileKind(relativePath: string): TemplateFileKind {
-  const segments = relativePath.split(path.sep);
+  const normalizedPath = relativePath.split(path.sep).join("/");
 
-  if (segments.includes("optional-ui")) {
+  if (normalizedPath.startsWith("optional-ui/")) {
     return "optional-ui";
   }
 
-  if (segments.includes("db-adapter")) {
+  if (normalizedPath === "core/lib/auth-db.ts") {
     return "db-adapter";
   }
 
