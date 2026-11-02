@@ -56,7 +56,7 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 | Phase | Focus | Status |
 |:-----:|-------|--------|
 | 1 | Foundation, registry & extensible schema | ✅ Complete |
-| 2 | Global layout, hero & catalog UI | 🚧 In progressd |
+| 2 | Global layout, hero & catalog UI | ✅ Complete |
 | 3 | Method detail page, Shiki viewer & docs UI | ⏳ Planned |
 | 4 | `.zip` bundler & download pipeline | ⏳ Planned |
 | 5 | Credentials auth boilerplates (3 methods) | ⏳ Planned |
@@ -75,12 +75,12 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 - [x] **Step 1.3:** Create `src/types/auth.ts` with types for `AuthVariant`, `TemplateFile` (`core` vs `optional-ui` vs `db-adapter` badges), `FunctionDoc`, `DbAdapterMethodDoc`, and `ApiPayloadContract`
 - [x] **Step 1.4:** Create `src/lib/templates.ts` to read raw files from `templates/[method-id]/[variant-id]/` on the server and construct the structured file tree
 
-### Phase 2 — Global layout, hero & catalog UI 🚧
+### Phase 2 — Global layout, hero & catalog UI ✅
 
 - [x] **Step 2.1:** Create a dark developer-focused layout with sticky navigation, GitHub link, and quick category jump links
 - [x] **Step 2.2:** Create the hero section explaining the `core/` + `auth-db.ts` + `optional-ui/` workflow and one-click `.zip` downloads
 - [x] **Step 2.3:** Build filter controls for `All`, `Credentials`, `Passwordless`, `Social`, `Modern`, and `Enterprise SSO`, plus status pills (`available`, `in-progress`, `planned`)
-- [ ] **Step 2.4:** Render all 17 authentication methods with dynamic Lucide icons, category tags, status badges, and links to `/methods/[id]`
+- [x] **Step 2.4:** Render all 17 authentication methods with dynamic Lucide icons, category tags, status badges, and links to `/methods/[id]`
 
 ### Phase 3 — Method detail page, Shiki viewer & docs UI ⏳
 

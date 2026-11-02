@@ -7,6 +7,7 @@ import {
   type AuthCategoryId,
   type AuthMethodStatus,
 } from "@/data/auth-methods";
+import { MethodCard } from "@/components/catalog/method-card";
 
 type CategoryFilter = "all" | AuthCategoryId;
 type StatusFilter = "all" | AuthMethodStatus;
@@ -151,16 +152,11 @@ export function CatalogSection() {
 
         {/* Filtered results */}
         {filteredMethods.length > 0 ? (
-          <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-3">
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filteredMethods.map((method) => (
-              <li
-                key={method.id}
-                className="text-sm text-zinc-400"
-              >
-                {method.title}
-              </li>
+              <MethodCard key={method.id} method={method} />
             ))}
-          </ul>
+          </div>
         ) : (
           <div className="mt-8 rounded-xl border border-white/[0.08] bg-white/[0.02] px-6 py-10 text-center">
             <h3 className="text-base font-semibold text-zinc-200">
