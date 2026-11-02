@@ -19,6 +19,7 @@ export async function SourceCodeSection({
         path: file.path,
         name: file.name,
         kind: file.kind,
+        content: file.content,
         language,
         highlightedCode: await highlightCode(file.content, language),
       };
@@ -37,7 +38,7 @@ export async function SourceCodeSection({
         </h2>
 
         <p className="mt-2 text-sm leading-6 text-zinc-400">
-          Browse the template files and inspect their implementation.
+          Browse the required files, database adapter, and optional UI.
         </p>
       </div>
 
