@@ -2,6 +2,7 @@ import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 
 import type {
+  AuthVariant,
   TemplateFile,
   TemplateFileKind,
 } from "@/types/auth";
@@ -110,6 +111,54 @@ export async function loadTemplateFiles(
       throw new Error(
         `Template not found for method "${methodId}" and variant "${variantId}".`,
       );
+    }
+
+    throw error;
+  }
+}
+
+// Lists the available variants for an authentication method.
+export async function listTemplateVariants(
+  methodId: string,
+): Promise<AuthVariant[]> {
+  validateId(methodId, "method ID");
+
+  const methodRoot = path.join(TEMPLATES_DIR, methodId);
+
+  try {
+    const entries = await readdir(methodRoot, {
+      withFileTypes: true,
+    });
+
+    const variantDirectories = entries
+      .filter((entry) => entry.isDirectory() && !entry.isSymbolicLink())
+      .map((entry) => entry.name)
+      .filter((id) => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id))
+      .sort();
+
+    return variantDirectories.map((id, index) => {
+      const title =
+        id === "nextjs-app-router"
+          ? "Next.js App Router"
+          : id
+              .split("-")
+              .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+              .join(" ");
+
+      return {
+        id,
+        title,
+        description: `${title} implementation`,
+        isDefault: index === 0,
+      };
+    });
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      "code" in error &&
+      error.code === "ENOENT"
+    ) {
+      return [];
     }
 
     throw error;

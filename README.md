@@ -57,7 +57,7 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 |:-----:|-------|--------|
 | 1 | Foundation, registry & extensible schema | ✅ Complete |
 | 2 | Global layout, hero & catalog UI | ✅ Complete |
-| 3 | Method detail page, Shiki viewer & docs UI | ⏳ Planned |
+| 3 | Method detail page, Shiki viewer & docs UI | 🚧 In progress |
 | 4 | `.zip` bundler & download pipeline | ⏳ Planned |
 | 5 | Credentials auth boilerplates (3 methods) | ⏳ Planned |
 | 6 | Passwordless auth boilerplates (3 methods) | ⏳ Planned |
@@ -82,9 +82,9 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 - [x] **Step 2.3:** Build filter controls for `All`, `Credentials`, `Passwordless`, `Social`, `Modern`, and `Enterprise SSO`, plus status pills (`available`, `in-progress`, `planned`)
 - [x] **Step 2.4:** Render all 17 authentication methods with dynamic Lucide icons, category tags, status badges, and links to `/methods/[id]`
 
-### Phase 3 — Method detail page, Shiki viewer & docs UI ⏳
+### Phase 3 — Method detail page, Shiki viewer & docs UI 🚧
 
-- [ ] **Step 3.1:** Build the method detail header with breadcrumbs, status badge, variant selector dropdown (`Next.js App Router`), and primary **Download `.zip`** CTA
+- [x] **Step 3.1:** Build the method detail header with breadcrumbs, status badge, variant selector dropdown (`Next.js App Router`), and primary **Download `.zip`** CTA
 - [ ] **Step 3.2:** Create `src/lib/shiki.ts` singleton and render syntax-highlighted source files with zero client-side syntax bundle overhead
 - [ ] **Step 3.3:** Group template files into `README.md`, `core/` (Required), `core/lib/auth-db.ts` (DB Adapter highlight), and `optional-ui/` (Optional Reference UI) with one-click file copy
 - [ ] **Step 3.4:** Render structured documentation explaining what each file and function does, required environment variables, and security notes
