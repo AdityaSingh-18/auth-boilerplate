@@ -79,7 +79,7 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 
 - [x] **Step 2.1:** Create a dark developer-focused layout with sticky navigation, GitHub link, and quick category jump links
 - [x] **Step 2.2:** Create the hero section explaining the `core/` + `auth-db.ts` + `optional-ui/` workflow and one-click `.zip` downloads
-- [ ] **Step 2.3:** Build filter controls for `All`, `Credentials`, `Passwordless`, `Social`, `Modern`, and `Enterprise SSO`, plus status pills (`available`, `in-progress`, `planned`)
+- [x] **Step 2.3:** Build filter controls for `All`, `Credentials`, `Passwordless`, `Social`, `Modern`, and `Enterprise SSO`, plus status pills (`available`, `in-progress`, `planned`)
 - [ ] **Step 2.4:** Render all 17 authentication methods with dynamic Lucide icons, category tags, status badges, and links to `/methods/[id]`
 
 ### Phase 3 — Method detail page, Shiki viewer & docs UI ⏳
