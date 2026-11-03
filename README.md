@@ -100,8 +100,9 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 
 - [x] **Step 5.1:** Implement password hashing (Web Crypto PBKDF2/Scrypt), stateless HTTP-only JWT sessions (`jose`), register/login/logout/me API routes, `auth-db.ts` adapter, optional reference forms, and `README.md`; mark `email-password` as `available`
 - [x] **Step 5.2:** Add database adapter documentation and UI for **Neon**, **MongoDB**, **MySQL**, and **Supabase**, with **Neon** as implemented and the remaining adapters as reference examples; add syntax-highlighted adapter tabs, integrate the database adapter section into the `Email & Password` method detail page, and improve the template file explorer and file overview.
-- [ ] **Step 5.2:** Implement username normalization, uniqueness checks, login/register/logout routes, `auth-db.ts` adapter, optional UI, and `README.md`; mark `username-password` as `available`
-- [ ] **Step 5.3:** Implement E.164 phone normalization, password authentication routes, `auth-db.ts` adapter, optional UI, and `README.md`; mark `phone-password` as `available`
+- [x] **Step 5.3:** Implement username normalization, uniqueness checks, login/register/logout routes, `auth-db.ts` adapter, optional UI, and `README.md`; mark `username-password` as `available`
+- [ ] **Step 5.4:** Add File Overview, database adapter documentation, and API contracts to the `Username & Password` method detail page.
+- [ ] **Step 5.5:** Implement E.164 phone normalization, password authentication routes, `auth-db.ts` adapter, optional UI, and `README.md`; mark `phone-password` as `available`
 
 ### Phase 6 — Passwordless auth boilerplates ⏳
 
@@ -274,7 +275,7 @@ All 17 methods defined in `src/data/auth-methods.ts`:
 | Category | ID | Method Title | Status |
 |----------|----|--------------|:------:|
 | **Credentials** | `email-password` | Email & Password | ✅ Available |
-| **Credentials** | `username-password` | Username & Password | ⏳ Planned |
+| **Credentials** | `username-password` | Username & Password | ✅ Available |
 | **Credentials** | `phone-password` | Phone & Password | ⏳ Planned |
 | **Passwordless** | `email-otp` | Email OTP | ⏳ Planned |
 | **Passwordless** | `magic-link` | Magic Link | ⏳ Planned |
