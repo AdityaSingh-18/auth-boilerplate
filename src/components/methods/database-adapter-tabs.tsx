@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { DatabaseAdapterExample } from "@/data/template-docs/email-password-adapters";
+import type { DatabaseAdapterExample } from "@/types/auth";
 
 interface HighlightedAdapter extends DatabaseAdapterExample {
   highlightedCode: string;

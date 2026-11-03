@@ -89,3 +89,22 @@ export interface TemplateDocumentation {
   environmentVariables: EnvironmentVariableDoc[];
   securityNotes: SecurityNote[];
 }
+
+// Database adapters supported by the authentication templates.
+export type DatabaseAdapterId =
+  | "neon"
+  | "mongodb"
+  | "mysql"
+  | "supabase";
+
+// Documentation and code examples for a database adapter.
+export interface DatabaseAdapterExample {
+  id: DatabaseAdapterId;
+  label: string;
+  description: string;
+  packageName: string;
+  envVariables: string[];
+  setup: string;
+  code: string;
+  implemented: boolean;
+}

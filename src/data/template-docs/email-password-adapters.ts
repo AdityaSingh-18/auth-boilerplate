@@ -1,21 +1,6 @@
-export type DatabaseAdapterId =
-  | "neon"
-  | "mongodb"
-  | "mysql"
-  | "supabase";
+import type { DatabaseAdapterExample } from "@/types/auth";
 
-export interface DatabaseAdapterExample {
-  id: DatabaseAdapterId;
-  label: string;
-  description: string;
-  packageName: string;
-  envVariables: string[];
-  setup: string;
-  code: string;
-  implemented: boolean;
-}
-
-export const databaseAdapters: DatabaseAdapterExample[] = [
+export const emailPasswordAdapters: DatabaseAdapterExample[] = [
   {
     id: "neon",
     label: "PostgreSQL · Neon",

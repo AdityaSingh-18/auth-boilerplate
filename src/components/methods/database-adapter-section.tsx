@@ -1,10 +1,16 @@
-import { databaseAdapters } from "@/data/template-docs/email-password-adapters";
+import type { DatabaseAdapterExample } from "@/types/auth";
 import { getLanguageFromPath, highlightCode } from "@/lib/shiki";
 import { DatabaseAdapterTabs } from "./database-adapter-tabs";
 
-export async function DatabaseAdapterSection() {
-  const adapters = await Promise.all(
-    databaseAdapters.map(async (adapter) => ({
+interface DatabaseAdapterSectionProps {
+  adapters: DatabaseAdapterExample[];
+}
+
+export async function DatabaseAdapterSection({
+  adapters,
+}: DatabaseAdapterSectionProps) {
+  const highlightedAdapters = await Promise.all(
+    adapters.map(async (adapter) => ({
       ...adapter,
       highlightedCode: await highlightCode(
         adapter.code,
@@ -13,5 +19,5 @@ export async function DatabaseAdapterSection() {
     })),
   );
 
-  return <DatabaseAdapterTabs adapters={adapters} />;
+  return <DatabaseAdapterTabs adapters={highlightedAdapters} />;
 }

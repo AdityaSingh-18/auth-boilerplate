@@ -13,6 +13,8 @@ import { FileOverview } from "@/components/methods/file-overview";
 import { emailPasswordDocumentation } from "@/data/template-docs/email-password";
 import { DatabaseAdapterSection } from "@/components/methods/database-adapter-section";
 import { ApiContractSection } from "@/components/methods/api-contract-section";
+import { emailPasswordAdapters } from "@/data/template-docs/email-password-adapters";
+import { usernamePasswordAdapters } from "@/data/template-docs/username-password-adapters";
 
 export const instant = false;
 
@@ -47,6 +49,12 @@ export default async function MethodPage({
   const files = defaultVariant
     ? await loadTemplateFiles(method.id, defaultVariant.id)
     : [];
+  
+  const databaseAdapters = method.id === "email-password"
+    ? emailPasswordAdapters
+    : method.id === "username-password"
+      ? usernamePasswordAdapters
+      : [];
 
   return (
     <main className="min-h-screen px-5 pb-24 pt-12 sm:px-8">
@@ -146,9 +154,9 @@ export default async function MethodPage({
 
         {documentation && <FileOverview documentation={documentation} />}
 
-        {method.id === "email-password" && (
+        {(method.id === "email-password" || method.id === "username-password") && (
           <>
-            <DatabaseAdapterSection />
+            <DatabaseAdapterSection adapters={databaseAdapters} />
             <ApiContractSection />
           </>
         )}
