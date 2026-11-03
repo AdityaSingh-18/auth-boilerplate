@@ -35,7 +35,7 @@ export type AuthCategory = (typeof authCategories)[number];
 
 export type AuthCategoryId = AuthCategory["id"];
 
-export type AuthMethodStatus = "available" | "in-progress" | "planned";
+export type AuthMethodStatus = "available" | "planned";
 
 export const authMethods = [
   // Credentials (3)
@@ -46,7 +46,7 @@ export const authMethods = [
     categoryId: "credentials",
     icon: "mail",
     iconType: "lucide",
-    status: "planned",
+    status: "available",
   },
   {
     id: "username-password",
@@ -55,7 +55,7 @@ export const authMethods = [
     categoryId: "credentials",
     icon: "user-round",
     iconType: "lucide",
-    status: "planned",
+    status: "available",
   },
   {
     id: "phone-password",
@@ -64,7 +64,7 @@ export const authMethods = [
     categoryId: "credentials",
     icon: "smartphone",
     iconType: "lucide",
-    status: "planned",
+    status: "available",
   },
 
   // Passwordless (3)

@@ -15,7 +15,6 @@ type StatusFilter = "all" | AuthMethodStatus;
 const statusFilters: { id: StatusFilter; label: string }[] = [
   { id: "all", label: "All Statuses" },
   { id: "available", label: "Available" },
-  { id: "in-progress", label: "In Progress" },
   { id: "planned", label: "Planned" },
 ];
 

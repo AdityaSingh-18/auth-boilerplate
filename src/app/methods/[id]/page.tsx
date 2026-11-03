@@ -10,11 +10,14 @@ import { loadTemplateFiles, listTemplateVariants } from "@/lib/templates";
 import { VariantDownloadControls } from "@/components/methods/variant-download-controls";
 import { SourceCodeSection } from "@/components/methods/source-code-section";
 import { FileOverview } from "@/components/methods/file-overview";
-import { emailPasswordDocumentation } from "@/data/template-docs/email-password";
 import { DatabaseAdapterSection } from "@/components/methods/database-adapter-section";
 import { ApiContractSection } from "@/components/methods/api-contract-section";
+import { emailPasswordDocumentation } from "@/data/template-docs/email-password";
 import { emailPasswordAdapters } from "@/data/template-docs/email-password-adapters";
+import { usernamePasswordDocumentation } from "@/data/template-docs/username-password";
 import { usernamePasswordAdapters } from "@/data/template-docs/username-password-adapters";
+import { phonePasswordDocumentation } from "@/data/template-docs/phone-password";
+import { phonePasswordAdapters } from "@/data/template-docs/phone-password-adapters";
 
 export const instant = false;
 
@@ -37,7 +40,19 @@ export default async function MethodPage({
 
   const documentation = method.id === "email-password"
     ? emailPasswordDocumentation
-    : null;
+    : method.id === "username-password"
+      ? usernamePasswordDocumentation
+      : method.id === "phone-password"
+        ? phonePasswordDocumentation
+        : undefined;
+
+  const databaseAdapters = method.id === "email-password"
+    ? emailPasswordAdapters
+    : method.id === "username-password"
+      ? usernamePasswordAdapters
+      : method.id === "phone-password"
+        ? phonePasswordAdapters
+        : [];
 
   const category = authCategories.find(
     (item) => item.id === method.categoryId,
@@ -49,12 +64,6 @@ export default async function MethodPage({
   const files = defaultVariant
     ? await loadTemplateFiles(method.id, defaultVariant.id)
     : [];
-  
-  const databaseAdapters = method.id === "email-password"
-    ? emailPasswordAdapters
-    : method.id === "username-password"
-      ? usernamePasswordAdapters
-      : [];
 
   return (
     <main className="min-h-screen px-5 pb-24 pt-12 sm:px-8">
@@ -154,7 +163,11 @@ export default async function MethodPage({
 
         {documentation && <FileOverview documentation={documentation} />}
 
-        {(method.id === "email-password" || method.id === "username-password") && (
+        {(
+          method.id === "email-password" ||
+          method.id === "username-password" ||
+          method.id === "phone-password"
+        ) && (
           <>
             <DatabaseAdapterSection adapters={databaseAdapters} />
             <ApiContractSection />
