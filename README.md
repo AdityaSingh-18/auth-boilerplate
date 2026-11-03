@@ -102,7 +102,9 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 - [x] **Step 5.2:** Add database adapter documentation and UI for **Neon**, **MongoDB**, **MySQL**, and **Supabase**, with **Neon** as implemented and the remaining adapters as reference examples; add syntax-highlighted adapter tabs, integrate the database adapter section into the `Email & Password` method detail page, and improve the template file explorer and file overview.
 - [x] **Step 5.3:** Implement username normalization, uniqueness checks, login/register/logout routes, `auth-db.ts` adapter, optional UI, and `README.md`; mark `username-password` as `available`
 - [x] **Step 5.4:** Add File Overview, database adapter documentation, and API contracts to the `Username & Password` method detail page.
-- [ ] **Step 5.5:** Implement E.164 phone normalization, password authentication routes, `auth-db.ts` adapter, optional UI, and `README.md`; mark `phone-password` as `available`
+- [x] **Step 5.5:** Implement E.164 phone normalization, password authentication routes, `auth-db.ts` adapter, optional UI, and `README.md`; mark `phone-password` as `available`
+- [ ] **Step 5.6:** Add File Overview, database adapter documentation, and API contracts to the `Phone & Password` method detail page.
+- [ ] **Step 5.7:** Improve the shared template UI by enhancing the file explorer, adding **Markdown rendering** for `README.md` files, refining code display and text wrapping.
 
 ### Phase 6 — Passwordless auth boilerplates ⏳
 
@@ -276,7 +278,7 @@ All 17 methods defined in `src/data/auth-methods.ts`:
 |----------|----|--------------|:------:|
 | **Credentials** | `email-password` | Email & Password | ✅ Available |
 | **Credentials** | `username-password` | Username & Password | ✅ Available |
-| **Credentials** | `phone-password` | Phone & Password | ⏳ Planned |
+| **Credentials** | `phone-password` | Phone & Password | ✅ Available |
 | **Passwordless** | `email-otp` | Email OTP | ⏳ Planned |
 | **Passwordless** | `magic-link` | Magic Link | ⏳ Planned |
 | **Passwordless** | `sms-otp` | Phone / SMS OTP | ⏳ Planned |
