@@ -25,14 +25,12 @@ export function createSmtpEmailSender(): EmailSender {
     !Number.isInteger(port) ||
     port < 1 ||
     port > 65535 ||
-    !from
+    !from ||
+    !user ||
+    !pass
   ) {
-    throw new Error("SMTP email configuration is incomplete.");
-  }
-
-  if ((user && !pass) || (!user && pass)) {
     throw new Error(
-      "SMTP_USER and SMTP_PASS must both be configured.",
+      "SMTP configuration is incomplete. SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, and EMAIL_FROM are required.",
     );
   }
 
@@ -40,14 +38,10 @@ export function createSmtpEmailSender(): EmailSender {
     host,
     port,
     secure,
-    ...(user && pass
-      ? {
-          auth: {
-            user,
-            pass,
-          },
-        }
-      : {}),
+    auth: {
+      user,
+      pass,
+    },
   });
 
   return async (message: EmailMessage): Promise<void> => {

@@ -149,21 +149,9 @@ export function FileOverview({
                 key={variable.name}
                 className="rounded-xl border border-white/10 bg-white/[0.02] p-4"
               >
-                <div className="flex flex-wrap items-center gap-2">
-                  <code className="text-sm font-semibold text-violet-300">
-                    {variable.name}
-                  </code>
-
-                  <span
-                    className={`text-[10px] font-semibold uppercase ${
-                      variable.required
-                        ? "text-emerald-400"
-                        : "text-zinc-500"
-                    }`}
-                  >
-                    {variable.required ? "Required" : "Optional"}
-                  </span>
-                </div>
+                <code className="flex flex-wrap text-sm font-semibold text-violet-300">
+                  {variable.name}
+                </code>
 
                 <p className="mt-2 text-sm leading-6 text-zinc-400">
                   {variable.description}

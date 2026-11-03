@@ -75,7 +75,7 @@ export const authMethods = [
     categoryId: "passwordless",
     icon: "mail-check",
     iconType: "lucide",
-    status: "planned",
+    status: "available",
   },
   {
     id: "magic-link",

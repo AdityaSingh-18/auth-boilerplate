@@ -12,12 +12,7 @@ import { SourceCodeSection } from "@/components/methods/source-code-section";
 import { FileOverview } from "@/components/methods/file-overview";
 import { DatabaseAdapterSection } from "@/components/methods/database-adapter-section";
 import { ApiContractSection } from "@/components/methods/api-contract-section";
-import { emailPasswordDocumentation } from "@/data/template-docs/email-password";
-import { emailPasswordAdapters } from "@/data/template-docs/email-password-adapters";
-import { usernamePasswordDocumentation } from "@/data/template-docs/username-password";
-import { usernamePasswordAdapters } from "@/data/template-docs/username-password-adapters";
-import { phonePasswordDocumentation } from "@/data/template-docs/phone-password";
-import { phonePasswordAdapters } from "@/data/template-docs/phone-password-adapters";
+import { methodDocumentation } from "@/data/template-docs";
 
 export const instant = false;
 
@@ -38,21 +33,9 @@ export default async function MethodPage({
     notFound();
   }
 
-  const documentation = method.id === "email-password"
-    ? emailPasswordDocumentation
-    : method.id === "username-password"
-      ? usernamePasswordDocumentation
-      : method.id === "phone-password"
-        ? phonePasswordDocumentation
-        : undefined;
-
-  const databaseAdapters = method.id === "email-password"
-    ? emailPasswordAdapters
-    : method.id === "username-password"
-      ? usernamePasswordAdapters
-      : method.id === "phone-password"
-        ? phonePasswordAdapters
-        : [];
+  const methodDocs = methodDocumentation[method.id];
+  const documentation = methodDocs?.documentation;
+  const databaseAdapters = methodDocs?.databaseAdapters ?? [];
 
   const category = authCategories.find(
     (item) => item.id === method.categoryId,
@@ -67,7 +50,7 @@ export default async function MethodPage({
 
   return (
     <main className="min-h-screen px-5 pb-24 pt-12 sm:px-8">
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-6xl">
         {/* Breadcrumbs */}
         <nav
           aria-label="Breadcrumb"
@@ -162,17 +145,10 @@ export default async function MethodPage({
         <SourceCodeSection files={files} />
 
         {documentation && <FileOverview documentation={documentation} />}
-
-        {(
-          method.id === "email-password" ||
-          method.id === "username-password" ||
-          method.id === "phone-password"
-        ) && (
-          <>
-            <DatabaseAdapterSection adapters={databaseAdapters} />
-            <ApiContractSection />
-          </>
-        )}
+        
+        {databaseAdapters.length > 0 && <DatabaseAdapterSection adapters={databaseAdapters} />}
+        
+        {methodDocs?.hasApiContracts && <ApiContractSection />}
       </div>
     </main>
   );
