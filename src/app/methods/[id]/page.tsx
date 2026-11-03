@@ -148,7 +148,7 @@ export default async function MethodPage({
         
         {databaseAdapters.length > 0 && <DatabaseAdapterSection adapters={databaseAdapters} />}
         
-        {methodDocs?.hasApiContracts && <ApiContractSection />}
+        {methodDocs?.apiContracts && <ApiContractSection contracts={methodDocs.apiContracts} />}
       </div>
     </main>
   );
