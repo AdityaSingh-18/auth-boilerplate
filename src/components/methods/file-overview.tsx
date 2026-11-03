@@ -14,11 +14,11 @@ interface FileOverviewProps {
 function getFileCategory(path: string): string {
   const lowerPath = path.toLowerCase();
 
-  if (lowerPath === ".env.example") return "Environment";
-  if (lowerPath === "readme.md") return "Documentation";
-  if (lowerPath.endsWith("/auth-db.ts")) return "DB Adapter";
-  if (lowerPath.startsWith("optional-ui/")) return "Optional UI";
-  if (lowerPath.startsWith("core/")) return "Required Core";
+  if (lowerPath === ".env.example")   return "Environment";
+  if (lowerPath === "readme.md")   return "Documentation";
+  if (lowerPath.endsWith("/auth-db.ts"))   return "DB Adapter";
+  if (lowerPath.startsWith("optional-ui/"))   return "Optional UI";
+  if (lowerPath.startsWith("core/"))   return "Core";
 
   return "Template File";
 }
@@ -56,9 +56,9 @@ export function FileOverview({
             {documentation.files.map((file) => (
               <div
                 key={file.path}
-                className="flex flex-col gap-2 px-4 py-4 sm:flex-row sm:items-start sm:justify-between"
+                className="flex flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center"
               >
-                <div className="flex min-w-0 gap-3">
+                <div className="flex min-w-0 flex-1 gap-3">
                   <FileCode2 className="mt-0.5 h-4 w-4 shrink-0 text-violet-300" />
 
                   <div className="min-w-0">
@@ -72,19 +72,21 @@ export function FileOverview({
                   </div>
                 </div>
 
-                <span
-                  className={`w-fit shrink-0 rounded-md px-2 py-1 text-[10px] font-semibold uppercase tracking-wide ${
-                    file.required
-                      ? "bg-emerald-500/10 text-emerald-400"
-                      : "bg-violet-500/10 text-violet-300"
-                  }`}
-                >
-                  {file.required ? "Required" : "Optional"}
-                </span>
+                <div className="flex shrink-0 flex-wrap items-center gap-2 sm:ml-auto">
+                  <span
+                    className={`rounded-md px-2 py-1 text-[10px] font-semibold uppercase tracking-wide ${
+                      file.required
+                        ? "bg-emerald-500/10 text-emerald-400"
+                        : "bg-violet-500/10 text-violet-300"
+                    }`}
+                  >
+                    {file.required ? "Required" : "Optional"}
+                  </span>
 
-                <span className="w-fit shrink-0 rounded-md bg-white/[0.05] px-2 py-1 text-[10px] font-medium uppercase tracking-wide text-zinc-400">
-                  {getFileCategory(file.path)}
-                </span>
+                  <span className="rounded-md bg-white/[0.05] px-2 py-1 text-[10px] font-medium uppercase tracking-wide text-zinc-400">
+                    {getFileCategory(file.path)}
+                  </span>
+                </div>
               </div>
             ))}
           </div>

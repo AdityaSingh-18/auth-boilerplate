@@ -9,6 +9,8 @@ import {
   Folder,
   FolderOpen,
 } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface ExplorerFile {
   path: string;
@@ -381,12 +383,35 @@ export function FileExplorer({ files }: FileExplorerProps) {
           </div>
 
           {/* Active highlighted code */}
-          <div
-            className="overflow-x-auto text-[13px] leading-6 [&_pre]:min-w-full [&_pre]:p-5 [&_pre]:font-mono"
-            dangerouslySetInnerHTML={{
-              __html: activeFile.highlightedCode,
-            }}
-          />
+          {activeFile.name.toLowerCase().endsWith(".md") ? (
+            <div className="max-h-[700px] overflow-y-auto overflow-x-hidden p-6">
+              <article className="prose prose-invert max-w-none
+                prose-headings:font-bold
+                prose-h1:text-3xl
+                prose-h2:text-2xl
+                prose-h3:text-xl
+                prose-p:text-sm
+                prose-li:text-sm
+                prose-a:text-violet-400
+                prose-strong:text-white
+                prose-code:rounded
+                prose-code:bg-white/10
+                prose-code:px-1
+                prose-pre:overflow-x-auto
+              ">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {activeFile.content}
+                </ReactMarkdown>
+              </article>
+            </div>
+          ) : (
+            <div
+              className="max-h-[700px] overflow-y-auto overflow-x-hidden text-[13px] leading-6 [&_pre]:!whitespace-pre-wrap [&_pre]:!break-words [&_pre]:min-w-0 [&_pre]:p-5 [&_pre]:font-mono [&_code]:!whitespace-pre-wrap [&_code]:!break-words"
+              dangerouslySetInnerHTML={{
+                __html: activeFile.highlightedCode,
+              }}
+            />
+          )}
         </div>
       </div>
     </div>

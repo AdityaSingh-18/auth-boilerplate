@@ -59,7 +59,7 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 | 2 | Global layout, hero & catalog UI | ✅ Complete |
 | 3 | Method detail page, Shiki viewer & docs UI | ✅ Complete |
 | 4 | `.zip` bundler & download pipeline | ✅ Complete |
-| 5 | Credentials auth boilerplates (3 methods) | 🚧 In progress |
+| 5 | Credentials auth boilerplates (3 methods) | ✅ Complete |
 | 6 | Passwordless auth boilerplates (3 methods) | ⏳ Planned |
 | 7 | Social OAuth boilerplates (7 methods) | ⏳ Planned |
 | 8 | Modern auth boilerplates (2 methods) | ⏳ Planned |
@@ -96,7 +96,7 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 - [x] **Step 4.1:** Use `jszip` in a Next.js Route Handler to package `templates/[method-id]/[variant-id]/` (including `README.md`, `core/`, and `optional-ui/`) and stream `auth-[method-id].zip`
 - [x] **Step 4.2:** Allow developers to download either the **Full Package (`core/` + `optional-ui/` + `README.md`)** or **Headless Core Only (`core/` + `README.md`)**
 
-### Phase 5 — Credentials auth boilerplates 🚧
+### Phase 5 — Credentials auth boilerplates ✅
 
 - [x] **Step 5.1:** Implement password hashing (Web Crypto PBKDF2/Scrypt), stateless HTTP-only JWT sessions (`jose`), register/login/logout/me API routes, `auth-db.ts` adapter, optional reference forms, and `README.md`; mark `email-password` as `available`
 - [x] **Step 5.2:** Add database adapter documentation and UI for **Neon**, **MongoDB**, **MySQL**, and **Supabase**, with **Neon** as implemented and the remaining adapters as reference examples; add syntax-highlighted adapter tabs, integrate the database adapter section into the `Email & Password` method detail page, and improve the template file explorer and file overview.
@@ -104,7 +104,7 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 - [x] **Step 5.4:** Add File Overview, database adapter documentation, and API contracts to the `Username & Password` method detail page.
 - [x] **Step 5.5:** Implement E.164 phone normalization, password authentication routes, `auth-db.ts` adapter, optional UI, and `README.md`; mark `phone-password` as `available`
 - [x] **Step 5.6:** Add File Overview, database adapter documentation, and API contracts to the `Phone & Password` method detail page.
-- [ ] **Step 5.7:** Improve the shared template UI by enhancing the file explorer, adding **Markdown rendering** for `README.md` files, refining code display and text wrapping.
+- [x] **Step 5.7:** Improve the shared template UI by enhancing the file explorer, adding **Markdown rendering** for `README.md` files, refining code display and text wrapping.
 
 ### Phase 6 — Passwordless auth boilerplates ⏳
 
