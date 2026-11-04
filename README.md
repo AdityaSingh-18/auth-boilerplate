@@ -119,7 +119,7 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 
 - [x] **Step 7.1:** Implement OAuth 2.0 authorization redirect, PKCE + CSRF state cookie validation, token exchange, account linking in `auth-db.ts`, and `README.md`; mark `google-oauth` as `available`
 - [x] **Step 7.2:** Implement GitHub OAuth redirect, callback handler, primary verified email fetch, `auth-db.ts` adapter, and `README.md`; mark `github-oauth` as `available`
-- [ ] **Step 7.3:** Implement Discord OAuth2 flow, user profile hydration, `auth-db.ts` adapter, and `README.md`; mark `discord-oauth` as `available`
+- [x] **Step 7.3:** Implement Discord OAuth2 flow, user profile hydration, `auth-db.ts` adapter, and `README.md`; mark `discord-oauth` as `available`
 - [ ] **Step 7.4:** Implement Microsoft Entra / common tenant OAuth2 flow, token exchange, `auth-db.ts` adapter, and `README.md`; mark `microsoft-oauth` as `available`
 - [ ] **Step 7.5:** Implement Sign in with Apple client secret JWT generation, `form_post` callback handling, ID token verification, `auth-db.ts`, and `README.md`; mark `apple-oauth` as `available`
 - [ ] **Step 7.6:** Implement Facebook Graph OAuth flow, callback verification, `auth-db.ts` adapter, and `README.md`; mark `facebook-oauth` as `available`
@@ -287,7 +287,7 @@ All 17 methods defined in `src/data/auth-methods.ts`:
 | **Passwordless** | `sms-otp` | Phone / SMS OTP | ✅ Available |
 | **Social** | `google-oauth` | Google Login | ✅ Available |
 | **Social** | `github-oauth` | GitHub Login | ✅ Available |
-| **Social** | `discord-oauth` | Discord Login | ⏳ Planned |
+| **Social** | `discord-oauth` | Discord Login | ✅ Available |
 | **Social** | `microsoft-oauth` | Microsoft Login | ⏳ Planned |
 | **Social** | `apple-oauth` | Apple Login | ⏳ Planned |
 | **Social** | `facebook-oauth` | Facebook Login | ⏳ Planned |
