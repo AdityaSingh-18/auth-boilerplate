@@ -104,7 +104,7 @@ export const authMethods = [
     categoryId: "social",
     icon: "google",
     iconType: "simple",
-    status: "planned",
+    status: "available",
   },
   {
     id: "github-oauth",

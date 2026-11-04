@@ -28,6 +28,10 @@ import { smsOtpDocumentation } from "./sms-otp/sms-otp";
 import { smsOtpAdapters } from "./sms-otp/sms-otp-adapters";
 import { smsOtpApiContracts } from "./sms-otp/sms-otp-api";
 
+import { googleOAuthDocumentation } from "./google-oauth/google-oauth";
+import { googleOAuthAdapters } from "./google-oauth/google-oauth-adapters";
+import { googleOAuthApiContracts } from "./google-oauth/google-oauth-api";
+
 export interface MethodDocumentation {
   documentation?: TemplateDocumentation;
   databaseAdapters?: DatabaseAdapterExample[];
@@ -69,5 +73,11 @@ export const methodDocumentation: Record<string, MethodDocumentation> = {
     documentation: smsOtpDocumentation,
     databaseAdapters: smsOtpAdapters,
     apiContracts: smsOtpApiContracts,
+  },
+
+  "google-oauth": {
+    documentation: googleOAuthDocumentation,
+    databaseAdapters: googleOAuthAdapters,
+    apiContracts: googleOAuthApiContracts,
   },
 };
