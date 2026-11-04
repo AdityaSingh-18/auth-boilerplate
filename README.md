@@ -60,7 +60,7 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 | 3 | Method detail page, Shiki viewer & docs UI | ✅ Complete |
 | 4 | `.zip` bundler & download pipeline | ✅ Complete |
 | 5 | Credentials auth boilerplates (3 methods) | ✅ Complete |
-| 6 | Passwordless auth boilerplates (3 methods) | 🚧 In progress |
+| 6 | Passwordless auth boilerplates (3 methods) | ✅ Complete  |
 | 7 | Social OAuth boilerplates (7 methods) | ⏳ Planned |
 | 8 | Modern auth boilerplates (2 methods) | ⏳ Planned |
 | 9 | Enterprise SSO boilerplates (2 methods) | ⏳ Planned |
@@ -106,14 +106,14 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 - [x] **Step 5.6:** Add File Overview, database adapter documentation, and API contracts to the `Phone & Password` method detail page.
 - [x] **Step 5.7:** Improve the shared template UI by enhancing the file explorer, adding **Markdown rendering** for `README.md` files, refining code display and text wrapping.
 
-### Phase 6 — Passwordless auth boilerplates 🚧
+### Phase 6 — Passwordless auth boilerplates ✅
 
 - [x] **Step 6.1:** Implement cryptographic 6-digit OTP generation, hashed OTP storage, rate/expiry verification, pluggable email sender helper (`core/lib/mailer.ts`), `auth-db.ts`, and `README.md`; mark `email-otp` as `available`
 - [x] **Step 6.2:** Add File Overview, database adapter documentation, and API contracts to the `Email OTP` method detail page; integrate the optional reference UI and database adapter section.
 - [x] **Step 6.3:** Implement single-use signed/hashed token generation, callback verification route, pluggable email sender, `auth-db.ts`, and `README.md`; mark `magic-link` as `available`
 - [x] **Step 6.4:** Add File Overview, database adapter documentation, and API contracts to the `Magic Link` method detail page.
 - [x] **Step 6.5:** Implement SMS OTP issue/verify routes, pluggable SMS provider adapter (`core/lib/sms.ts` for Twilio/Vonage/console), `auth-db.ts`, and `README.md`; mark `sms-otp` as `available`
-- [ ] **Step 6.6:** Add File Overview, database adapter documentation, and API contracts to the `SMS OTP` method detail page.
+- [x] **Step 6.6:** Add File Overview, database adapter documentation, and API contracts to the `SMS OTP` method detail page.
 
 ### Phase 7 — Social OAuth boilerplates ⏳
 

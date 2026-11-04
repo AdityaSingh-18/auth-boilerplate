@@ -24,6 +24,10 @@ import { magicLinkDocumentation } from "./magic-link/magic-link";
 import { magicLinkAdapters } from "./magic-link/magic-link-adapters";
 import { magicLinkApiContracts } from "./magic-link/magic-link-api";
 
+import { smsOtpDocumentation } from "./sms-otp/sms-otp";
+import { smsOtpAdapters } from "./sms-otp/sms-otp-adapters";
+import { smsOtpApiContracts } from "./sms-otp/sms-otp-api";
+
 export interface MethodDocumentation {
   documentation?: TemplateDocumentation;
   databaseAdapters?: DatabaseAdapterExample[];
@@ -59,5 +63,11 @@ export const methodDocumentation: Record<string, MethodDocumentation> = {
     documentation: magicLinkDocumentation,
     databaseAdapters: magicLinkAdapters,
     apiContracts: magicLinkApiContracts,
+  },
+
+  "sms-otp": {
+    documentation: smsOtpDocumentation,
+    databaseAdapters: smsOtpAdapters,
+    apiContracts: smsOtpApiContracts,
   },
 };

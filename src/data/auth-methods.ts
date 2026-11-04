@@ -93,7 +93,7 @@ export const authMethods = [
     categoryId: "passwordless",
     icon: "message-square",
     iconType: "lucide",
-    status: "planned",
+    status: "available",
   },
 
   // Social (7)
