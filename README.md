@@ -61,7 +61,7 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 | 4 | `.zip` bundler & download pipeline | ✅ Complete |
 | 5 | Credentials auth boilerplates (3 methods) | ✅ Complete |
 | 6 | Passwordless auth boilerplates (3 methods) | ✅ Complete  |
-| 7 | Social OAuth boilerplates (7 methods) | ⏳ Planned |
+| 7 | Social OAuth boilerplates (7 methods) | 🚧 In progress |
 | 8 | Modern auth boilerplates (2 methods) | ⏳ Planned |
 | 9 | Enterprise SSO boilerplates (2 methods) | ⏳ Planned |
 | 10 | Command palette search, SEO & release polish | ⏳ Planned |
@@ -115,9 +115,9 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 - [x] **Step 6.5:** Implement SMS OTP issue/verify routes, pluggable SMS provider adapter (`core/lib/sms.ts` for Twilio/Vonage/console), `auth-db.ts`, and `README.md`; mark `sms-otp` as `available`
 - [x] **Step 6.6:** Add File Overview, database adapter documentation, and API contracts to the `SMS OTP` method detail page.
 
-### Phase 7 — Social OAuth boilerplates ⏳
+### Phase 7 — Social OAuth boilerplates 🚧
 
-- [ ] **Step 7.1:** Implement OAuth 2.0 authorization redirect, PKCE + CSRF state cookie validation, token exchange, account linking in `auth-db.ts`, and `README.md`; mark `google-oauth` as `available`
+- [x] **Step 7.1:** Implement OAuth 2.0 authorization redirect, PKCE + CSRF state cookie validation, token exchange, account linking in `auth-db.ts`, and `README.md`; mark `google-oauth` as `available`
 - [ ] **Step 7.2:** Implement GitHub OAuth redirect, callback handler, primary verified email fetch, `auth-db.ts` adapter, and `README.md`; mark `github-oauth` as `available`
 - [ ] **Step 7.3:** Implement Discord OAuth2 flow, user profile hydration, `auth-db.ts` adapter, and `README.md`; mark `discord-oauth` as `available`
 - [ ] **Step 7.4:** Implement Microsoft Entra / common tenant OAuth2 flow, token exchange, `auth-db.ts` adapter, and `README.md`; mark `microsoft-oauth` as `available`
@@ -285,7 +285,7 @@ All 17 methods defined in `src/data/auth-methods.ts`:
 | **Passwordless** | `email-otp` | Email OTP | ✅ Available |
 | **Passwordless** | `magic-link` | Magic Link | ✅ Available |
 | **Passwordless** | `sms-otp` | Phone / SMS OTP | ✅ Available |
-| **Social** | `google-oauth` | Google Login | ⏳ Planned |
+| **Social** | `google-oauth` | Google Login | ✅ Available |
 | **Social** | `github-oauth` | GitHub Login | ⏳ Planned |
 | **Social** | `discord-oauth` | Discord Login | ⏳ Planned |
 | **Social** | `microsoft-oauth` | Microsoft Login | ⏳ Planned |
