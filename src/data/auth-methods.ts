@@ -84,7 +84,7 @@ export const authMethods = [
     categoryId: "passwordless",
     icon: "link",
     iconType: "lucide",
-    status: "planned",
+    status: "available",
   },
   {
     id: "sms-otp",

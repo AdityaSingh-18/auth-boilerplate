@@ -4,21 +4,25 @@ import type {
   ApiPayloadContract,
 } from "@/types/auth";
 
-import { emailPasswordDocumentation } from "./email-password";
-import { emailPasswordAdapters } from "./email-password-adapters";
-import { emailPasswordApiContracts } from "./email-password-api";
+import { emailPasswordDocumentation } from "./email-password/email-password";
+import { emailPasswordAdapters } from "./email-password/email-password-adapters";
+import { emailPasswordApiContracts } from "./email-password/email-password-api";
 
-import { usernamePasswordDocumentation } from "./username-password";
-import { usernamePasswordAdapters } from "./username-password-adapters";
-import { usernamePasswordApiContracts } from "./username-password-api";
+import { usernamePasswordDocumentation } from "./username-password/username-password";
+import { usernamePasswordAdapters } from "./username-password/username-password-adapters";
+import { usernamePasswordApiContracts } from "./username-password/username-password-api";
 
-import { phonePasswordDocumentation } from "./phone-password";
-import { phonePasswordAdapters } from "./phone-password-adapters";
-import { phonePasswordApiContracts } from "./phone-password-api";
+import { phonePasswordDocumentation } from "./phone-password/phone-password";
+import { phonePasswordAdapters } from "./phone-password/phone-password-adapters";
+import { phonePasswordApiContracts } from "./phone-password/phone-password-api";
 
-import { emailOtpDocumentation } from "./email-otp";
-import { emailOtpAdapters } from "./email-otp-adapters";
-import { emailOtpApiContracts } from "./email-otp-api";
+import { emailOtpDocumentation } from "./email-otp/email-otp";
+import { emailOtpAdapters } from "./email-otp/email-otp-adapters";
+import { emailOtpApiContracts } from "./email-otp/email-otp-api";
+
+import { magicLinkDocumentation } from "./magic-link/magic-link";
+import { magicLinkAdapters } from "./magic-link/magic-link-adapters";
+import { magicLinkApiContracts } from "./magic-link/magic-link-api";
 
 export interface MethodDocumentation {
   documentation?: TemplateDocumentation;
@@ -49,5 +53,11 @@ export const methodDocumentation: Record<string, MethodDocumentation> = {
     documentation: emailOtpDocumentation,
     databaseAdapters: emailOtpAdapters,
     apiContracts: emailOtpApiContracts,
+  },
+
+  "magic-link": {
+    documentation: magicLinkDocumentation,
+    databaseAdapters: magicLinkAdapters,
+    apiContracts: magicLinkApiContracts,
   },
 };
