@@ -140,7 +140,7 @@ export const authMethods = [
     categoryId: "social",
     icon: "apple",
     iconType: "simple",
-    status: "planned",
+    status: "available",
   },
   {
     id: "facebook-oauth",

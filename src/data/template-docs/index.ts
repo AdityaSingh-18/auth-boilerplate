@@ -44,6 +44,10 @@ import { microsoftOAuthDocumentation } from "./microsoft-oauth/microsoft-oauth";
 import { microsoftOAuthAdapters } from "./microsoft-oauth/microsoft-oauth-adapters";
 import { microsoftOAuthApi } from "./microsoft-oauth/microsoft-oauth-api";
 
+import { appleOAuthDocumentation } from "./apple-oauth/apple-oauth";
+import { appleOAuthAdapters } from "./apple-oauth/apple-oauth-adapters";
+import { appleOAuthApiContracts } from "./apple-oauth/apple-oauth-api";
+
 export interface MethodDocumentation {
   documentation?: TemplateDocumentation;
   databaseAdapters?: DatabaseAdapterExample[];
@@ -109,5 +113,11 @@ export const methodDocumentation: Record<string, MethodDocumentation> = {
     documentation: microsoftOAuthDocumentation,
     databaseAdapters: microsoftOAuthAdapters,
     apiContracts: microsoftOAuthApi,
+  },
+
+  "apple-oauth": {
+    documentation: appleOAuthDocumentation,
+    databaseAdapters: appleOAuthAdapters,
+    apiContracts: appleOAuthApiContracts,
   },
 };

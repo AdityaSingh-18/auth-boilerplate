@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface AuthUser {
   id: string;
@@ -19,32 +19,48 @@ export function AuthButton() {
   const [loading, setLoading] = useState(true);
   const [loggingOut, setLoggingOut] = useState(false);
 
-  const loadSession = useCallback(async () => {
-    try {
-      const response = await fetch("/api/auth/me", {
-        method: "GET",
-        credentials: "include",
-        cache: "no-store",
-      });
-
-      if (!response.ok) {
-        setUser(null);
-        return;
-      }
-
-      const data = (await response.json()) as SessionResponse;
-      setUser(data.user);
-    } catch (error) {
-      console.error("Failed to load authentication session:", error);
-      setUser(null);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
   useEffect(() => {
-    void loadSession();
-  }, [loadSession]);
+    let cancelled = false;
+
+    async function fetchSession() {
+      try {
+        const response = await fetch("/api/auth/me", {
+          method: "GET",
+          credentials: "include",
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          if (!cancelled) {
+            setUser(null);
+          }
+          return;
+        }
+
+        const data = (await response.json()) as SessionResponse;
+
+        if (!cancelled) {
+          setUser(data.user);
+        }
+      } catch (error) {
+        console.error("Failed to load session:", error);
+
+        if (!cancelled) {
+          setUser(null);
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }
+
+    void fetchSession();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   function signIn() {
     window.location.assign("/api/auth/microsoft");
