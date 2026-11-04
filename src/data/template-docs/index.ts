@@ -32,6 +32,10 @@ import { googleOAuthDocumentation } from "./google-oauth/google-oauth";
 import { googleOAuthAdapters } from "./google-oauth/google-oauth-adapters";
 import { googleOAuthApiContracts } from "./google-oauth/google-oauth-api";
 
+import { githubOAuthDocumentation } from "./github-oauth/github-oauth";
+import { githubOAuthAdapters } from "./github-oauth/github-oauth-adapters";
+import { githubOAuthApiContracts } from "./github-oauth/github-oauth-api";
+
 export interface MethodDocumentation {
   documentation?: TemplateDocumentation;
   databaseAdapters?: DatabaseAdapterExample[];
@@ -79,5 +83,11 @@ export const methodDocumentation: Record<string, MethodDocumentation> = {
     documentation: googleOAuthDocumentation,
     databaseAdapters: googleOAuthAdapters,
     apiContracts: googleOAuthApiContracts,
+  },
+
+  "github-oauth": {
+    documentation: githubOAuthDocumentation,
+    databaseAdapters: githubOAuthAdapters,
+    apiContracts: githubOAuthApiContracts,
   },
 };

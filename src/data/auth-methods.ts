@@ -113,7 +113,7 @@ export const authMethods = [
     categoryId: "social",
     icon: "github",
     iconType: "simple",
-    status: "planned",
+    status: "available",
   },
   {
     id: "discord-oauth",

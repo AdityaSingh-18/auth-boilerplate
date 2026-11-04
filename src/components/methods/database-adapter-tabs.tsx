@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { DatabaseAdapterExample } from "@/types/auth";
 
 interface HighlightedAdapter extends DatabaseAdapterExample {
@@ -14,19 +14,15 @@ interface DatabaseAdapterTabsProps {
 export function DatabaseAdapterTabs({
   adapters,
 }: DatabaseAdapterTabsProps) {
-  const [activeId, setActiveId] = useState(adapters[0]?.id);
-
-  useEffect(() => {
-    if (!adapters.some((adapter) => adapter.id === activeId)) {
-      setActiveId(adapters[0]?.id);
-    }
-  }, [adapters, activeId]);
+  const [selectedId, setSelectedId] = useState(adapters[0]?.id);
 
   const activeAdapter = adapters.find(
-    (adapter) => adapter.id === activeId,
-  );
+      (adapter) => adapter.id === selectedId
+    ) ?? adapters[0];
 
   if (!activeAdapter) return null;
+
+  const activeId = activeAdapter.id;
 
   return (
     <section className="mt-6 space-y-5">
@@ -44,7 +40,7 @@ export function DatabaseAdapterTabs({
           <button
             key={adapter.id}
             type="button"
-            onClick={() => setActiveId(adapter.id)}
+            onClick={() => setSelectedId(adapter.id)}
             aria-pressed={activeId === adapter.id}
             className={`shrink-0 border-b-2 px-4 py-3 text-sm transition ${
               activeId === adapter.id

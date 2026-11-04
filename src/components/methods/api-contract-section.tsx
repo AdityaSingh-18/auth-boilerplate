@@ -16,13 +16,13 @@ function PayloadExample({
   const content =
     payload.example !== undefined
       ? JSON.stringify(payload.example, null, 2)
-      : payload.typeDefinition ?? payload.description;
+      : payload.typeDefinition;
 
-  if (!content) return null;
+  if (!payload.description && !content) return null;
 
   return (
     <div>
-      <p className="mb-2 text-xs text-zinc-400">{title}</p>
+      <p className="mb-2 text-[15px] text-zinc-200">{title}</p>
 
       {payload.description && (
         <p className="mb-3 text-sm text-zinc-400">
@@ -30,9 +30,11 @@ function PayloadExample({
         </p>
       )}
 
-      <pre className="overflow-x-auto rounded-lg bg-black/30 p-4 text-sm leading-6 text-zinc-300">
-        {content}
-      </pre>
+      {content && (
+        <pre className="overflow-x-auto rounded-lg bg-black/30 p-4 text-sm leading-6 text-zinc-300">
+          {content}
+        </pre>
+      )}
     </div>
   );
 }

@@ -148,7 +148,7 @@ export function Hero() {
               Everything you need.
               <br />
               <span className="bg-gradient-to-r from-violet-300 to-violet-500 bg-clip-text text-transparent">
-                Nothing you don't.
+                Nothing you don&apos;t.
               </span>
             </h2>
 

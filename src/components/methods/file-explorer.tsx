@@ -83,18 +83,6 @@ function buildFileTree(files: ExplorerFile[]): FileTreeNode[] {
   return root;
 }
 
-function getFolderPaths(nodes: FileTreeNode[]): string[] {
-  const paths: string[] = [];
-
-  for (const node of nodes) {
-    if (node.type === "folder") {
-      paths.push(node.path, ...getFolderPaths(node.children));
-    }
-  }
-
-  return paths;
-}
-
 function getFileCategory(file: ExplorerFile): string {
   const lowerPath = file.path.toLowerCase();
   const lowerName = file.name.toLowerCase();
@@ -131,15 +119,22 @@ export function FileExplorer({ files }: FileExplorerProps) {
   const [activePath, setActivePath] = useState(
     files[0]?.path ?? "",
   );
+
   const [copiedPath, setCopiedPath] = useState<string | null>(null);
   const [copyErrorPath, setCopyErrorPath] = useState<string | null>(null);
-  const [expandedFolders, setExpandedFolders] = useState<string[]>(() =>
-    getFolderPaths(buildFileTree(files)),
+
+  // Folders are expanded by default.
+  // This state tracks only folders explicitly collapsed by the user.
+  const [collapsedFolders, setCollapsedFolders] = useState<string[]>([]);
+
+  const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
   );
 
-  const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Fall back to the first available file if the selected file disappears.
+  const activeFile = files.find((file) => file.path === activePath) ?? files[0];
 
-  const activeFile = files.find((file) => file.path === activePath);
+  const currentActivePath = activeFile?.path ?? "";
 
   useEffect(() => {
     return () => {
@@ -149,25 +144,8 @@ export function FileExplorer({ files }: FileExplorerProps) {
     };
   }, []);
 
-  useEffect(() => {
-    if (!files.some((file) => file.path === activePath)) {
-      setActivePath(files[0]?.path ?? "");
-    }
-
-    setExpandedFolders((current) => {
-      const availablePaths = getFolderPaths(tree);
-
-      return [
-        ...new Set([
-          ...current.filter((path) => availablePaths.includes(path)),
-          ...availablePaths,
-        ]),
-      ];
-    });
-  }, [files, tree, activePath]);
-
   function toggleFolder(folderPath: string) {
-    setExpandedFolders((current) =>
+    setCollapsedFolders((current) =>
       current.includes(folderPath)
         ? current.filter((path) => path !== folderPath)
         : [...current, folderPath],
@@ -211,7 +189,7 @@ export function FileExplorer({ files }: FileExplorerProps) {
   function renderNode(node: FileTreeNode, depth = 0) {
     if (node.type === "file") {
       const file = node.file;
-      const isActive = activePath === file.path;
+      const isActive = currentActivePath === file.path;
       const isReadme = file.name.toLowerCase() === "readme.md";
 
       return (
@@ -245,7 +223,7 @@ export function FileExplorer({ files }: FileExplorerProps) {
       );
     }
 
-    const isExpanded = expandedFolders.includes(node.path);
+    const isExpanded = !collapsedFolders.includes(node.path);
 
     return (
       <div key={node.path}>
@@ -316,7 +294,7 @@ export function FileExplorer({ files }: FileExplorerProps) {
 
             <select
               id="mobile-file-selector"
-              value={activePath}
+              value={currentActivePath}
               onChange={(event) => selectFile(event.target.value)}
               className="w-full rounded-lg border border-white/10 bg-[#111118] px-3 py-2 text-xs text-zinc-200 outline-none focus:border-violet-400/50"
             >
@@ -336,7 +314,7 @@ export function FileExplorer({ files }: FileExplorerProps) {
                 type="button"
                 onClick={() => selectFile(file.path)}
                 className={`flex shrink-0 items-center gap-2 border-b-2 px-4 py-3 text-sm transition-colors ${
-                  activePath === file.path
+                  currentActivePath === file.path
                     ? "border-violet-400 bg-white/[0.04] text-white"
                     : "border-transparent text-zinc-500 hover:text-zinc-300"
                 }`}
@@ -385,20 +363,22 @@ export function FileExplorer({ files }: FileExplorerProps) {
           {/* Active highlighted code */}
           {activeFile.name.toLowerCase().endsWith(".md") ? (
             <div className="max-h-[700px] overflow-y-auto overflow-x-hidden p-6">
-              <article className="prose prose-invert max-w-none
-                prose-headings:font-bold
-                prose-h1:text-3xl
-                prose-h2:text-2xl
-                prose-h3:text-xl
-                prose-p:text-sm
-                prose-li:text-sm
-                prose-a:text-violet-400
-                prose-strong:text-white
-                prose-code:rounded
-                prose-code:bg-white/10
-                prose-code:px-1
-                prose-pre:overflow-x-auto
-              ">
+              <article
+                className="prose prose-invert max-w-none
+                  prose-headings:font-bold
+                  prose-h1:text-3xl
+                  prose-h2:text-2xl
+                  prose-h3:text-xl
+                  prose-p:text-sm
+                  prose-li:text-sm
+                  prose-a:text-violet-400
+                  prose-strong:text-white
+                  prose-code:rounded
+                  prose-code:bg-white/10
+                  prose-code:px-1
+                  prose-pre:overflow-x-auto
+                "
+              >
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {activeFile.content}
                 </ReactMarkdown>
@@ -406,7 +386,9 @@ export function FileExplorer({ files }: FileExplorerProps) {
             </div>
           ) : (
             <div
-              className="max-h-[700px] overflow-y-auto overflow-x-hidden text-[13px] leading-6 [&_pre]:!whitespace-pre-wrap [&_pre]:!break-words [&_pre]:min-w-0 [&_pre]:p-5 [&_pre]:font-mono [&_code]:!whitespace-pre-wrap [&_code]:!break-words"
+              className="max-h-[700px] overflow-y-auto overflow-x-hidden text-[13px] leading-6 
+                [&_pre]:!whitespace-pre-wrap [&_pre]:!break-words [&_pre]:min-w-0 [&_pre]:p-5 
+                [&_pre]:font-mono [&_code]:!whitespace-pre-wrap [&_code]:!break-words"
               dangerouslySetInnerHTML={{
                 __html: activeFile.highlightedCode,
               }}
