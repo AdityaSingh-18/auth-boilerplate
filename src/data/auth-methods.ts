@@ -131,7 +131,7 @@ export const authMethods = [
     categoryId: "social",
     icon: "microsoft",
     iconType: "simple",
-    status: "planned",
+    status: "available",
   },
   {
     id: "apple-oauth",

@@ -40,6 +40,10 @@ import { discordOAuthDocumentation } from "./discord-oauth/discord-oauth";
 import { discordOAuthAdapters } from "./discord-oauth/discord-oauth-adapters";
 import { discordOAuthApiContracts } from "./discord-oauth/discord-oauth-api";
 
+import { microsoftOAuthDocumentation } from "./microsoft-oauth/microsoft-oauth";
+import { microsoftOAuthAdapters } from "./microsoft-oauth/microsoft-oauth-adapters";
+import { microsoftOAuthApi } from "./microsoft-oauth/microsoft-oauth-api";
+
 export interface MethodDocumentation {
   documentation?: TemplateDocumentation;
   databaseAdapters?: DatabaseAdapterExample[];
@@ -99,5 +103,11 @@ export const methodDocumentation: Record<string, MethodDocumentation> = {
     documentation: discordOAuthDocumentation,
     databaseAdapters: discordOAuthAdapters,
     apiContracts: discordOAuthApiContracts,
+  },
+
+  "microsoft-oauth": {
+    documentation: microsoftOAuthDocumentation,
+    databaseAdapters: microsoftOAuthAdapters,
+    apiContracts: microsoftOAuthApi,
   },
 };
