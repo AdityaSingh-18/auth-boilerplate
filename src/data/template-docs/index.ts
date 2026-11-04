@@ -36,6 +36,10 @@ import { githubOAuthDocumentation } from "./github-oauth/github-oauth";
 import { githubOAuthAdapters } from "./github-oauth/github-oauth-adapters";
 import { githubOAuthApiContracts } from "./github-oauth/github-oauth-api";
 
+import { discordOAuthDocumentation } from "./discord-oauth/discord-oauth";
+import { discordOAuthAdapters } from "./discord-oauth/discord-oauth-adapters";
+import { discordOAuthApiContracts } from "./discord-oauth/discord-oauth-api";
+
 export interface MethodDocumentation {
   documentation?: TemplateDocumentation;
   databaseAdapters?: DatabaseAdapterExample[];
@@ -89,5 +93,11 @@ export const methodDocumentation: Record<string, MethodDocumentation> = {
     documentation: githubOAuthDocumentation,
     databaseAdapters: githubOAuthAdapters,
     apiContracts: githubOAuthApiContracts,
+  },
+
+  "discord-oauth": {
+    documentation: discordOAuthDocumentation,
+    databaseAdapters: discordOAuthAdapters,
+    apiContracts: discordOAuthApiContracts,
   },
 };

@@ -122,7 +122,7 @@ export const authMethods = [
     categoryId: "social",
     icon: "discord",
     iconType: "simple",
-    status: "planned",
+    status: "available",
   },
   {
     id: "microsoft-oauth",
