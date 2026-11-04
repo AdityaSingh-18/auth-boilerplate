@@ -110,7 +110,7 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 
 - [x] **Step 6.1:** Implement cryptographic 6-digit OTP generation, hashed OTP storage, rate/expiry verification, pluggable email sender helper (`core/lib/mailer.ts`), `auth-db.ts`, and `README.md`; mark `email-otp` as `available`
 - [x] **Step 6.2:** Add File Overview, database adapter documentation, and API contracts to the `Email OTP` method detail page; integrate the optional reference UI and database adapter section.
-- [ ] **Step 6.3:** Implement single-use signed/hashed token generation, callback verification route, pluggable email sender, `auth-db.ts`, and `README.md`; mark `magic-link` as `available`
+- [x] **Step 6.3:** Implement single-use signed/hashed token generation, callback verification route, pluggable email sender, `auth-db.ts`, and `README.md`; mark `magic-link` as `available`
 - [ ] **Step 6.4:** Add File Overview, database adapter documentation, and API contracts to the `Magic Link` method detail page.
 - [ ] **Step 6.5:** Implement SMS OTP issue/verify routes, pluggable SMS provider adapter (`core/lib/sms.ts` for Twilio/Vonage/console), `auth-db.ts`, and `README.md`; mark `sms-otp` as `available`
 - [ ] **Step 6.6:** Add File Overview, database adapter documentation, and API contracts to the `SMS OTP` method detail page.
@@ -283,7 +283,7 @@ All 17 methods defined in `src/data/auth-methods.ts`:
 | **Credentials** | `username-password` | Username & Password | ✅ Available |
 | **Credentials** | `phone-password` | Phone & Password | ✅ Available |
 | **Passwordless** | `email-otp` | Email OTP | ✅ Available |
-| **Passwordless** | `magic-link` | Magic Link | ⏳ Planned |
+| **Passwordless** | `magic-link` | Magic Link | ✅ Available |
 | **Passwordless** | `sms-otp` | Phone / SMS OTP | ⏳ Planned |
 | **Social** | `google-oauth` | Google Login | ⏳ Planned |
 | **Social** | `github-oauth` | GitHub Login | ⏳ Planned |
