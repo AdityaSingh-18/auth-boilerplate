@@ -48,6 +48,10 @@ import { appleOAuthDocumentation } from "./apple-oauth/apple-oauth";
 import { appleOAuthAdapters } from "./apple-oauth/apple-oauth-adapters";
 import { appleOAuthApiContracts } from "./apple-oauth/apple-oauth-api";
 
+import { facebookOAuthDocumentation } from "./facebook-oauth/facebook-oauth";
+import { facebookOAuthAdapters } from "./facebook-oauth/facebook-oauth-adapters";
+import { facebookOAuthApiContracts } from "./facebook-oauth/facebook-oauth-api";
+
 export interface MethodDocumentation {
   documentation?: TemplateDocumentation;
   databaseAdapters?: DatabaseAdapterExample[];
@@ -119,5 +123,11 @@ export const methodDocumentation: Record<string, MethodDocumentation> = {
     documentation: appleOAuthDocumentation,
     databaseAdapters: appleOAuthAdapters,
     apiContracts: appleOAuthApiContracts,
+  },
+
+  "facebook-oauth": {
+    documentation: facebookOAuthDocumentation,
+    databaseAdapters: facebookOAuthAdapters,
+    apiContracts: facebookOAuthApiContracts,
   },
 };

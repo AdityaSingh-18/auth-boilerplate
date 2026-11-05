@@ -149,7 +149,7 @@ export const authMethods = [
     categoryId: "social",
     icon: "facebook",
     iconType: "simple",
-    status: "planned",
+    status: "available",
   },
   {
     id: "x-oauth",
