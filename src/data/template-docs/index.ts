@@ -60,6 +60,10 @@ import { passkeysDocumentation } from "./passkeys/passkeys";
 import { passkeysAdapters } from "./passkeys/passkeys-adapters";
 import { passkeysApiContracts } from "./passkeys/passkeys-api";
 
+import { guestLoginDocumentation } from "./guest-login/guest-login";
+import { guestLoginAdapters } from "./guest-login/guest-login-adapters";
+import { guestLoginApiContracts } from "./guest-login/guest-login-api";
+
 export interface MethodDocumentation {
   documentation?: TemplateDocumentation;
   databaseAdapters?: DatabaseAdapterExample[];
@@ -149,5 +153,11 @@ export const methodDocumentation: Record<string, MethodDocumentation> = {
     documentation: passkeysDocumentation,
     databaseAdapters: passkeysAdapters,
     apiContracts: passkeysApiContracts,
+  },
+
+  "guest-login": {
+    documentation: guestLoginDocumentation,
+    databaseAdapters: guestLoginAdapters,
+    apiContracts: guestLoginApiContracts,
   },
 };

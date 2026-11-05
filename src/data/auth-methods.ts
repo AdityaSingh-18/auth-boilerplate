@@ -178,7 +178,7 @@ export const authMethods = [
     categoryId: "modern",
     icon: "user-round-plus",
     iconType: "lucide",
-    status: "planned",
+    status: "available",
   },
 
   // Enterprise SSO (2)
