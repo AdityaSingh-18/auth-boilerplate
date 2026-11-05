@@ -56,6 +56,10 @@ import { xOAuthDocumentation } from "./x-oauth/x-oauth";
 import { xOAuthAdapters } from "./x-oauth/x-oauth-adapters";
 import { xOAuthApiContracts } from "./x-oauth/x-oauth-api";
 
+import { passkeysDocumentation } from "./passkeys/passkeys";
+import { passkeysAdapters } from "./passkeys/passkeys-adapters";
+import { passkeysApiContracts } from "./passkeys/passkeys-api";
+
 export interface MethodDocumentation {
   documentation?: TemplateDocumentation;
   databaseAdapters?: DatabaseAdapterExample[];
@@ -139,5 +143,11 @@ export const methodDocumentation: Record<string, MethodDocumentation> = {
     documentation: xOAuthDocumentation,
     databaseAdapters: xOAuthAdapters,
     apiContracts: xOAuthApiContracts,
+  },
+
+  "passkeys": {
+    documentation: passkeysDocumentation,
+    databaseAdapters: passkeysAdapters,
+    apiContracts: passkeysApiContracts,
   },
 };

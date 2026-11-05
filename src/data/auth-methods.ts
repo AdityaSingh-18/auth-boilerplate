@@ -169,7 +169,7 @@ export const authMethods = [
     categoryId: "modern",
     icon: "fingerprint",
     iconType: "lucide",
-    status: "planned",
+    status: "available",
   },
   {
     id: "guest-login",
