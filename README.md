@@ -62,7 +62,7 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 | 5 | Credentials auth boilerplates (3 methods) | ✅ Complete |
 | 6 | Passwordless auth boilerplates (3 methods) | ✅ Complete  |
 | 7 | Social OAuth boilerplates (7 methods) | ✅ Complete |
-| 8 | Modern auth boilerplates (2 methods) | 🚧 In progress |
+| 8 | Modern auth boilerplates (2 methods) | ✅ Complete |
 | 9 | Enterprise SSO boilerplates (2 methods) | ⏳ Planned |
 | 10 | Command palette search, SEO & release polish | ⏳ Planned |
 
@@ -125,10 +125,10 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 - [x] **Step 7.6:** Implement Facebook Graph OAuth flow, callback verification, `auth-db.ts` adapter, and `README.md`; mark `facebook-oauth` as `available`
 - [x] **Step 7.7:** Implement X (Twitter) OAuth 2.0 with PKCE flow, user lookup, `auth-db.ts` adapter, and `README.md`; mark `x-oauth` as `available`
 
-### Phase 8 — Modern auth boilerplates 🚧
+### Phase 8 — Modern auth boilerplates ✅
 
 - [x] **Step 8.1:** Implement WebAuthn registration & authentication challenge generation, credential public key verification (`@simplewebauthn/server`), `auth-db.ts` passkey store, and `README.md`; mark `passkeys` as `available`
-- [ ] **Step 8.2:** Implement temporary anonymous session creation and account promotion/linking helper in `auth-db.ts` + `README.md`; mark `guest-login` as `available`
+- [x] **Step 8.2:** Implement temporary anonymous session creation and account promotion/linking helper in `auth-db.ts` + `README.md`; mark `guest-login` as `available`
 
 ### Phase 9 — Enterprise SSO boilerplates ⏳
 
@@ -293,7 +293,7 @@ All 17 methods defined in `src/data/auth-methods.ts`:
 | **Social** | `facebook-oauth` | Facebook Login | ✅ Available |
 | **Social** | `x-oauth` | X (Twitter) Login | ✅ Available |
 | **Modern** | `passkeys` | Passkeys / WebAuthn | ✅ Available |
-| **Modern** | `guest-login` | Guest / Anonymous Login | ⏳ Planned |
+| **Modern** | `guest-login` | Guest / Anonymous Login | ✅ Available |
 | **Enterprise** | `oidc-sso` | OIDC Single Sign-On | ⏳ Planned |
 | **Enterprise** | `saml-sso` | SAML 2.0 Single Sign-On | ⏳ Planned |
 
