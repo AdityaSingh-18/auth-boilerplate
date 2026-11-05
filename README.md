@@ -122,7 +122,7 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 - [x] **Step 7.3:** Implement Discord OAuth2 flow, user profile hydration, `auth-db.ts` adapter, and `README.md`; mark `discord-oauth` as `available`
 - [x] **Step 7.4:** Implement Microsoft Entra / common tenant OAuth2 flow, token exchange, `auth-db.ts` adapter, and `README.md`; mark `microsoft-oauth` as `available`
 - [x] **Step 7.5:** Implement Sign in with Apple client secret JWT generation, `form_post` callback handling, ID token verification, `auth-db.ts`, and `README.md`; mark `apple-oauth` as `available`
-- [ ] **Step 7.6:** Implement Facebook Graph OAuth flow, callback verification, `auth-db.ts` adapter, and `README.md`; mark `facebook-oauth` as `available`
+- [x] **Step 7.6:** Implement Facebook Graph OAuth flow, callback verification, `auth-db.ts` adapter, and `README.md`; mark `facebook-oauth` as `available`
 - [ ] **Step 7.7:** Implement X (Twitter) OAuth 2.0 with PKCE flow, user lookup, `auth-db.ts` adapter, and `README.md`; mark `x-oauth` as `available`
 
 ### Phase 8 — Modern auth boilerplates ⏳
@@ -290,7 +290,7 @@ All 17 methods defined in `src/data/auth-methods.ts`:
 | **Social** | `discord-oauth` | Discord Login | ✅ Available |
 | **Social** | `microsoft-oauth` | Microsoft Login | ✅ Available |
 | **Social** | `apple-oauth` | Apple Login | ✅ Available |
-| **Social** | `facebook-oauth` | Facebook Login | ⏳ Planned |
+| **Social** | `facebook-oauth` | Facebook Login | ✅ Available |
 | **Social** | `x-oauth` | X (Twitter) Login | ⏳ Planned |
 | **Modern** | `passkeys` | Passkeys / WebAuthn | ⏳ Planned |
 | **Modern** | `guest-login` | Guest / Anonymous Login | ⏳ Planned |
