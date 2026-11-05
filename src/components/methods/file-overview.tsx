@@ -33,11 +33,11 @@ export function FileOverview({
           Implementation guide
         </p>
 
-        <h2 className="mt-2 text-2xl font-bold tracking-tight text-white">
+        <h2 className="mt-2 text-3xl font-bold tracking-tight text-white">
           Understanding this implementation
         </h2>
 
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-zinc-400">
+        <p className="mt-2 max-w-5xl text-sm leading-6 text-zinc-400">
           {documentation.overview}
         </p>
       </div>

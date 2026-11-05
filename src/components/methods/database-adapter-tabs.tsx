@@ -85,9 +85,12 @@ export function DatabaseAdapterTabs({
             {activeAdapter.envVariables.join(", ")}
           </p>
 
-          <p className="mt-2 text-xs text-zinc-500">
-            Database setup: {activeAdapter.setup}
-          </p>
+          <div className="mt-3 space-y-2">
+            <p className="text-xs text-zinc-500">Database setup</p>
+            <pre className="overflow-x-auto rounded-lg border border-white/10 bg-zinc-900 p-4 text-sm leading-6 text-zinc-300">
+              <code>{activeAdapter.setup}</code>
+            </pre>
+          </div>
         </div>
 
         <div className="overflow-hidden rounded-xl border border-white/10">

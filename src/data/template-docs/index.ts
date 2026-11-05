@@ -52,6 +52,10 @@ import { facebookOAuthDocumentation } from "./facebook-oauth/facebook-oauth";
 import { facebookOAuthAdapters } from "./facebook-oauth/facebook-oauth-adapters";
 import { facebookOAuthApiContracts } from "./facebook-oauth/facebook-oauth-api";
 
+import { xOAuthDocumentation } from "./x-oauth/x-oauth";
+import { xOAuthAdapters } from "./x-oauth/x-oauth-adapters";
+import { xOAuthApiContracts } from "./x-oauth/x-oauth-api";
+
 export interface MethodDocumentation {
   documentation?: TemplateDocumentation;
   databaseAdapters?: DatabaseAdapterExample[];
@@ -129,5 +133,11 @@ export const methodDocumentation: Record<string, MethodDocumentation> = {
     documentation: facebookOAuthDocumentation,
     databaseAdapters: facebookOAuthAdapters,
     apiContracts: facebookOAuthApiContracts,
+  },
+
+  "x-oauth": {
+    documentation: xOAuthDocumentation,
+    databaseAdapters: xOAuthAdapters,
+    apiContracts: xOAuthApiContracts,
   },
 };

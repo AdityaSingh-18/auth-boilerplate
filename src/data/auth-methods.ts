@@ -158,7 +158,7 @@ export const authMethods = [
     categoryId: "social",
     icon: "x",
     iconType: "simple",
-    status: "planned",
+    status: "available",
   },
 
   // Modern (2)
