@@ -68,6 +68,10 @@ import { oidcSsoDocumentation } from "./oidc-sso/oidc-sso";
 import { oidcSsoAdapters } from "./oidc-sso/oidc-sso-adapters";
 import { oidcSsoApiContracts } from "./oidc-sso/oidc-sso-api";
 
+import { samlSsoDocumentation } from "./saml-sso/saml-sso";
+import { samlSsoAdapters } from "./saml-sso/saml-sso-adapters";
+import { samlSsoApiContracts } from "./saml-sso/saml-sso-api";
+
 export interface MethodDocumentation {
   documentation?: TemplateDocumentation;
   databaseAdapters?: DatabaseAdapterExample[];
@@ -169,5 +173,11 @@ export const methodDocumentation: Record<string, MethodDocumentation> = {
     documentation: oidcSsoDocumentation,
     databaseAdapters: oidcSsoAdapters,
     apiContracts: oidcSsoApiContracts,
+  },
+
+  "saml-sso": {
+    documentation: samlSsoDocumentation,
+    databaseAdapters: samlSsoAdapters,
+    apiContracts: samlSsoApiContracts,
   },
 };

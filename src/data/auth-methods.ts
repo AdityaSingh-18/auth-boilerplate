@@ -198,7 +198,7 @@ export const authMethods = [
     categoryId: "enterprise-sso",
     icon: "building-2",
     iconType: "lucide",
-    status: "planned",
+    status: "available",
   },
 ] as const satisfies readonly {
   id: string;
