@@ -189,7 +189,7 @@ export const authMethods = [
     categoryId: "enterprise-sso",
     icon: "shield-check",
     iconType: "lucide",
-    status: "planned",
+    status: "available",
   },
   {
     id: "saml-sso",

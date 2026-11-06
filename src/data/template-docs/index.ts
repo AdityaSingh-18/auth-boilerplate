@@ -64,6 +64,10 @@ import { guestLoginDocumentation } from "./guest-login/guest-login";
 import { guestLoginAdapters } from "./guest-login/guest-login-adapters";
 import { guestLoginApiContracts } from "./guest-login/guest-login-api";
 
+import { oidcSsoDocumentation } from "./oidc-sso/oidc-sso";
+import { oidcSsoAdapters } from "./oidc-sso/oidc-sso-adapters";
+import { oidcSsoApiContracts } from "./oidc-sso/oidc-sso-api";
+
 export interface MethodDocumentation {
   documentation?: TemplateDocumentation;
   databaseAdapters?: DatabaseAdapterExample[];
@@ -159,5 +163,11 @@ export const methodDocumentation: Record<string, MethodDocumentation> = {
     documentation: guestLoginDocumentation,
     databaseAdapters: guestLoginAdapters,
     apiContracts: guestLoginApiContracts,
+  },
+
+  "oidc-sso": {
+    documentation: oidcSsoDocumentation,
+    databaseAdapters: oidcSsoAdapters,
+    apiContracts: oidcSsoApiContracts,
   },
 };
