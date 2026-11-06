@@ -362,7 +362,7 @@ export function FileExplorer({ files }: FileExplorerProps) {
 
           {/* Active highlighted code */}
           {activeFile.name.toLowerCase().endsWith(".md") ? (
-            <div className="max-h-[700px] overflow-y-auto overflow-x-hidden p-6">
+            <div className="max-h-[760px] overflow-y-auto overflow-x-hidden p-6">
               <article
                 className="prose prose-invert max-w-none
                   prose-headings:font-bold
@@ -386,7 +386,7 @@ export function FileExplorer({ files }: FileExplorerProps) {
             </div>
           ) : (
             <div
-              className="max-h-[700px] overflow-y-auto overflow-x-hidden text-[13px] leading-6 
+              className="max-h-[760px] overflow-y-auto overflow-x-hidden text-[13px] leading-6 
                 [&_pre]:!whitespace-pre-wrap [&_pre]:!break-words [&_pre]:min-w-0 [&_pre]:p-5 
                 [&_pre]:font-mono [&_code]:!whitespace-pre-wrap [&_code]:!break-words"
               dangerouslySetInnerHTML={{

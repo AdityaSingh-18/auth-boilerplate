@@ -1,5 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+
+import { CommandPalette } from "@/components/search/command-palette";
+
 import { ArrowUpRight, Menu } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 
@@ -17,7 +20,6 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/[0.08] bg-[#090711]/85 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-5 sm:px-8">
-
         {/* Logo and brand */}
         <Link
           href="/"
@@ -63,16 +65,20 @@ export function Navbar() {
 
         {/* Desktop actions */}
         <div className="hidden items-center gap-4 sm:flex">
-          <a
-            href={githubUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-400 transition hover:text-white"
-          >
-            <FaGithub size={16} />
-            GitHub
-            <ArrowUpRight size={12} />
-          </a>
+          <CommandPalette />
+
+          {githubUrl ? (
+            <a
+              href={githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-400 transition hover:text-white"
+            >
+              <FaGithub size={16} />
+              GitHub
+              <ArrowUpRight size={12} />
+            </a>
+          ) : null}
 
           <Link
             href="/#credentials"
@@ -95,6 +101,10 @@ export function Navbar() {
             aria-label="Mobile navigation"
             className="absolute right-0 top-12 grid w-60 gap-1 rounded-xl border border-white/10 bg-[#111019] p-2 shadow-2xl shadow-black/50"
           >
+            <div className="border-b border-white/10 p-2">
+              <CommandPalette />
+            </div>
+
             {categories.map((category) => (
               <Link
                 key={category.href}

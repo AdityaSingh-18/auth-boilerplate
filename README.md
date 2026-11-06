@@ -64,7 +64,7 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 | 7 | Social OAuth boilerplates (7 methods) | ✅ Complete |
 | 8 | Modern auth boilerplates (2 methods) | ✅ Complete |
 | 9 | Enterprise SSO boilerplates (2 methods) | ✅ Complete |
-| 10 | Command palette search, SEO & release polish | ⏳ Planned |
+| 10 | Command palette search, SEO & release polish | 🚧 In progress |
 
 ---
 
@@ -135,11 +135,13 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 - [x] **Step 9.1:** Implement dynamic OIDC `.well-known/openid-configuration` discovery, domain-based tenant lookup, ID token validation, `auth-db.ts`, and `README.md`; mark `oidc-sso` as `available`
 - [x] **Step 9.2:** Implement SP-initiated login redirect, Assertion Consumer Service (ACS) XML signature verification, attribute mapping, `auth-db.ts`, and `README.md`; mark `saml-sso` as `available`
 
-### Phase 10 — Command palette search, SEO & release polish ⏳
+### Phase 10 — Command palette search, SEO & release polish 🚧
 
-- [ ] **Step 10.1:** Build instant keyboard-accessible search across all 17 auth methods, categories, and documentation topics
-- [ ] **Step 10.2:** Add a build-time check ensuring every `available` method has valid files in `templates/`, a complete `README.md`, and working `.zip` packaging
-- [ ] **Step 10.3:** Add dynamic OpenGraph metadata per method page, responsive mobile polish, and final production build verification
+- [x] **Step 10.1:** Build instant keyboard-accessible search across all 17 auth methods, categories, and documentation topics
+- [ ] **Step 10.2:** Create dedicated landing pages for all five authentication categories, with category introductions, visual hero sections, relevant UI images, authentication method cards, feature highlights, animations, and navigation to individual method detail pages
+- [ ] **Step 10.3:** Add SEO metadata, Open Graph images, canonical URLs, sitemap, robots.txt, and structured metadata for the homepage, category pages, and authentication method pages
+- [ ] **Step 10.4:** Polish responsive layouts, accessibility, loading states, transitions, and overall UI consistency
+- [ ] **Step 10.5:** Complete production checks, documentation review, and release preparation
 
 ---
 
@@ -295,7 +297,7 @@ All 17 methods defined in `src/data/auth-methods.ts`:
 | **Modern** | `passkeys` | Passkeys / WebAuthn | ✅ Available |
 | **Modern** | `guest-login` | Guest / Anonymous Login | ✅ Available |
 | **Enterprise** | `oidc-sso` | OIDC Single Sign-On | ✅ Available |
-| **Enterprise** | `saml-sso` | SAML 2.0 Single Sign-On | ⏳ Planned |
+| **Enterprise** | `saml-sso` | SAML 2.0 Single Sign-On | ✅ Available |
 
 ## API routes
 
