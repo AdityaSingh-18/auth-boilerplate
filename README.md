@@ -63,7 +63,7 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 | 6 | Passwordless auth boilerplates (3 methods) | ✅ Complete  |
 | 7 | Social OAuth boilerplates (7 methods) | ✅ Complete |
 | 8 | Modern auth boilerplates (2 methods) | ✅ Complete |
-| 9 | Enterprise SSO boilerplates (2 methods) | ⏳ Planned |
+| 9 | Enterprise SSO boilerplates (2 methods) | ✅ Complete |
 | 10 | Command palette search, SEO & release polish | ⏳ Planned |
 
 ---
@@ -130,10 +130,10 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 - [x] **Step 8.1:** Implement WebAuthn registration & authentication challenge generation, credential public key verification (`@simplewebauthn/server`), `auth-db.ts` passkey store, and `README.md`; mark `passkeys` as `available`
 - [x] **Step 8.2:** Implement temporary anonymous session creation and account promotion/linking helper in `auth-db.ts` + `README.md`; mark `guest-login` as `available`
 
-### Phase 9 — Enterprise SSO boilerplates ⏳
+### Phase 9 — Enterprise SSO boilerplates ✅
 
-- [ ] **Step 9.1:** Implement dynamic OIDC `.well-known/openid-configuration` discovery, domain-based tenant lookup, ID token validation, `auth-db.ts`, and `README.md`; mark `oidc-sso` as `available`
-- [ ] **Step 9.2:** Implement SP-initiated login redirect, Assertion Consumer Service (ACS) XML signature verification, attribute mapping, `auth-db.ts`, and `README.md`; mark `saml-sso` as `available`
+- [x] **Step 9.1:** Implement dynamic OIDC `.well-known/openid-configuration` discovery, domain-based tenant lookup, ID token validation, `auth-db.ts`, and `README.md`; mark `oidc-sso` as `available`
+- [x] **Step 9.2:** Implement SP-initiated login redirect, Assertion Consumer Service (ACS) XML signature verification, attribute mapping, `auth-db.ts`, and `README.md`; mark `saml-sso` as `available`
 
 ### Phase 10 — Command palette search, SEO & release polish ⏳
 
@@ -294,7 +294,7 @@ All 17 methods defined in `src/data/auth-methods.ts`:
 | **Social** | `x-oauth` | X (Twitter) Login | ✅ Available |
 | **Modern** | `passkeys` | Passkeys / WebAuthn | ✅ Available |
 | **Modern** | `guest-login` | Guest / Anonymous Login | ✅ Available |
-| **Enterprise** | `oidc-sso` | OIDC Single Sign-On | ⏳ Planned |
+| **Enterprise** | `oidc-sso` | OIDC Single Sign-On | ✅ Available |
 | **Enterprise** | `saml-sso` | SAML 2.0 Single Sign-On | ⏳ Planned |
 
 ## API routes
