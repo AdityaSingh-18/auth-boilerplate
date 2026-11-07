@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ChevronRight } from "lucide-react";
@@ -12,6 +13,7 @@ import {
   listTemplateVariants,
 } from "@/lib/templates";
 
+import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-json-ld";
 import { VariantDownloadControls } from "@/components/methods/variant-download-controls";
 import { SourceCodeSection } from "@/components/methods/source-code-section";
 import { FileOverview } from "@/components/methods/file-overview";
@@ -19,6 +21,8 @@ import { DatabaseAdapterSection } from "@/components/methods/database-adapter-se
 import { ApiContractSection } from "@/components/methods/api-contract-section";
 
 import { methodDocumentation } from "@/data/template-docs";
+
+import { createPageMetadata, absoluteUrl } from "@/lib/seo";
 
 export const instant = false;
 
@@ -28,13 +32,57 @@ interface MethodPageProps {
   }>;
 }
 
+export async function generateMetadata({
+  params,
+}: MethodPageProps): Promise<Metadata> {
+  const { id } = await params;
+
+  const method = getAuthMethodById(id);
+  if (!method) {
+    return createPageMetadata({
+      title: "Authentication Method Not Found",
+      description:
+        "The requested authentication method could not be found.",
+      path: `/methods/${id}`,
+      index: false,
+    });
+  }
+
+  const category = authCategories.find(
+    (item) => item.id === method.categoryId,
+  );
+
+  const methodDocs = methodDocumentation[method.id];
+  const documentation = methodDocs?.documentation;
+
+  const documentationKeywords = [
+    ...(documentation?.files?.map((file) => file.path) ?? []),
+    ...(documentation?.functions?.map((fn) => fn.name) ?? []),
+    ...(methodDocs?.databaseAdapters?.map((adapter) => adapter.label) ?? []),
+  ];
+
+  return createPageMetadata({
+    title: `${method.title} Authentication Boilerplate`,
+    description: method.description,
+    path: `/methods/${method.id}`,
+    keywords: [
+      method.title,
+      `${method.title} authentication`,
+      `${method.title} boilerplate`,
+      "Next.js App Router",
+      ...(category ? [category.title] : []),
+      ...documentationKeywords,
+    ],
+    index: method.status === "available",
+  });
+}
+
 export default async function MethodPage({
   params,
 }: MethodPageProps) {
   const { id } = await params;
 
   const method = getAuthMethodById(id);
-
   if (!method) {
     notFound();
   }
@@ -48,9 +96,7 @@ export default async function MethodPage({
   );
 
   const variants = await listTemplateVariants(method.id);
-
-  const defaultVariant =
-    variants.find((variant) => variant.isDefault) ?? variants[0];
+  const defaultVariant = variants.find((variant) => variant.isDefault) ?? variants[0];
 
   const files = defaultVariant
     ? await loadTemplateFiles(method.id, defaultVariant.id)
@@ -58,6 +104,30 @@ export default async function MethodPage({
 
   return (
     <main className="min-h-screen px-5 pb-24 pt-12 sm:px-8">
+      <BreadcrumbJsonLd
+        items={[
+          {
+            name: "Home",
+            url: absoluteUrl("/"),
+          },
+          {
+            name: "Catalog",
+            url: absoluteUrl("/#catalog"),
+          },
+          ...(category
+            ? [
+                {
+                  name: category.title,
+                  url: absoluteUrl(`/categories/${category.id}`),
+                },
+              ]
+            : []),
+          {
+            name: method.title,
+            url: absoluteUrl(`/methods/${method.id}`),
+          },
+        ]}
+      />
       <div className="mx-auto max-w-6xl">
         {/* Breadcrumbs */}
         <nav
@@ -155,17 +225,11 @@ export default async function MethodPage({
 
         <SourceCodeSection files={files} />
 
-        {documentation && (
-          <FileOverview documentation={documentation} />
-        )}
+        {documentation && <FileOverview documentation={documentation} />}
 
-        {databaseAdapters.length > 0 && (
-          <DatabaseAdapterSection adapters={databaseAdapters} />
-        )}
+        {databaseAdapters.length > 0 && <DatabaseAdapterSection adapters={databaseAdapters} />}
 
-        {methodDocs?.apiContracts && (
-          <ApiContractSection contracts={methodDocs.apiContracts} />
-        )}
+        {methodDocs?.apiContracts && <ApiContractSection contracts={methodDocs.apiContracts} />}
       </div>
     </main>
   );
