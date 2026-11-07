@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 interface AuthUser {
@@ -101,9 +102,13 @@ export function AuthButton() {
         <>
           <div className="flex items-center gap-3">
             {user.imageUrl ? (
-              <img
+              <Image
                 src={user.imageUrl}
                 alt=""
+                width={36}
+                height={36}
+                unoptimized
+                referrerPolicy="no-referrer"
                 className="h-9 w-9 rounded-full"
               />
             ) : (

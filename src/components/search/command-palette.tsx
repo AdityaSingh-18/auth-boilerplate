@@ -10,6 +10,7 @@ import {
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
 } from "react";
 import type { KeyboardEvent as ReactKeyboardEvent } from "react";
 import {
@@ -36,13 +37,16 @@ const RESULT_ICONS: Record<SearchResultType, typeof Search> = {
 
 const MAX_RESULTS = 12;
 
+const subscribe = () => () => {};
+const getSnapshot = () => true;
+const getServerSnapshot = () => false;
+
 export function CommandPalette() {
   const router = useRouter();
   const inputId = useId();
   const listboxId = useId();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -51,9 +55,11 @@ export function CommandPalette() {
   const panelRef = useRef<HTMLDivElement>(null);
   const resultRefs = useRef<Array<HTMLAnchorElement | null>>([]);
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const isMounted = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot,
+  );
 
   const results = useMemo(
     () => searchAuthContent(query, MAX_RESULTS),
@@ -156,10 +162,6 @@ export function CommandPalette() {
       window.cancelAnimationFrame(frame);
     };
   }, [isOpen, isMounted]);
-
-  useEffect(() => {
-    setActiveIndex(0);
-  }, [query]);
 
   // Keep the active result visible inside the results area.
   useEffect(() => {
@@ -287,7 +289,10 @@ export function CommandPalette() {
                 : undefined
             }
             value={query}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => {
+              setQuery(event.target.value);
+              setActiveIndex(0);
+            }}
             onKeyDown={handleInputKeyDown}
             placeholder="Search methods, categories, documentation..."
             className="h-16 min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white/40"

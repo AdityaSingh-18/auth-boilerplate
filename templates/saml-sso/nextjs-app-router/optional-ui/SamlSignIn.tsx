@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface SamlUser {
   id: string;
@@ -33,45 +33,55 @@ export default function SamlSignIn({
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const loadCurrentUser = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch(meEndpoint, {
-        method: "GET",
-        credentials: "include",
-        cache: "no-store",
-        headers: {
-          Accept: "application/json",
-        },
-      });
-
-      if (response.status === 401) {
-        setUser(null);
-        return;
-      }
-
-      const data = (await response.json()) as MeResponse;
-
-      if (!response.ok || !data.success || !data.user) {
-        throw new Error(
-          data.error || "Unable to retrieve the current user.",
-        );
-      }
-
-      setUser(data.user);
-    } catch {
-      setUser(null);
-      setError("Unable to check your authentication status.");
-    } finally {
-      setLoading(false);
-    }
-  }, [meEndpoint]);
-
   useEffect(() => {
+    let cancelled = false;
+
+    async function loadCurrentUser() {
+      try {
+        const response = await fetch(meEndpoint, {
+          method: "GET",
+          credentials: "include",
+          cache: "no-store",
+          headers: {
+            Accept: "application/json",
+          },
+        });
+
+        if (response.status === 401) {
+          if (!cancelled) {
+            setUser(null);
+          }
+          return;
+        }
+
+        const data = (await response.json()) as MeResponse;
+        if (!response.ok || !data.success || !data.user) {
+          throw new Error(
+            data.error || "Unable to retrieve the current user.",
+          );
+        }
+
+        if (!cancelled) {
+          setUser(data.user);
+        }
+      } catch {
+        if (!cancelled) {
+          setUser(null);
+          setError("Unable to check your authentication status.");
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }
+
     void loadCurrentUser();
-  }, [loadCurrentUser]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [meEndpoint]);
 
   function handleLogin() {
     setSubmitting(true);

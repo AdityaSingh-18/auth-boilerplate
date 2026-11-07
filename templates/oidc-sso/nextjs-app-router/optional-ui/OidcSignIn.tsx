@@ -199,8 +199,7 @@ export default function OidcSignIn() {
         </h2>
 
         <p className="mt-1 text-sm text-zinc-600">
-          Enter your work email to continue with your organization's
-          identity provider.
+          Enter your work email to continue with your organization&apos;s identity provider.
         </p>
       </div>
 

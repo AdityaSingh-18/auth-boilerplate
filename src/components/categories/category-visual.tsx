@@ -213,7 +213,7 @@ function ModernVisual() {
         </h3>
 
         <p className="mt-2 text-center text-xs leading-5 text-zinc-500">
-          Use your device's built-in authentication to continue.
+          Use your device&apos;s built-in authentication to continue.
         </p>
 
         <div className="mt-7 flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-4">
@@ -254,7 +254,7 @@ function EnterpriseVisual() {
         </h3>
 
         <p className="mt-2 text-center text-xs leading-5 text-zinc-500">
-          Continue through your organization's identity provider.
+          Continue through your organization&apos;s identity provider.
         </p>
 
         <div className="mt-7 rounded-lg border border-white/10 bg-white/[0.03] p-4">

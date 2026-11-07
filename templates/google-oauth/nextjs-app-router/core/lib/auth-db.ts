@@ -9,10 +9,6 @@ export interface AuthUser {
   email_verified: boolean;
 }
 
-interface OAuthAccount {
-  user_id: string;
-}
-
 function getSql() {
   const databaseUrl = process.env.DATABASE_URL;
 
