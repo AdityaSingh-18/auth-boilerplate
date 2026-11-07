@@ -7,11 +7,11 @@ import { ArrowUpRight, Menu } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 
 const categories = [
-  { label: "Credentials", href: "/#credentials" },
-  { label: "Passwordless", href: "/#passwordless" },
-  { label: "Social", href: "/#social" },
-  { label: "Modern", href: "/#modern" },
-  { label: "Enterprise SSO", href: "/#enterprise-sso" },
+  { label: "Credentials", href: "/categories/credentials" },
+  { label: "Passwordless", href: "/categories/passwordless" },
+  { label: "Social", href: "/categories/social" },
+  { label: "Modern", href: "/categories/modern" },
+  { label: "Enterprise SSO", href: "/categories/enterprise-sso" },
 ];
 
 export function Navbar() {
@@ -81,7 +81,7 @@ export function Navbar() {
           ) : null}
 
           <Link
-            href="/#credentials"
+            href="/categories/credentials"
             className="rounded-lg bg-zinc-100 px-4 py-2.5 text-xs font-bold text-zinc-950 transition-all duration-300 hover:-translate-y-0.5 hover:bg-white"
           >
             Explore methods

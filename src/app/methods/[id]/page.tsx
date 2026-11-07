@@ -6,12 +6,18 @@ import {
   authCategories,
   getAuthMethodById,
 } from "@/data/auth-methods";
-import { loadTemplateFiles, listTemplateVariants } from "@/lib/templates";
+
+import {
+  loadTemplateFiles,
+  listTemplateVariants,
+} from "@/lib/templates";
+
 import { VariantDownloadControls } from "@/components/methods/variant-download-controls";
 import { SourceCodeSection } from "@/components/methods/source-code-section";
 import { FileOverview } from "@/components/methods/file-overview";
 import { DatabaseAdapterSection } from "@/components/methods/database-adapter-section";
 import { ApiContractSection } from "@/components/methods/api-contract-section";
+
 import { methodDocumentation } from "@/data/template-docs";
 
 export const instant = false;
@@ -42,7 +48,9 @@ export default async function MethodPage({
   );
 
   const variants = await listTemplateVariants(method.id);
-  const defaultVariant = variants.find((variant) => variant.isDefault) ?? variants[0];
+
+  const defaultVariant =
+    variants.find((variant) => variant.isDefault) ?? variants[0];
 
   const files = defaultVariant
     ? await loadTemplateFiles(method.id, defaultVariant.id)
@@ -75,8 +83,9 @@ export default async function MethodPage({
           {category && (
             <>
               <ChevronRight size={14} aria-hidden="true" />
+
               <Link
-                href={`/#${category.id}`}
+                href={`/categories/${category.id}`}
                 className="transition-colors hover:text-violet-300"
               >
                 {category.title}
@@ -86,7 +95,9 @@ export default async function MethodPage({
 
           <ChevronRight size={14} aria-hidden="true" />
 
-          <span className="text-zinc-300">{method.title}</span>
+          <span className="text-zinc-300">
+            {method.title}
+          </span>
         </nav>
 
         {/* Method header */}
@@ -136,19 +147,25 @@ export default async function MethodPage({
             />
 
             <p className="mt-4 text-xs leading-5 text-zinc-500">
-              The ZIP includes the selected variant folder, including its README, 
-              core implementation, and optional UI files.
+              The ZIP includes the selected variant folder, including its
+              README, core implementation, and optional UI files.
             </p>
           </section>
         )}
 
         <SourceCodeSection files={files} />
 
-        {documentation && <FileOverview documentation={documentation} />}
-        
-        {databaseAdapters.length > 0 && <DatabaseAdapterSection adapters={databaseAdapters} />}
-        
-        {methodDocs?.apiContracts && <ApiContractSection contracts={methodDocs.apiContracts} />}
+        {documentation && (
+          <FileOverview documentation={documentation} />
+        )}
+
+        {databaseAdapters.length > 0 && (
+          <DatabaseAdapterSection adapters={databaseAdapters} />
+        )}
+
+        {methodDocs?.apiContracts && (
+          <ApiContractSection contracts={methodDocs.apiContracts} />
+        )}
       </div>
     </main>
   );
