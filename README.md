@@ -18,7 +18,7 @@
   <img alt="Vercel Deployment" src="https://img.shields.io/badge/Vercel-Deployment-334155?logo=vercel&logoColor=white&labelColor=000000" />
 </p>
 
-> 🚧 **Work in progress.** Auth Boilerplate is an open catalog of **17 authentication methods** across **5 categories** (`Credentials`, `Passwordless`, `Social`, `Modern`, and `Enterprise SSO`). Rather than locking developers into a third-party auth vendor or forcing a rigid UI and database, every method provides a clean `core/` backend implementation with a single-file database adapter (`auth-db.ts`), optional reference UI wiring (`optional-ui/`), interactive Shiki code highlighting, function-level documentation, and one-click `.zip` downloads. Follow the [roadmap](#roadmap) below for commit-by-commit progress.
+> **Auth Boilerplate** is a catalog of 17 reusable authentication implementations across five categories: Credentials, Passwordless, Social, Modern, and Enterprise SSO. Explore each method, inspect its source code and implementation notes, compare documented database adapter examples, and download a ready-to-integrate ZIP package. The platform is a code catalog and download experience—not a hosted authentication service.
 
 ## Table of contents
 
@@ -35,15 +35,22 @@
 
 ## Overview
 
-**Auth Boilerplate** helps developers integrate authentication into their own projects without vendor lock-in. Users browse the catalog of 17 authentication methods, inspect the syntax-highlighted source files directly in the browser, read the file-by-file and function-by-function documentation, and download a self-contained `.zip` archive complete with a tailored `README.md` setup guide.
+**Auth Boilerplate** helps developers explore and integrate authentication implementations into their own applications. The website provides:
 
-**Core platform principles**
+- A catalog of 17 authentication methods grouped into five dedicated category pages.
+- Individual method pages with source-file browsing and server-rendered Shiki syntax highlighting.
+- Structured documentation covering files, functions, environment variables, security considerations, database adapter examples, and API request/response contracts.
+- Full-package and headless-core ZIP downloads for each available method and implementation variant.
+- Keyboard-accessible catalog search across authentication methods, categories, and documentation topics.
 
-- **Zero Platform Database Overhead:** The Auth Boilerplate website itself uses no database and runs 100% free on Vercel. All catalog metadata, documentation, and template source files live directly in the repository.
-- **Single Source of Truth (`templates/`):** The raw files inside `templates/[method-id]/[variant-id]/` power both the browser Shiki code viewer and the downloadable `.zip` bundle.
-- **Database-Agnostic via Adapter Pattern:** Downloaded auth code never hardcodes database queries inside API routes. All database reads/writes are isolated inside `core/lib/auth-db.ts`, with copy-paste snippets in each template's `README.md` for **Neon / PostgreSQL**, **MongoDB**, **MySQL**, and **Supabase**.
-- **Headless Core + Optional Reference UI:** Every downloadable template separates `core/` (required API routes, session/token helpers, and DB adapter) from `optional-ui/` (reference hooks and minimal forms) so developers can easily wire their own project's theme and components.
-- **Multi-Variant Ready:** The data schema supports multiple implementation variants per method (starting with `nextjs-app-router` as the flagship variant, with room for Express, Fastify, or Hono variants later).
+**Platform principles**
+
+- **No platform database:** The catalog registry and documentation are stored in the repository. The website does not require an application database or authentication-provider credentials to run.
+- **Repository-backed templates:** The root `templates/[methodId]/[variantId]/` directory is the source read by the server-side file loader and ZIP download handler.
+- **Inspectable implementations:** Users can inspect template files before downloading and review method-specific integration documentation.
+- **Optional reference UI:** Where included, `optional-ui/` provides example client-side wiring. The headless package can be selected when developers want to connect their own UI.
+- **Extensible variants:** The registry and template loader support variant directories. `nextjs-app-router` is the current implementation variant represented in the catalog.
+- **Not an authentication SaaS:** Auth Boilerplate does not create user accounts, manage application sessions, or authenticate visitors on behalf of developers. Those responsibilities belong to the downloaded implementation and the developer's application.
 
 ## Roadmap
 
@@ -64,7 +71,7 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 | 7 | Social OAuth boilerplates (7 methods) | ✅ Complete |
 | 8 | Modern auth boilerplates (2 methods) | ✅ Complete |
 | 9 | Enterprise SSO boilerplates (2 methods) | ✅ Complete |
-| 10 | Command palette search, SEO & release polish | 🚧 In progress |
+| 10 | Command palette search, SEO & release polish | ✅ Complete |
 
 ---
 
@@ -135,145 +142,213 @@ This README doubles as the project's commit-by-commit progress tracker. Update t
 - [x] **Step 9.1:** Implement dynamic OIDC `.well-known/openid-configuration` discovery, domain-based tenant lookup, ID token validation, `auth-db.ts`, and `README.md`; mark `oidc-sso` as `available`
 - [x] **Step 9.2:** Implement SP-initiated login redirect, Assertion Consumer Service (ACS) XML signature verification, attribute mapping, `auth-db.ts`, and `README.md`; mark `saml-sso` as `available`
 
-### Phase 10 — Command palette search, SEO & release polish 🚧
+### Phase 10 — Command palette search, SEO & release polish ✅
 
 - [x] **Step 10.1:** Build instant keyboard-accessible search across all 17 auth methods, categories, and documentation topics
 - [x] **Step 10.2:** Create dedicated landing pages for all five authentication categories, with category introductions, visual hero sections, relevant UI images, authentication method cards, feature highlights, animations, and navigation to individual method detail pages
 - [x] **Step 10.3:** Add SEO metadata, Open Graph images, canonical URLs, sitemap, robots.txt, and structured metadata for the homepage, category pages, and authentication method pages
 - [x] **Step 10.4:** Polish responsive layouts, accessibility, loading states, transitions, and overall UI consistency
-- [ ] **Step 10.5:** Complete production checks, documentation review, and release preparation
+- [x] **Step 10.5:** Complete production checks, documentation review, and release preparation
 
 ---
 
 ## Tech stack
 
-### 1. The Auth Boilerplate Platform (This Website)
+### 1. Auth Boilerplate platform
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
-| Framework | Next.js (App Router) | Server Components for zero-bundle code rendering & API routes for `.zip` streaming |
-| Language | TypeScript | Strict typing across the method registry, documentation blocks, and templates |
-| Styling | Tailwind CSS | Responsive developer-focused dark UI |
-| Syntax Highlighting | Shiki | Server-side syntax highlighting (`codeToHtml`) with VS Code theme accuracy |
-| Icons | `lucide-react` | Category, method, and file-tree iconography |
-| Brand Icons | `react-icons` | Official social provider logos for authentication methods |
-| Archive Bundler | `jszip` | On-demand `.zip` generation directly from the `templates/` directory |
-| Hosting | Vercel (Free Hobby Tier) | Stateless deployment with zero database required |
+| Framework | Next.js 16 App Router | Server-rendered catalog and method pages, metadata, and Route Handlers |
+| Language | TypeScript | Typed catalog data, template models, documentation, and server utilities |
+| UI | React 19 | Interactive catalog controls, file explorer, search, and download controls |
+| Styling | Tailwind CSS 4 | Responsive layouts, component styling, and dark visual theme |
+| Syntax highlighting | Shiki | Server-side highlighting of template source files |
+| Markdown | `react-markdown`, `remark-gfm` | Rendering template README files with GitHub-Flavored Markdown support |
+| Icons | `lucide-react`, `react-icons` | Interface icons and social-provider brand icons |
+| ZIP generation | `jszip` | Creates downloadable full and core-only template archives |
+| Package manager | pnpm | Dependency installation and project scripts |
+| Hosting target | Vercel | Deployment of the Next.js platform |
 
-### 2. The Downloadable Auth Templates (Inside Each `.zip`)
+### 2. Downloaded authentication implementations
 
-| Layer | Technology | Purpose |
-|-------|------------|---------|
-| HTTP Handlers | Next.js App Router Route Handlers | Clean `POST`/`GET` endpoints under `app/api/auth/...` |
-| Session & Tokens | `jose` + Web Crypto API | Edge-compatible stateless `httpOnly` JWT sessions, CSRF state, and hashing |
-| Database Layer | Single-file `core/lib/auth-db.ts` | Adapter pattern with ready-to-paste snippets for **PostgreSQL (Neon)**, **MongoDB**, **MySQL**, and **Supabase** |
-| Optional UI | React + Tailwind CSS (Optional) | Minimal reference hooks & unopinionated forms showing how to connect any UI |
+The downloadable code is method-specific. Depending on the selected method, implementations can use:
+
+| Technology | Role in applicable templates |
+|------------|------------------------------|
+| Next.js App Router Route Handlers | HTTP endpoints for authentication flows |
+| `jose` | JWT signing and verification where token-based sessions or state are used |
+| Web Crypto API | Cryptographic operations such as hashing and random value generation |
+| `@neondatabase/serverless` | Neon serverless PostgreSQL connectivity in applicable implementations |
+| `@simplewebauthn/server` and `@simplewebauthn/browser` | Server and browser WebAuthn/passkey flows |
+| `@node-saml/node-saml` | SAML service-provider flows |
+| `nodemailer` | Email delivery integration in applicable templates |
+| `libphonenumber-js` | Phone-number parsing and validation in applicable templates |
+
+Not every dependency or database adapter applies to every authentication method. Refer to the individual method page and the README included in its downloaded package for the exact requirements.
 
 ## Project structure
+
+The following tree reflects the platform source. The root `templates/` directory is intentionally shown as a separate source directory because the server reads it at runtime; it is not part of `src/`.
 
 ```text
 auth-boilerplate/
 ├── public/
-│   └── logo.svg
+│   ├── logo.png
+│   └── auth-banner.png
 ├── src/
 │   ├── app/
 │   │   ├── api/
-│   │   │   └── download/
-│   │   │       └── [id]/
-│   │   │           └── route.ts         # Streams the .zip package for a given auth method
+│   │   │   └── templates/
+│   │   │       └── [methodId]/
+│   │   │           └── [variantId]/
+│   │   │               └── download/
+│   │   │                   └── route.ts
+│   │   ├── categories/
+│   │   │   └── [id]/
+│   │   │       └── page.tsx
 │   │   ├── methods/
 │   │   │   └── [id]/
-│   │   │       └── page.tsx             # Method detail page (Shiki viewer + Architecture Docs)
+│   │   │       └── page.tsx
+│   │   ├── opengraph-image.tsx
+│   │   ├── twitter-image.tsx
+│   │   ├── sitemap.ts
+│   │   ├── robots.ts
 │   │   ├── globals.css
-│   │   ├── layout.tsx                   # Global shell & navbar
-│   │   └── page.tsx                     # Catalog home with category filters & search
+│   │   ├── layout.tsx
+│   │   └── page.tsx
 │   ├── components/
 │   │   ├── catalog/
-│   │   │   ├── CategoryTabs.tsx
-│   │   │   └── MethodCard.tsx
-│   │   ├── method-detail/
-│   │   │   ├── CodeExplorer.tsx         # File tree + Shiki code panel + Copy button
-│   │   │   ├── DbAdapterTabs.tsx        # Postgres/Neon, Mongo, MySQL, Supabase switcher
-│   │   │   ├── DownloadButton.tsx       # Triggers full or core-only .zip download
-│   │   │   └── FunctionDocs.tsx         # Explains every file, function, and API payload
-│   │   └── layout/
-│   │       ├── Navbar.tsx
-│   │       └── CommandMenu.tsx          # Ctrl+K search modal
+│   │   ├── categories/
+│   │   ├── layout/
+│   │   ├── methods/
+│   │   ├── search/
+│   │   └── seo/
 │   ├── data/
-│   │   ├── auth-methods.ts              # 5 categories & 17 auth methods registry
-│   │   └── method-docs/                 # Structured documentation & DB adapter snippets per method
+│   │   ├── template-docs/
+│   │   │   ├── [method-id]/
+│   │   │   └── index.ts
+│   │   ├── auth-methods.ts
+│   │   └── category-content.ts
 │   ├── lib/
-│   │   ├── shiki.ts                     # Shiki highlighter singleton
-│   │   └── templates.ts                 # Reads raw files from templates/ for UI & ZIP
+│   │   ├── search/
+│   │   │   └── search-index.ts
+│   │   ├── seo.ts
+│   │   ├── shiki.ts
+│   │   └── templates.ts
 │   └── types/
-│       └── auth.ts                      # Types for categories, methods, variants & docs
-├── templates/                           # Single source of truth for viewable & downloadable code
-│   ├── email-password/
-│   │   └── nextjs-app-router/           # Default flagship variant
-│   │       ├── README.md                # Step-by-step integration & DB setup instructions
-│   │       ├── core/                    # REQUIRED: Headless backend auth logic
-│   │       │   ├── api/auth/...         # Route handlers (login, register, logout, me)
-│   │       │   └── lib/
-│   │       │       ├── auth-db.ts       # <-- The ONLY file users edit for their database
-│   │       │       ├── password.ts      # Cryptographic hashing & verification
-│   │       │       └── session.ts       # Stateless httpOnly cookie session manager
-│   │       └── optional-ui/             # OPTIONAL: Reference client wiring & minimal form
-│   │           ├── use-auth.ts
-│   │           └── AuthFormExample.tsx
-│   └── ... (all 17 methods)
+│       └── auth.ts
+├── templates/
+│   └── [method-id]/
+│       └── [variant-id]/
+│           ├── README.md
+│           ├── .env.example
+│           ├── core/
+│           └── optional-ui/
+├── next.config.ts
+├── package.json
+├── pnpm-workspace.yaml
+├── tsconfig.json
 └── README.md
 ```
+
+**Important directories**
+
+- `src/data/auth-methods.ts` — the five category definitions and 17 authentication method records.
+- `src/data/category-content.ts` — content used by the dedicated category landing pages.
+- `src/data/template-docs/` — method-specific file overviews, function documentation, environment-variable notes, security notes, database adapter examples, and API contracts.
+- `src/lib/templates.ts` — validates method and variant identifiers, reads template files recursively, skips symbolic links, and lists available variants.
+- `src/lib/shiki.ts` — shared Shiki highlighter used by the source viewer and documentation UI.
+- `src/lib/search/search-index.ts` — searchable catalog and documentation index.
+- `src/lib/seo.ts` — canonical URL, page metadata, Open Graph, and Twitter metadata helpers.
+- `templates/` — actual downloadable implementation files. Keep this directory in the deployed repository; the platform reads it at runtime.
 
 ## Architecture
 
 ```mermaid
 flowchart TD
-    subgraph Repo["Repository Single Source of Truth"]
-        T["templates/[method-id]/[variant-id]/<br/>├── README.md<br/>├── core/ (API + lib/auth-db.ts)<br/>└── optional-ui/"]
-        D["src/data/auth-methods.ts<br/>Categories, Methods & Docs Registry"]
+    subgraph Repository["Repository"]
+        Registry["src/data/auth-methods.ts"]
+        Docs["src/data/template-docs/"]
+        Templates["templates/[methodId]/[variantId]/"]
+        CategoryContent["src/data/category-content.ts"]
     end
 
-    subgraph Platform["Auth Boilerplate Website (Next.js on Vercel)"]
-        C["Catalog Home (/)<br/>Filter by Category & Status"]
-        M["Method Detail Page (/methods/[id])"]
-        S["Server-Side Shiki Viewer<br/>Syntax-highlighted file explorer"]
-        DOC["Interactive Documentation<br/>File/Function Reference + DB Snippets"]
-        Z["GET /api/download/[id]?mode=full|core<br/>JSZip On-Demand Stream"]
+    subgraph Website["Auth Boilerplate platform"]
+        Home["Home page /"]
+        Categories["Category pages /categories/[id]"]
+        Method["Method pages /methods/[id]"]
+        Search["Command palette search"]
+        Viewer["Template file explorer + Shiki"]
+        Documentation["File, function, security, adapter and API docs"]
+        Download["GET /api/templates/[methodId]/[variantId]/download"]
+        SEO["Metadata, JSON-LD, sitemap and robots"]
     end
 
-    subgraph Developer["Developer's Own Project"]
-        ZIP["Downloaded auth-[method].zip"]
-        CORE["Drop core/ into project"]
-        DB["Edit ONLY core/lib/auth-db.ts<br/>(Postgres / Neon / Mongo / MySQL / Supabase)"]
-        UI["Connect existing project UI<br/>(or copy optional-ui/ reference)"]
+    subgraph Developer["Developer"]
+        FullZIP["Full ZIP package"]
+        CoreZIP["Core-only ZIP package"]
+        Integration["Integrate into own application"]
     end
 
-    D --> C
-    C --> M
-    T --> S
-    T --> Z
-    D --> DOC
-    M --> S
-    M --> DOC
-    M --> Z
-    Z --> ZIP
-    ZIP --> CORE
-    CORE --> DB
-    CORE --> UI
+    Registry --> Home
+    Registry --> Categories
+    Registry --> Method
+    CategoryContent --> Categories
+    Docs --> Documentation
+    Templates --> Viewer
+    Templates --> Download
+    Registry --> Search
+    Docs --> Search
+    Method --> Viewer
+    Method --> Documentation
+    Method --> Download
+    SEO --> Home
+    SEO --> Categories
+    SEO --> Method
+    Download --> FullZIP
+    Download --> CoreZIP
+    FullZIP --> Integration
+    CoreZIP --> Integration
 ```
+
+The catalog registry and documentation are imported by the Next.js application. Template source files are loaded from the repository on the server. The method detail page combines the selected method's metadata, available template variants, source files, and structured documentation. The download Route Handler uses the same template loader to assemble a ZIP archive on demand.
+
+The platform does not run the downloaded authentication flows itself. Developers download the package and integrate the code into their own Next.js application, database, provider configuration, and UI.
 
 ## Template design (DB-agnostic & optional UI)
 
-Every project has its own UI design system and its own database choice. To make every boilerplate universal with minimal changes, each method's template is divided into two clear parts:
+Each downloadable method is stored under:
 
-### 1. `core/` (Required Headless Auth Engine)
-Contains all Next.js API route handlers, token/session cryptography, and `core/lib/auth-db.ts`.
-- **No Database Lock-In:** Route handlers never import `pg`, `mongoose`, `mysql2`, or `@supabase/supabase-js` directly. Instead, they call typed functions on `authDb` (such as `authDb.findUserByEmail(email)` or `authDb.createUser(data)`).
-- **One File to Edit:** Developers only open `core/lib/auth-db.ts` and paste the snippet for their database from the included `README.md` (with ready-made implementations for **Neon Serverless Postgres**, **MongoDB**, **MySQL**, and **Supabase**).
+```text
+templates/
+└── [method-id]/
+    └── [variant-id]/
+        ├── README.md
+        ├── .env.example
+        ├── core/
+        └── optional-ui/
+```
 
-### 2. `optional-ui/` (Optional Reference Wiring)
-Because every application has its own theme and component library, UI files are strictly optional.
-- Developers can either download the **Core-Only `.zip`** and connect their existing forms to the documented JSON endpoints, or inspect `optional-ui/` to see a clean `fetch()` hook and minimal form example.
+### 1. `core/` — authentication implementation
+
+The `core/` directory contains the required server-side implementation for the selected method. Depending on the flow, it can include Route Handler files, cryptographic helpers, session/token utilities, provider configuration, and database access code.
+
+### 2. `optional-ui/` — reference interface
+
+The `optional-ui/` directory contains optional client-side examples when the method provides them. Developers can use these as a starting point or connect their own components to the documented API contracts.
+
+### 3. Database adapter documentation
+
+Method pages can display database adapter examples alongside the source viewer. Each adapter entry identifies its package, environment variables, setup instructions, code example, and whether it is implemented or illustrative. Check the individual method page and downloaded README before treating an example as a production-ready adapter.
+
+### 4. Download package contents
+
+The download endpoint supports two package types:
+
+- **Full package (`package=full`):** includes `README.md`, `.env.example` when present, all `core/` files, and `optional-ui/` files when present.
+- **Core-only package (`package=core`):** includes `README.md`, `.env.example` when present, and `core/` files. It excludes `optional-ui/`.
+
+The generated archive places files inside the selected variant directory, for example `nextjs-app-router/README.md` and `nextjs-app-router/core/...`.
 
 ## Authentication catalog
 
@@ -301,18 +376,33 @@ All 17 methods defined in `src/data/auth-methods.ts`:
 
 ## API routes
 
-### Platform API Routes (Auth Boilerplate Website)
+### Platform API routes
 
 | Route | Method | Description |
 |-------|--------|-------------|
-| `/api/download/[id]` | `GET` | Packages `templates/[id]/[variant]` into a `.zip` stream. Supports `?variant=nextjs-app-router` and `?includeUi=true\|false`. |
+| `/api/templates/[methodId]/[variantId]/download` | `GET` | Generates and returns a ZIP archive for the requested authentication method and implementation variant. |
+
+**Query parameters**
+
+| Parameter | Values | Default | Description |
+|-----------|--------|---------|-------------|
+| `package` | `full`, `core` | `full` | Selects the full package or the headless core-only package. |
+
+Example:
+
+```text
+/api/templates/email-password/nextjs-app-router/download?package=full
+/api/templates/email-password/nextjs-app-router/download?package=core
+```
+
+The route returns a ZIP response with an attachment filename. Invalid package values return `400`; a missing template returns `404`. The website does not expose the authentication endpoints contained inside the downloaded templates as platform API routes.
 
 ## Getting started
 
 ### Prerequisites
 
-- Node.js 20 or later
-- `pnpm` (or `npm` / `bun`)
+- Node.js 20 or later.
+- pnpm 10.26.1 (the repository declares its package manager in `package.json`).
 
 ### 1. Clone the repository
 
@@ -321,33 +411,93 @@ git clone https://github.com/<your-username>/auth-boilerplate.git
 cd auth-boilerplate
 ```
 
+Replace `<your-username>` with the GitHub account or organization that hosts the repository.
+
 ### 2. Install dependencies
 
 ```bash
 pnpm install
 ```
 
-No `.env` file or database is required to run the **Auth Boilerplate** website locally.
+### 3. Configure the site URL
 
-### 3. Run the development server
+The platform does not require a database or authentication-provider secrets to run. For local development, the SEO helper defaults the site URL to `http://localhost:3000`.
+
+When using a different local URL or preparing a deployment, set:
+
+```dotenv
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
+
+For production, replace the value with the canonical deployed origin, for example:
+
+```dotenv
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
+```
+
+This value is used to generate canonical URLs, Open Graph/Twitter URLs, structured metadata, and the sitemap. Set it in the deployment environment before building the production site.
+
+### 4. Run the development server
 
 ```bash
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000).
 
-### 4. Type-check and verify build
+### 5. Run checks and create a production build
 
 ```bash
 pnpm exec tsc --noEmit
+pnpm lint
 pnpm build
 ```
 
+To run the built application locally:
+
+```bash
+pnpm start
+```
+
+### Available package scripts
+
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Starts the Next.js development server. |
+| `pnpm build` | Creates the production build. |
+| `pnpm start` | Starts the production server after a build. |
+| `pnpm lint` | Runs ESLint. |
+| `pnpm exec tsc --noEmit` | Runs the TypeScript compiler without emitting files. |
+
+## Deployment
+
+### Deploy to Vercel
+
+1. Push the project to a GitHub repository.
+2. In Vercel, choose **Add New → Project** and import the repository.
+3. Keep the detected **Next.js** framework preset.
+4. Use `pnpm install` for dependency installation and `pnpm build` for the build command, unless Vercel detects these automatically.
+5. Add the production environment variable:
+
+   ```dotenv
+   NEXT_PUBLIC_SITE_URL=https://your-production-domain.com
+   ```
+
+6. Deploy the project.
+7. If you connect a custom domain, update `NEXT_PUBLIC_SITE_URL` to that canonical domain and redeploy.
+
+No platform database or authentication-provider environment variables are required by the website itself. Provider credentials and database variables belong to the individual downloaded authentication implementations, not to the catalog deployment.
+
+**Deployment note:** Keep the root `templates/` directory in the Git repository and in the Vercel deployment. The server-side template loader reads those files when rendering method pages and generating downloads.
+
 ## Contributing
 
-We follow a strict commit-by-commit flow matching the [Roadmap](#roadmap):
+We follow a commit-by-commit workflow that matches the [Roadmap](#roadmap):
+
 1. Pick the next unchecked step (`[ ]`) in the active phase.
-2. Implement the files for that step and verify with `tsc --noEmit`.
-3. Mark the step as `[x]` in `README.md` inside the exact same commit.
-4. Commit using the conventional commit message listed in the roadmap step.
+2. Implement the relevant platform or template files.
+3. Run the applicable checks, including `pnpm exec tsc --noEmit`, `pnpm lint`, and `pnpm build`.
+4. Update the relevant roadmap checklist in `README.md` in the same commit that completes the step.
+5. Commit the changes using a clear conventional commit message.
+
+When contributing authentication templates, include accurate setup instructions, required environment variables, API contracts, and security limitations. Clearly distinguish implemented database adapters from illustrative examples. Never commit real secrets, provider credentials, private keys, or production environment files.
