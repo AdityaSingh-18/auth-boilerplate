@@ -16,13 +16,15 @@ interface CategoryVisualProps {
   categoryId: AuthCategoryId;
 }
 
+interface VisualFrameProps {
+  children: React.ReactNode;
+  label: string;
+}
+
 function VisualFrame({
   children,
   label,
-}: {
-  children: React.ReactNode;
-  label: string;
-}) {
+}: VisualFrameProps) {
   return (
     <div className="relative mx-auto w-full max-w-md">
       <div
@@ -308,8 +310,8 @@ export function CategoryVisual({
   const content = categoryContent[categoryId];
 
   return (
-    <section
-      aria-label={content.visualLabel}
+    <div
+      aria-hidden="true"
       className="relative"
     >
       <div className="mb-5 text-center">
@@ -321,9 +323,9 @@ export function CategoryVisual({
         </p>
       </div>
 
-      <div className="animate-in fade-in duration-700">
+      <div className="animate-in fade-in duration-700 motion-reduce:animate-none">
         <Visual />
       </div>
-    </section>
+    </div>
   );
 }

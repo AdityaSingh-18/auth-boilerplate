@@ -4,12 +4,14 @@ import { ArrowUpRight } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 
 const categories = [
-  { label: "Credentials", href: "/#credentials" },
-  { label: "Passwordless", href: "/#passwordless" },
-  { label: "Social OAuth", href: "/#social" },
-  { label: "Modern Auth", href: "/#modern" },
-  { label: "Enterprise SSO", href: "/#enterprise-sso" },
+  { label: "Credentials", href: "/categories/credentials" },
+  { label: "Passwordless", href: "/categories/passwordless" },
+  { label: "Social OAuth", href: "/categories/social" },
+  { label: "Modern Auth", href: "/categories/modern" },
+  { label: "Enterprise SSO", href: "/categories/enterprise-sso" },
 ];
+
+const focusClasses = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#09080f]";
 
 export function Footer() {
   const githubUrl = process.env.NEXT_PUBLIC_GITHUB_URL;
@@ -18,13 +20,12 @@ export function Footer() {
     <footer className="border-t border-white/[0.08] bg-[#09080f]">
       <div className="mx-auto max-w-7xl px-5 pb-6 pt-14 sm:px-8">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr] lg:gap-16">
-
           {/* Brand */}
           <div className="max-w-sm">
             <Link
               href="/"
               aria-label="Auth Boilerplate home"
-              className="group inline-flex items-center gap-1"
+              className={`group inline-flex items-center gap-1 ${focusClasses}`}
             >
               <Image
                 src="/logo.png"
@@ -46,16 +47,18 @@ export function Footer() {
               download, and integrate into your next project.
             </p>
 
-            <a
-              href={githubUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-5 inline-flex items-center gap-2 text-xs text-violet-300 transition hover:text-white"
-            >
-              <FaGithub size={15} />
-              View source on GitHub
-              <ArrowUpRight size={12} />
-            </a>
+            {githubUrl ? (
+              <a
+                href={githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`mt-5 inline-flex items-center gap-2 text-xs text-violet-300 transition-colors hover:text-white ${focusClasses}`}
+              >
+                <FaGithub size={15} aria-hidden="true" />
+                View source on GitHub
+                <ArrowUpRight size={12} aria-hidden="true" />
+              </a>
+            ) : null}
           </div>
 
           {/* Categories */}
@@ -69,7 +72,7 @@ export function Footer() {
                 <li key={category.href}>
                   <Link
                     href={category.href}
-                    className="text-xs text-zinc-500 transition hover:text-zinc-200"
+                    className={`text-xs text-zinc-500 transition-colors hover:text-zinc-200 ${focusClasses}`}
                   >
                     {category.label}
                   </Link>
@@ -88,22 +91,24 @@ export function Footer() {
               <li>
                 <Link
                   href="/"
-                  className="text-xs text-zinc-500 transition hover:text-zinc-200"
+                  className={`text-xs text-zinc-500 transition-colors hover:text-zinc-200 ${focusClasses}`}
                 >
                   Home
                 </Link>
               </li>
 
-              <li>
-                <a
-                  href={githubUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-xs text-zinc-500 transition hover:text-zinc-200"
-                >
-                  GitHub repository
-                </a>
-              </li>
+              {githubUrl ? (
+                <li>
+                  <a
+                    href={githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`text-xs text-zinc-500 transition-colors hover:text-zinc-200 ${focusClasses}`}
+                  >
+                    GitHub repository
+                  </a>
+                </li>
+              ) : null}
             </ul>
           </div>
         </div>

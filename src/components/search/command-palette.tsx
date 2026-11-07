@@ -41,6 +41,8 @@ const subscribe = () => () => {};
 const getSnapshot = () => true;
 const getServerSnapshot = () => false;
 
+const focusClasses = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-inset";
+
 export function CommandPalette() {
   const router = useRouter();
   const inputId = useId();
@@ -81,6 +83,7 @@ export function CommandPalette() {
   const openPalette = useCallback(() => {
     setQuery("");
     setActiveIndex(0);
+    resultRefs.current = [];
     setIsOpen(true);
   }, []);
 
@@ -88,8 +91,9 @@ export function CommandPalette() {
     setIsOpen(false);
     setQuery("");
     setActiveIndex(0);
+    resultRefs.current = [];
 
-    requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
       triggerRef.current?.focus();
     });
   }, []);
@@ -171,6 +175,11 @@ export function CommandPalette() {
       block: "nearest",
     });
   }, [activeIndex, isOpen, results]);
+
+  // Reset result references when the result list changes.
+  useEffect(() => {
+    resultRefs.current = [];
+  }, [query]);
 
   const handleInputKeyDown = (
     event: ReactKeyboardEvent<HTMLInputElement>,
@@ -295,14 +304,14 @@ export function CommandPalette() {
             }}
             onKeyDown={handleInputKeyDown}
             placeholder="Search methods, categories, documentation..."
-            className="h-16 min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white/40"
+            className={`h-16 min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white/40 ${focusClasses}`}
           />
 
           <button
             type="button"
             onClick={closePalette}
             aria-label="Close search"
-            className="grid size-9 shrink-0 place-items-center rounded-lg text-white/50 transition hover:bg-white/10 hover:text-white"
+            className={`grid size-9 shrink-0 place-items-center rounded-lg text-white/50 transition-colors hover:bg-white/10 hover:text-white ${focusClasses}`}
           >
             <X className="h-4 w-4" aria-hidden="true" />
           </button>
@@ -315,10 +324,21 @@ export function CommandPalette() {
           aria-label="Search results"
           className="min-h-0 flex-1 overflow-y-auto overscroll-contain bg-[#111018] p-3"
         >
+          <p className="sr-only" aria-live="polite" aria-atomic="true">
+            {query.trim()
+              ? results.length === 0
+                ? "No search results found."
+                : `${results.length} search results found.`
+              : "Search authentication boilerplates."}
+          </p>
+
           {!query.trim() ? (
             <div className="px-4 py-14 text-center">
               <div className="mx-auto mb-4 grid size-12 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
-                <Search className="size-5 text-violet-300" />
+                <Search
+                  className="size-5 text-violet-300"
+                  aria-hidden="true"
+                />
               </div>
 
               <p className="text-sm font-medium text-white">
@@ -332,7 +352,10 @@ export function CommandPalette() {
           ) : results.length === 0 ? (
             <div className="px-4 py-14 text-center">
               <div className="mx-auto mb-4 grid size-12 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
-                <Search className="size-5 text-white/30" />
+                <Search
+                  className="size-5 text-white/30"
+                  aria-hidden="true"
+                />
               </div>
 
               <p className="text-sm font-medium text-white">
@@ -379,7 +402,7 @@ export function CommandPalette() {
                           onMouseEnter={() =>
                             setActiveIndex(currentIndex)
                           }
-                          className={`flex items-center gap-3 rounded-xl border px-3 py-3 transition-colors ${
+                          className={`flex items-center gap-3 rounded-xl border px-3 py-3 transition-colors ${focusClasses} ${
                             isActive
                               ? "border-violet-400/20 bg-violet-500/10"
                               : "border-transparent hover:bg-white/[0.04]"
@@ -432,13 +455,13 @@ export function CommandPalette() {
         <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-white/10 bg-[#111018] px-4 py-3 text-[11px] text-white/45">
           <div className="flex items-center gap-4">
             <span className="inline-flex items-center gap-1.5">
-              <ArrowUp className="size-3" />
-              <ArrowDown className="size-3" />
+              <ArrowUp className="size-3" aria-hidden="true" />
+              <ArrowDown className="size-3" aria-hidden="true" />
               Navigate
             </span>
 
             <span className="inline-flex items-center gap-1.5">
-              <CornerDownLeft className="size-3" />
+              <CornerDownLeft className="size-3" aria-hidden="true" />
               Open
             </span>
           </div>
@@ -461,7 +484,7 @@ export function CommandPalette() {
         type="button"
         onClick={openPalette}
         aria-label="Open search"
-        className="inline-flex h-10 items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 text-sm text-zinc-400 transition-colors hover:border-violet-400/30 hover:bg-white/[0.08] hover:text-white"
+        className={`inline-flex h-10 items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 text-sm text-zinc-400 transition-colors hover:border-violet-400/30 hover:bg-white/[0.08] hover:text-white ${focusClasses}`}
       >
         <Search className="size-4" aria-hidden="true" />
 

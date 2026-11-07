@@ -21,7 +21,7 @@ function PayloadExample({
   if (!payload.description && !content) return null;
 
   return (
-    <div>
+    <div className="min-w-0">
       <p className="mb-2 text-[15px] text-zinc-200">{title}</p>
 
       {payload.description && (
@@ -31,8 +31,8 @@ function PayloadExample({
       )}
 
       {content && (
-        <pre className="overflow-x-auto rounded-lg bg-black/30 p-4 text-sm leading-6 text-zinc-300">
-          {content}
+        <pre className="max-w-full overflow-x-auto rounded-lg bg-black/30 p-4 text-sm leading-6 text-zinc-300">
+          <code>{content}</code>
         </pre>
       )}
     </div>
@@ -45,11 +45,18 @@ export function ApiContractSection({
   if (contracts.length === 0) return null;
 
   return (
-    <section className="mt-6 space-y-5">
+    <section
+      aria-labelledby="api-contracts-heading"
+      className="mt-6 space-y-5"
+    >
       <div>
-        <h3 className="text-xl font-semibold text-white">
+        <h3
+          id="api-contracts-heading"
+          className="text-xl font-semibold text-white"
+        >
           API request &amp; response contracts
         </h3>
+
         <p className="mt-1 text-sm text-zinc-400">
           Reference the following API contracts when connecting a custom
           authentication UI.
@@ -58,17 +65,17 @@ export function ApiContractSection({
 
       <div className="space-y-4">
         {contracts.map((contract, index) => (
-          <div
+          <article
             key={`${contract.method}-${contract.endpoint}-${index}`}
-            className="space-y-4 rounded-xl border border-white/10 bg-zinc-900 p-4"
+            className="min-w-0 space-y-4 rounded-xl border border-white/10 bg-zinc-900 p-4"
           >
-            <div>
+            <div className="min-w-0">
               <div className="mb-3 flex flex-wrap items-center gap-3">
-                <span className="rounded-md bg-green-500/10 px-2 py-1 text-xs font-semibold text-green-400">
+                <span className="shrink-0 rounded-md bg-green-500/10 px-2 py-1 text-xs font-semibold text-green-400">
                   {contract.method}
                 </span>
 
-                <code className="text-sm text-zinc-200">
+                <code className="min-w-0 break-all text-sm text-zinc-200">
                   {contract.endpoint}
                 </code>
               </div>
@@ -87,7 +94,7 @@ export function ApiContractSection({
               title="Response"
               payload={contract.response}
             />
-          </div>
+          </article>
         ))}
       </div>
     </section>

@@ -27,13 +27,19 @@ export function FileOverview({
   documentation,
 }: FileOverviewProps) {
   return (
-    <section className="mt-12 space-y-8">
+    <section
+      aria-labelledby="implementation-overview-heading"
+      className="mt-12 space-y-8"
+    >
       <div>
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-violet-300">
           Implementation guide
         </p>
 
-        <h2 className="mt-2 text-3xl font-bold tracking-tight text-white">
+        <h2
+          id="implementation-overview-heading"
+          className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl"
+        >
           Understanding this implementation
         </h2>
 
@@ -46,7 +52,10 @@ export function FileOverview({
       {documentation.files.length > 0 && (
         <div>
           <div className="mb-4 flex items-center gap-2">
-            <FileText className="h-4 w-4 text-violet-300" />
+            <FileText
+              aria-hidden="true"
+              className="h-4 w-4 text-violet-300"
+            />
             <h3 className="text-base font-semibold text-white">
               File overview
             </h3>
@@ -59,7 +68,10 @@ export function FileOverview({
                 className="flex flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center"
               >
                 <div className="flex min-w-0 flex-1 gap-3">
-                  <FileCode2 className="mt-0.5 h-4 w-4 shrink-0 text-violet-300" />
+                  <FileCode2
+                    aria-hidden="true"
+                    className="mt-0.5 h-4 w-4 shrink-0 text-violet-300"
+                  />
 
                   <div className="min-w-0">
                     <p className="break-all font-mono text-xs text-zinc-200">
@@ -97,7 +109,10 @@ export function FileOverview({
       {documentation.functions.length > 0 && (
         <div>
           <div className="mb-4 flex items-center gap-2">
-            <FileCode2 className="h-4 w-4 text-violet-300" />
+            <FileCode2
+              aria-hidden="true"
+              className="h-4 w-4 text-violet-300"
+            />
             <h3 className="text-base font-semibold text-white">
               Function documentation
             </h3>
@@ -107,21 +122,24 @@ export function FileOverview({
             {documentation.functions.map((fn) => (
               <article
                 key={fn.name}
-                className="rounded-xl border border-white/10 bg-white/[0.02] p-4"
+                className="min-w-0 rounded-xl border border-white/10 bg-white/[0.02] p-4"
               >
-                <h4 className="font-mono text-sm text-violet-300">
+                <h4 className="break-words font-mono text-sm text-violet-300">
                   {fn.name}
                 </h4>
+
                 <p className="mt-2 text-sm leading-6 text-zinc-400">
                   {fn.description}
                 </p>
-                <pre className="mt-3 overflow-x-auto rounded-lg bg-black/30 p-3 text-xs text-zinc-300">
+
+                <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-black/30 p-3 text-xs text-zinc-300">
                   <code className="whitespace-pre">
                     {fn.signature}
                   </code>
                 </pre>
+
                 {fn.example && (
-                  <pre className="mt-2 overflow-x-auto rounded-lg bg-black/30 p-3 text-xs text-zinc-300">
+                  <pre className="mt-2 max-w-full overflow-x-auto rounded-lg bg-black/30 p-3 text-xs text-zinc-300">
                     <code className="whitespace-pre">
                       {fn.example}
                     </code>
@@ -136,7 +154,10 @@ export function FileOverview({
       {/* Environment variables */}
       <div>
         <div className="mb-4 flex items-center gap-2">
-          <KeyRound className="h-4 w-4 text-violet-300" />
+          <KeyRound
+            aria-hidden="true"
+            className="h-4 w-4 text-violet-300"
+          />
           <h3 className="text-base font-semibold text-white">
             Environment variables
           </h3>
@@ -147,17 +168,18 @@ export function FileOverview({
             {documentation.environmentVariables.map((variable) => (
               <div
                 key={variable.name}
-                className="rounded-xl border border-white/10 bg-white/[0.02] p-4"
+                className="min-w-0 rounded-xl border border-white/10 bg-white/[0.02] p-4"
               >
-                <code className="flex flex-wrap text-sm font-semibold text-violet-300">
+                <code className="break-all text-sm font-semibold text-violet-300">
                   {variable.name}
                 </code>
 
                 <p className="mt-2 text-sm leading-6 text-zinc-400">
                   {variable.description}
                 </p>
+
                 {variable.example && (
-                  <pre className="mt-3 overflow-x-auto rounded-lg bg-black/30 p-3 text-xs text-zinc-300">
+                  <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-black/30 p-3 text-xs text-zinc-300">
                     <code className="whitespace-pre">
                       {variable.example}
                     </code>
@@ -177,7 +199,10 @@ export function FileOverview({
       {documentation.securityNotes.length > 0 && (
         <div>
           <div className="mb-4 flex items-center gap-2">
-            <ShieldCheck className="h-4 w-4 text-violet-300" />
+            <ShieldCheck
+              aria-hidden="true"
+              className="h-4 w-4 text-violet-300"
+            />
             <h3 className="text-base font-semibold text-white">
               Security notes
             </h3>
@@ -189,9 +214,12 @@ export function FileOverview({
                 key={note.title}
                 className="flex gap-3 rounded-xl border border-amber-500/20 bg-amber-500/[0.04] p-4"
               >
-                <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
+                <AlertTriangle
+                  aria-hidden="true"
+                  className="mt-0.5 h-4 w-4 shrink-0 text-amber-400"
+                />
 
-                <div>
+                <div className="min-w-0">
                   <h4 className="text-sm font-semibold text-zinc-200">
                     {note.title}
                   </h4>

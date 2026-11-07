@@ -27,13 +27,19 @@ export async function SourceCodeSection({
   );
 
   return (
-    <section className="mt-12">
+    <section
+      aria-labelledby="source-code-heading"
+      className="mt-12 min-w-0"
+    >
       <div className="mb-6">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-violet-300">
           Source code
         </p>
 
-        <h2 className="mt-2 text-2xl font-bold tracking-tight text-white">
+        <h2
+          id="source-code-heading"
+          className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl"
+        >
           Explore the implementation
         </h2>
 

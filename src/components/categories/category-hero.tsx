@@ -11,6 +11,8 @@ interface CategoryHeroProps {
   methodCount: number;
 }
 
+const focusClasses = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#08070e]";
+
 export function CategoryHero({
   categoryId,
   categoryTitle,
@@ -19,7 +21,10 @@ export function CategoryHero({
   const content = categoryContent[categoryId];
 
   return (
-    <section className="relative isolate overflow-hidden border-b border-white/[0.08]">
+    <section
+      aria-labelledby="category-hero-title"
+      className="relative isolate overflow-hidden border-b border-white/[0.08]"
+    >
       {/* Background decoration */}
       <div
         aria-hidden="true"
@@ -42,7 +47,10 @@ export function CategoryHero({
         {/* Category introduction */}
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
           <div className="inline-flex items-center gap-2 rounded-full border border-violet-400/20 bg-violet-500/[0.08] px-3 py-1.5">
-            <span className="size-1.5 rounded-full bg-violet-400" />
+            <span
+              aria-hidden="true"
+              className="size-1.5 rounded-full bg-violet-400"
+            />
             <span className="text-[10px] font-bold tracking-[0.14em] text-violet-300">
               {content.eyebrow}
             </span>
@@ -52,7 +60,10 @@ export function CategoryHero({
             Authentication / {categoryTitle}
           </p>
 
-          <h1 className="mt-4 max-w-5xl text-4xl font-bold leading-[1.12] tracking-tight text-white sm:text-5xl">
+          <h1
+            id="category-hero-title"
+            className="mt-4 max-w-5xl text-4xl font-bold leading-[1.12] tracking-tight text-white sm:text-5xl"
+          >
             {content.title}
           </h1>
 
@@ -63,15 +74,15 @@ export function CategoryHero({
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link
               href="#methods"
-              className="inline-flex items-center gap-2 rounded-lg bg-violet-500 px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-violet-400"
+              className={`inline-flex items-center gap-2 rounded-lg bg-violet-500 px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-violet-400 ${focusClasses}`}
             >
               Explore {categoryTitle}
-              <ArrowRight size={16} />
+              <ArrowRight size={16} aria-hidden="true" />
             </Link>
 
             <Link
-              href="/#catalog"
-              className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-medium text-zinc-300 transition-colors hover:border-white/20 hover:bg-white/[0.06] hover:text-white"
+              href="/#credentials"
+              className={`inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-medium text-zinc-300 transition-colors hover:border-white/20 hover:bg-white/[0.06] hover:text-white ${focusClasses}`}
             >
               View full catalog
             </Link>
@@ -79,12 +90,20 @@ export function CategoryHero({
 
           <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-zinc-500">
             <span className="inline-flex items-center gap-2">
-              <CheckCircle2 size={14} className="text-violet-300" />
+              <CheckCircle2
+                size={14}
+                className="text-violet-300"
+                aria-hidden="true"
+              />
               Inspect implementation code
             </span>
 
             <span className="inline-flex items-center gap-2">
-              <CheckCircle2 size={14} className="text-violet-300" />
+              <CheckCircle2
+                size={14}
+                className="text-violet-300"
+                aria-hidden="true"
+              />
               Download reusable boilerplates
             </span>
           </div>
@@ -128,10 +147,10 @@ export function CategoryHero({
 
           <Link
             href="#features"
-            className="inline-flex shrink-0 items-center gap-2 text-xs font-medium text-zinc-400 transition-colors hover:text-violet-300"
+            className={`inline-flex shrink-0 items-center gap-2 text-xs font-medium text-zinc-400 transition-colors hover:text-violet-300 ${focusClasses}`}
           >
             Discover features
-            <ArrowDown size={14} />
+            <ArrowDown size={14} aria-hidden="true" />
           </Link>
         </div>
       </div>

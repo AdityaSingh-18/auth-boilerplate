@@ -13,6 +13,8 @@ interface CategoryMethodGridProps {
   categoryTitle: string;
 }
 
+const focusClasses = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#08070e]";
+
 export function CategoryMethodGrid({
   categoryId,
   categoryTitle,
@@ -22,6 +24,7 @@ export function CategoryMethodGrid({
   return (
     <section
       id="methods"
+      aria-labelledby="category-methods-heading"
       className="mx-auto max-w-7xl scroll-mt-24 px-5 py-20 sm:px-8 sm:py-24"
     >
       <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
@@ -30,7 +33,10 @@ export function CategoryMethodGrid({
             EXPLORE IMPLEMENTATIONS
           </p>
 
-          <h2 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+          <h2
+            id="category-methods-heading"
+            className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl"
+          >
             {categoryTitle} authentication methods
           </h2>
 
@@ -53,7 +59,7 @@ export function CategoryMethodGrid({
           {methods.map((method, index) => (
             <div
               key={method.id}
-              className="animate-in fade-in slide-in-from-bottom-3 duration-500"
+              className="animate-in fade-in slide-in-from-bottom-3 duration-500 motion-reduce:animate-none"
               style={{
                 animationDelay: `${index * 70}ms`,
                 animationFillMode: "both",
@@ -64,7 +70,10 @@ export function CategoryMethodGrid({
           ))}
         </div>
       ) : (
-        <div className="mt-10 rounded-2xl border border-white/[0.08] bg-white/[0.02] px-6 py-12 text-center">
+        <div
+          role="status"
+          className="mt-10 rounded-2xl border border-white/[0.08] bg-white/[0.02] px-6 py-12 text-center"
+        >
           <h3 className="text-base font-semibold text-zinc-200">
             No methods available
           </h3>
@@ -74,11 +83,11 @@ export function CategoryMethodGrid({
           </p>
 
           <Link
-            href="/#catalog"
-            className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-violet-300 transition-colors hover:text-violet-200"
+            href="/#credentials"
+            className={`mt-5 inline-flex items-center gap-2 text-sm font-medium text-violet-300 transition-colors hover:text-violet-200 ${focusClasses}`}
           >
             Browse full catalog
-            <ArrowRight size={15} />
+            <ArrowRight size={15} aria-hidden="true" />
           </Link>
         </div>
       )}

@@ -37,6 +37,8 @@ type FileTreeNode =
       file: ExplorerFile;
     };
 
+const focusClasses = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d0d12]";
+
 function buildFileTree(files: ExplorerFile[]): FileTreeNode[] {
   const root: FileTreeNode[] = [];
 
@@ -168,6 +170,7 @@ export function FileExplorer({ files }: FileExplorerProps) {
 
     if (copyTimeoutRef.current) {
       clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = null;
     }
 
     try {
@@ -198,8 +201,8 @@ export function FileExplorer({ files }: FileExplorerProps) {
           type="button"
           onClick={() => selectFile(file.path)}
           title={file.path}
-          aria-current={isActive ? "page" : undefined}
-          className={`flex w-full min-w-0 items-center gap-2 rounded-lg px-2 py-2 text-left text-xs transition-colors ${
+          aria-pressed={isActive}
+          className={`flex w-full min-w-0 items-center gap-2 rounded-lg px-2 py-2 text-left text-xs transition-colors ${focusClasses} ${
             isActive
               ? "bg-violet-500/10 text-violet-200"
               : "text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-200"
@@ -207,9 +210,15 @@ export function FileExplorer({ files }: FileExplorerProps) {
           style={{ paddingLeft: `${8 + depth * 14}px` }}
         >
           {isReadme ? (
-            <FileText className="h-3.5 w-3.5 shrink-0" />
+            <FileText
+              aria-hidden="true"
+              className="h-3.5 w-3.5 shrink-0"
+            />
           ) : (
-            <FileCode2 className="h-3.5 w-3.5 shrink-0" />
+            <FileCode2
+              aria-hidden="true"
+              className="h-3.5 w-3.5 shrink-0"
+            />
           )}
 
           <span className="truncate">{file.name}</span>
@@ -231,18 +240,27 @@ export function FileExplorer({ files }: FileExplorerProps) {
           type="button"
           onClick={() => toggleFolder(node.path)}
           aria-expanded={isExpanded}
-          className="flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-xs font-medium text-zinc-300 transition-colors hover:bg-white/[0.04]"
+          className={`flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-xs font-medium text-zinc-300 transition-colors hover:bg-white/[0.04] ${focusClasses}`}
           style={{ paddingLeft: `${8 + depth * 14}px` }}
         >
           {isExpanded ? (
-            <FolderOpen className="h-3.5 w-3.5 shrink-0 text-violet-300" />
+            <FolderOpen
+              aria-hidden="true"
+              className="h-3.5 w-3.5 shrink-0 text-violet-300"
+            />
           ) : (
-            <Folder className="h-3.5 w-3.5 shrink-0 text-violet-300" />
+            <Folder
+              aria-hidden="true"
+              className="h-3.5 w-3.5 shrink-0 text-violet-300"
+            />
           )}
 
           <span className="truncate">{node.name}/</span>
 
-          <span className="ml-auto text-[10px] text-zinc-600">
+          <span
+            aria-label={`${node.children.length} items`}
+            className="ml-auto text-[10px] text-zinc-600"
+          >
             {node.children.length}
           </span>
         </button>
@@ -266,7 +284,10 @@ export function FileExplorer({ files }: FileExplorerProps) {
     <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0d0d12]">
       <div className="flex min-h-[440px]">
         {/* File tree sidebar */}
-        <aside className="hidden w-60 shrink-0 border-r border-white/10 bg-[#111118] sm:block">
+        <aside
+          aria-label="Template file explorer"
+          className="hidden w-60 shrink-0 border-r border-white/10 bg-[#111118] sm:block"
+        >
           <div className="flex h-12 items-center justify-between border-b border-white/10 px-4">
             <span className="text-[11px] font-semibold uppercase tracking-wider text-zinc-400">
               Explorer
@@ -296,7 +317,7 @@ export function FileExplorer({ files }: FileExplorerProps) {
               id="mobile-file-selector"
               value={currentActivePath}
               onChange={(event) => selectFile(event.target.value)}
-              className="w-full rounded-lg border border-white/10 bg-[#111118] px-3 py-2 text-xs text-zinc-200 outline-none focus:border-violet-400/50"
+              className={`w-full rounded-lg border border-white/10 bg-[#111118] px-3 py-2 text-xs text-zinc-200 ${focusClasses}`}
             >
               {files.map((file) => (
                 <option key={file.path} value={file.path}>
@@ -308,21 +329,29 @@ export function FileExplorer({ files }: FileExplorerProps) {
 
           {/* Existing horizontal tabs */}
           <div className="hidden overflow-x-auto border-b border-white/10 sm:flex">
-            {files.map((file) => (
-              <button
-                key={file.path}
-                type="button"
-                onClick={() => selectFile(file.path)}
-                className={`flex shrink-0 items-center gap-2 border-b-2 px-4 py-3 text-sm transition-colors ${
-                  currentActivePath === file.path
-                    ? "border-violet-400 bg-white/[0.04] text-white"
-                    : "border-transparent text-zinc-500 hover:text-zinc-300"
-                }`}
-              >
-                <FileCode2 className="h-4 w-4" />
-                {file.name}
-              </button>
-            ))}
+            {files.map((file) => {
+              const isActive = currentActivePath === file.path;
+
+              return (
+                <button
+                  key={file.path}
+                  type="button"
+                  onClick={() => selectFile(file.path)}
+                  aria-pressed={isActive}
+                  className={`flex shrink-0 items-center gap-2 border-b-2 px-4 py-3 text-sm transition-colors ${focusClasses} ${
+                    isActive
+                      ? "border-violet-400 bg-white/[0.04] text-white"
+                      : "border-transparent text-zinc-500 hover:text-zinc-300"
+                  }`}
+                >
+                  <FileCode2
+                    aria-hidden="true"
+                    className="h-4 w-4"
+                  />
+                  {file.name}
+                </button>
+              );
+            })}
           </div>
 
           {/* File toolbar */}
@@ -339,25 +368,49 @@ export function FileExplorer({ files }: FileExplorerProps) {
             <button
               type="button"
               onClick={handleCopy}
-              className="flex shrink-0 items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-xs text-zinc-300 transition-colors hover:border-violet-400/40 hover:bg-violet-500/10 hover:text-white"
+              aria-label={
+                copiedPath === activeFile.path
+                  ? "File copied"
+                  : copyErrorPath === activeFile.path
+                    ? "Copy failed"
+                    : "Copy file contents"
+              }
+              className={`flex shrink-0 items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-xs text-zinc-300 transition-colors hover:border-violet-400/40 hover:bg-violet-500/10 hover:text-white ${focusClasses}`}
             >
               {copiedPath === activeFile.path ? (
                 <>
-                  <Check className="h-3.5 w-3.5 text-emerald-400" />
+                  <Check
+                    aria-hidden="true"
+                    className="h-3.5 w-3.5 text-emerald-400"
+                  />
                   Copied
                 </>
               ) : copyErrorPath === activeFile.path ? (
                 <>
-                  <Copy className="h-3.5 w-3.5 text-red-400" />
+                  <Copy
+                    aria-hidden="true"
+                    className="h-3.5 w-3.5 text-red-400"
+                  />
                   Copy failed
                 </>
               ) : (
                 <>
-                  <Copy className="h-3.5 w-3.5" />
+                  <Copy
+                    aria-hidden="true"
+                    className="h-3.5 w-3.5"
+                  />
                   Copy file
                 </>
               )}
             </button>
+
+            <span className="sr-only" aria-live="polite">
+              {copiedPath === activeFile.path
+                ? "File contents copied to clipboard."
+                : copyErrorPath === activeFile.path
+                  ? "Unable to copy file contents."
+                  : ""}
+            </span>
           </div>
 
           {/* Active highlighted code */}
@@ -386,8 +439,8 @@ export function FileExplorer({ files }: FileExplorerProps) {
             </div>
           ) : (
             <div
-              className="max-h-[760px] overflow-y-auto overflow-x-hidden text-[13px] leading-6 
-                [&_pre]:!whitespace-pre-wrap [&_pre]:!break-words [&_pre]:min-w-0 [&_pre]:p-5 
+              className="max-h-[760px] overflow-y-auto overflow-x-hidden text-[13px] leading-6
+                [&_pre]:!whitespace-pre-wrap [&_pre]:!break-words [&_pre]:min-w-0 [&_pre]:p-5
                 [&_pre]:font-mono [&_code]:!whitespace-pre-wrap [&_code]:!break-words"
               dangerouslySetInnerHTML={{
                 __html: activeFile.highlightedCode,

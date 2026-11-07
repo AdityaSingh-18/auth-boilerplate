@@ -15,9 +15,7 @@ import {
   Building2,
 } from "lucide-react";
 
-import {
-  type AuthMethod,
-} from "@/data/auth-methods";
+import type { AuthMethod } from "@/data/auth-methods";
 
 interface CategoryMethodCardProps {
   method: AuthMethod;
@@ -57,7 +55,8 @@ export function CategoryMethodCard({
   return (
     <Link
       href={`/methods/${method.id}`}
-      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-violet-400/30 hover:bg-violet-500/[0.04] hover:shadow-xl hover:shadow-violet-950/10 sm:p-6"
+      aria-labelledby={`category-method-${method.id}-title`}
+      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-violet-400/30 hover:bg-violet-500/[0.04] hover:shadow-xl hover:shadow-violet-950/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#08070e] sm:p-6"
     >
       <div
         aria-hidden="true"
@@ -70,17 +69,20 @@ export function CategoryMethodCard({
             providerColor ?? ""
           }`}
         >
-          <Icon size={21} strokeWidth={1.8} />
+          <Icon size={21} strokeWidth={1.8} aria-hidden="true" />
         </div>
 
         <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/15 bg-emerald-400/[0.06] px-2.5 py-1 text-[10px] font-semibold text-emerald-300">
-          <CheckCircle2 size={11} />
+          <CheckCircle2 size={11} aria-hidden="true" />
           Available
         </span>
       </div>
 
       <div className="relative mt-6 flex-1">
-        <h3 className="text-base font-semibold text-zinc-100 transition-colors group-hover:text-violet-200">
+        <h3
+          id={`category-method-${method.id}-title`}
+          className="text-base font-semibold text-zinc-100 transition-colors group-hover:text-violet-200"
+        >
           {method.title}
         </h3>
 
@@ -94,8 +96,11 @@ export function CategoryMethodCard({
           Explore implementation
         </span>
 
-        <span className="grid size-8 place-items-center rounded-lg border border-white/[0.08] text-zinc-500 transition-all duration-300 group-hover:border-violet-400/20 group-hover:bg-violet-500/10 group-hover:text-violet-300">
-          <ArrowUpRight size={15} />
+        <span
+          aria-hidden="true"
+          className="grid size-8 place-items-center rounded-lg border border-white/[0.08] text-zinc-500 transition-all duration-300 group-hover:border-violet-400/20 group-hover:bg-violet-500/10 group-hover:text-violet-300"
+        >
+          <ArrowUpRight size={15} aria-hidden="true" />
         </span>
       </div>
     </Link>

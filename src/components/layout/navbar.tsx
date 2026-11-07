@@ -64,7 +64,7 @@ export function Navbar() {
         </nav>
 
         {/* Desktop actions */}
-        <div className="hidden items-center gap-4 sm:flex">
+        <div className="hidden items-center gap-4 lg:flex">
           <CommandPalette />
 
           {githubUrl ? (
@@ -89,11 +89,10 @@ export function Navbar() {
         </div>
 
         {/* Mobile menu */}
-        <details className="group relative sm:hidden">
+        <details className="group relative lg:hidden">
           <summary
             aria-label="Open navigation menu"
-            className="grid size-10 cursor-pointer list-none place-items-center rounded-lg border border-white/10 text-zinc-300 transition hover:bg-white/5 [&::-webkit-details-marker]:hidden"
-          >
+            className="grid size-10 cursor-pointer list-none place-items-center rounded-lg border border-white/10 text-zinc-300 transition hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#090711] [&::-webkit-details-marker]:hidden"          >
             <Menu size={19} />
           </summary>
 

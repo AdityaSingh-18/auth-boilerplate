@@ -91,7 +91,10 @@ export function MethodCard({ method }: MethodCardProps) {
   const BrandIcon = brandIcons[method.icon];
 
   return (
-    <article className="group flex h-full flex-col rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-violet-400/30 hover:bg-white/[0.04]">
+    <article 
+      aria-labelledby={`method-${method.id}-title`}
+      className="group flex h-full flex-col rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-violet-400/30 hover:bg-white/[0.04]"
+    >
       <div className="flex items-start justify-between gap-3">
         <div className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.04] text-violet-300 transition-colors group-hover:border-violet-400/20 group-hover:bg-violet-500/10">
           {method.iconType === "simple" && BrandIcon ? (
@@ -104,6 +107,7 @@ export function MethodCard({ method }: MethodCardProps) {
         </div>
 
         <span
+          role="status"
           className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold ${status.className}`}
         >
           {status.label}
@@ -111,7 +115,10 @@ export function MethodCard({ method }: MethodCardProps) {
       </div>
 
       <div className="mt-5 flex-1">
-        <h3 className="text-base font-semibold text-zinc-100 transition-colors group-hover:text-violet-200">
+        <h3 
+          id={`method-${method.id}-title`}
+          className="text-base font-semibold text-zinc-100 transition-colors group-hover:text-violet-200"
+        >
           {method.title}
         </h3>
 
@@ -130,7 +137,7 @@ export function MethodCard({ method }: MethodCardProps) {
         <Link
           href={`/methods/${method.id}`}
           aria-label={`Explore ${method.title}`}
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-300 transition-colors hover:text-violet-200"
+          className="inline-flex items-center gap-1.5 rounded-sm text-xs font-semibold text-violet-300 transition-colors hover:text-violet-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#08070e]"
         >
           Explore
           <span

@@ -43,13 +43,15 @@ const templateParts = [
   },
 ];
 
+const ctaFocusClasses = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#08070e]";
+
 export function Hero() {
   const githubUrl = process.env.NEXT_PUBLIC_GITHUB_URL;
 
   return (
     <>
       {/* Main hero */}
-      <section className="relative isolate flex h-[calc(100svh-4rem)] min-h-0 items-center overflow-hidden bg-[#08070e] max-md:items-start">
+      <section className="relative isolate flex min-h-[calc(100svh-4rem)] items-center overflow-hidden bg-[#08070e] max-md:items-start">
         <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(ellipse_at_88%_45%,rgba(91,33,182,0.17),transparent_42%),linear-gradient(180deg,#090711_0%,#08070e_100%)]" />
 
         <div className="pointer-events-none absolute inset-0 -z-10 max-md:inset-x-0 max-md:bottom-0 max-md:top-[180px]">
@@ -58,6 +60,7 @@ export function Hero() {
             alt=""
             fill
             priority
+            sizes="100vw"
             className="hidden object-cover lg:block"
           />
         </div>
@@ -99,7 +102,7 @@ export function Hero() {
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <Link
               href="/#credentials"
-              className="inline-flex min-h-12 items-center gap-3 rounded-xl bg-gradient-to-r from-violet-500 to-violet-700 px-5 text-sm font-bold text-white shadow-[0_8px_30px_rgba(109,40,217,0.25)] transition hover:-translate-y-0.5 hover:shadow-[0_12px_38px_rgba(109,40,217,0.4)]"
+              className={`inline-flex min-h-12 items-center gap-3 rounded-xl bg-gradient-to-r from-violet-500 to-violet-700 px-5 text-sm font-bold text-white shadow-[0_8px_30px_rgba(109,40,217,0.25)] transition hover:-translate-y-0.5 hover:shadow-[0_12px_38px_rgba(109,40,217,0.4)] ${ctaFocusClasses}`}
             >
               Browse boilerplates
               <ArrowRight size={17} />
@@ -110,7 +113,7 @@ export function Hero() {
                 href={githubUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex min-h-12 items-center gap-2.5 rounded-xl border border-violet-400/35 bg-[#0f0c19]/70 px-5 text-sm font-semibold text-zinc-200 transition hover:-translate-y-0.5 hover:border-violet-300/70"
+                className={`inline-flex min-h-12 items-center gap-2.5 rounded-xl border border-violet-400/35 bg-[#0f0c19]/70 px-5 text-sm font-semibold text-zinc-200 transition hover:-translate-y-0.5 hover:border-violet-300/70 ${ctaFocusClasses}`}
               >
                 <FaGithub size={18} />
                 Star on GitHub
@@ -233,7 +236,7 @@ export function Hero() {
               <div className="flex flex-col items-start gap-3 lg:items-end">
                 <Link
                   href="/#credentials"
-                  className="inline-flex min-h-12 items-center gap-3 rounded-xl bg-violet-500 px-5 text-sm font-bold text-white shadow-lg shadow-violet-950/30 transition hover:-translate-y-0.5 hover:bg-violet-400"
+                  className={`inline-flex min-h-12 items-center gap-3 rounded-xl bg-violet-500 px-5 text-sm font-bold text-white shadow-lg shadow-violet-950/30 transition hover:-translate-y-0.5 hover:bg-violet-400 ${ctaFocusClasses}`}
                 >
                   Explore templates
                   <ArrowRight size={17} />

@@ -4,13 +4,8 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
-import {
-  categoryContent,
-} from "@/data/category-content";
-
-import type {
-  AuthCategoryId,
-} from "@/data/auth-methods";
+import { categoryContent } from "@/data/category-content";
+import type { AuthCategoryId } from "@/data/auth-methods";
 
 interface CategoryFeaturesProps {
   categoryId: AuthCategoryId;
@@ -31,7 +26,7 @@ export function CategoryFeatures({
     <section
       id="features"
       aria-labelledby="category-features-heading"
-      className="border-t border-white/10 bg-[#080a12] px-6 py-20 sm:py-24"
+      className="scroll-mt-24 border-t border-white/10 bg-[#080a12] px-5 py-20 sm:px-8 sm:py-24"
     >
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto mb-12 max-w-2xl text-center">
@@ -44,7 +39,9 @@ export function CategoryFeatures({
             className="text-3xl font-semibold tracking-tight text-white sm:text-4xl"
           >
             Understand the implementation,
-            <span className="text-violet-400"> not just the interface.</span>
+            <span className="text-violet-400">
+              {" "}not just the interface.
+            </span>
           </h2>
 
           <p className="mt-4 text-base leading-7 text-slate-400">

@@ -20,8 +20,7 @@ export default function TwitterImage() {
           alignItems: "center",
           justifyContent: "center",
           padding: "64px",
-          background:
-            "radial-gradient(ellipse at 75% 20%, #352267 0%, transparent 45%), linear-gradient(135deg, #08070e 0%, #100d1c 60%, #17102a 100%)",
+          background: "radial-gradient(ellipse at 75% 20%, #352267 0%, transparent 45%), linear-gradient(135deg, #08070e 0%, #100d1c 60%, #17102a 100%)",
           color: "#ffffff",
           fontFamily: "Arial, sans-serif",
         }}
@@ -75,6 +74,8 @@ export default function TwitterImage() {
 
           <div
             style={{
+              display: "flex",
+              flexWrap: "wrap",
               fontSize: "62px",
               lineHeight: 1.1,
               fontWeight: 800,
@@ -90,6 +91,7 @@ export default function TwitterImage() {
 
           <div
             style={{
+              display: "flex",
               marginTop: "28px",
               fontSize: "24px",
               lineHeight: 1.5,
@@ -112,6 +114,7 @@ export default function TwitterImage() {
                 <div
                   key={label}
                   style={{
+                    display: "flex",
                     padding: "10px 17px",
                     borderRadius: "999px",
                     border: "1px solid rgba(196,181,253,0.25)",
